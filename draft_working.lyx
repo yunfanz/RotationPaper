@@ -301,7 +301,9 @@ Here
 We define the delay transformed visibility:
 \begin_inset Formula 
 \[
-\begin{aligned}\end{aligned}
+\begin{aligned}V(b) & =\int d\nu V_{\nu}(b)\exp\left[-2\pi i\nu\eta\right],\\
+ & =\frac{2k_{B}}{\lambda^{2}}\int d\Omega d\nu A(\hat{r},\nu)T(\hat{r},\nu)\exp\left[-2\pi i\left(\frac{\nu}{c}b\cdot\hat{r}+\nu\eta\right)\right]
+\end{aligned}
 \]
 
 \end_inset
@@ -392,7 +394,7 @@ status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename figure_1.png
+	filename 64layout.png
 	scale 50
 
 \end_inset
@@ -430,6 +432,90 @@ We shall use the 64-antenna PAPER array to demonstrate.
  North-South directions are comparatively close (4m), so that baselines
  such as 0_44 and 0_7 are very close to equivalent.
  
+\end_layout
+
+\begin_layout Section
+Implementation
+\end_layout
+
+\begin_layout Standard
+An example of rotation tracks is shown in the uv plane below
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename tracks.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+The PAPER 64 layout.
+ Top panel shows the antenna positions drawn to scale, bottom panel show
+ the antenna labels and distances.
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The beam squared and its Fourier transform are given as
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename 64beam.png
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+The PAPER 64 layout.
+ Top panel shows the antenna positions drawn to scale, bottom panel show
+ the antenna labels and distances.
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_body
