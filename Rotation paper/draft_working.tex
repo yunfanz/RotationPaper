@@ -328,30 +328,56 @@ in Eq.(\ref{eq:final}) for various time offsets. Thus we shall first test its ro
 \section{Analysis}
 \subsection{Numerical Test \label{sec:Techniquet}}
 
-As the earth rotates, a point source traces out a track in UV plane
-for a given baseline. Shown in Fig. \ref{fig:Tracks-of-PAPER-64}
-are the rotation tracks for a source that passes through zenith for
-the baselines of PAPER-64. As we mentioned earlier, crossings of these tracks are approximate, 
-and only approximate points of maximum redundancy of near-equivalent baselines, because
-of the wide field of view of the PAPER beam, shown in Fig.\ref{fig:Beam-of-PAPER-64.}).
+To test the robustness of Eq.(\ref{eq:final}), we need to compare the amplitude and phase of the integral
+for a pair of baselines with products of simulated visibilities of those baselines. 
 
+For the simulation, we take N random realizations of the sky
+on a healpix map (\cite{Heal}, \cite{HealPrimer}) \footnote{We use functionalities in the python package AIPY for healpix mapping
+as well as coordinate transforms. }. For each realization, each pixel is given a Gaussian random value
+of brightness temperature. We then rotate the baseline positions with
+the appropriate rotation matrix, recording the visibilities, for each
+baseline \footnote{As a caveat, there are two obvious ways to achieve the rotation. One
+can either fix the sky and rotate the baselines, or the other way
+around. We found however, that we must not physically rotate the sky
+map, for the numerical round-offs due to finite resolutions of the
+map turns out to be significant. Thus we let the sky, represented
+by the healpix map, be fixed, and rotate the baselines. }. The resulting visibilities for the two baselines are then convolved
+via the Fourier convolution theorem, to obtain values of the cross
+correlation as a function of time-offset. The peak of the curve then
+corresponds to maximum redundancy. The accuracy of this result is
+limited by (simulated) cosmic variance and finite spacial resolution,
+and hence can be beat down by averaging over a large number of universes.
+A numerical estimate of the error of the peak height with $N=1$ is
+$\lesssim20\%$, and thus with $N=2500,$ we achieve an error of peak
+height $<0.5\%$. 
 
-In practice, we first implement a search algorithm that grids the
-uv plane and search for intersections these tracks, then fine tune
-the time delay by computing a) cross correlated visibilities from
-simulated random sky, and b) theoretical proportion factor from Eq.
-\eqref{eq:main} for a range of time delays. It is also worth pointing
-out that the near-redundant pairs is not only useful at a particular
-time corresponding to the crossing. The search algorithm uses a fiducial
-point source in the sky to find the offset, and all time-stamps separated
-by this offset corresponds to UV-track crossing of a point in the
-sky, and thus all data of the two baselines can be utilized. 
+To test our understanding of the time-offset, and to verify our derivation
+in Eq. \eqref{eq:main}, we must compare the simulated visibility cross multiplication with the integral in
+Eq. \eqref{eq:main}, for a pair of near-equivalent baselines. 
+This comparison is show in Fig. \ref{fig:numerics}. 
+Since the sensitivity contribution is inferred from height of the peak of the cross-multiplied visibilities as a function of time. 
+We first compare the simulation to the integral for a pair of equivalent baselines, then normalize the peaks 
+of the near-equivalent baselines to that of the equivalent ones. 
+In Fig. \ref{fig:numerics}  we show on the top comparison of
+the convolution of an equivalent baseline, normalized to 1 at the
+peak, whose location is at zero time offset as expected. On the bottom we show
+comparison of a near-equivalent baseline pair, of classes sep1,0:1,1 and sep1,1:1,1. The peaks
+are normalized with the same factor as the peak height on the top,
+i.e. the two plots have thus the same scale on the vertical axis.
+The height of the plot on the right thus quantifies the added sensitivity. 
+
+\begin{figure}[H]
+\includegraphics[width=\linewidth]{redun_agree}
+\label{fig:numerics}
+\caption{[Placeholder Plot]}
+\end{figure}
+
 
 At the optimal time separation, the integral in Eq. \eqref{eq:final}
-is maximized. We expect the two beams to have to same fringe pattern
+is maximized. Thus as a final check we expect the two beams to have to same fringe pattern
 (frequency and phase). Due to the time delay, however, the beam center
 would be slightly shifted with respect to each other. This we show
-in Fig. {[}insert{]}. The left and middle panels show the beam fringe
+in Fig. \ref{fig:Beam-fringe-pattern}. The left and middle panels show the beam fringe
 patterns for baselines sep0,1 and sep1,1, delayed by 0.0325 days,
 and the right panel shows their cross product. The fringe pattern
 indeed cancels out as we expect. 
@@ -366,88 +392,20 @@ chosen. \label{fig:Beam-fringe-pattern}}
 \end{figure}
 \end{widetext}
 
-Below we go into a little more details on the numerical techniques
-we used to obtain the results. 
 
-
-\subsection{Track crossing search {[}skip all together?{]}}
-
-The crossing algorithm sets up grids on the UV-plane, creates a point
-source that passes through zenith, and searches for intersections
-of the UV tracks. The search compares each track to each other track
-to locate the closest approaches. To optimize performance, the algorithm
-first sets up coarse grids, locates the cells that contain data points
-from more than one tracks, then fine-grains the cell to determine
-the points of closest approach. Fig {[}insert{]} illustrates this
-procedure. After all the crossings have been identified, we rank the
-crossings by computing the proportion factor in Eq. \eqref{eq:main}.
-This algorithm is mainly used to determine which baselines to cross
-correlate, and give a rough estimate of the time offset. We indeed
-find that baselines sep0,1 and sep1,1 give the closest approach with
-a time offset of roughly 0.03 sidereal days. In reality, a wide beam
-samples a patch of sky, not just a point source. And thus the real
-UV representation of a baseline is the track convolved with an appropriate
-point spread function. Accounting for these factors accurately in
-this context is difficult. Thus for accurate determination of the
-time offset, we resort to two other methods. 
-
-
-\subsection{Gaussian sky simulation \label{sub:Gaussian-sky-simulation}}
-
-Having found the pairs of baselines to cross-correlate, and a rough
-estimate of the time offset, we make a more accurate determination
-of the time offset. Here we take N random realizations of the sky
-on a healpix map\footnote{We use functionalities in the python package AIPY for healpix mapping
-as well as coordinate transforms. }. For each realization, each pixel is given a Gaussian random value
-of brightness temperature. We then rotate the baseline positions with
-the appropriate rotation matrix, recording the visibilities, for each
-baseline, as given in Eq. 1 \footnote{As a caveat, there are two obvious ways to achieve the rotation. One
-can either fix the sky and rotate the baselines, or the other way
-around. We found however, that we must not physically rotate the sky
-map, for the numerical roundoffs due to finite resolutions of the
-map turns out to be significant. Thus we let the sky, represented
-by the healpix map, be fixed, and rotate the baselines. }. The resulting visibilities for the two baselines are then convolved
-via the Fourier convolution theorem, to obtain values of the cross
-correlation as a function of time-offset. The peak of the curve then
-corresponds to maximum redundancy. The accuracy of this result is
-limited by (simulated) cosmic variance and finite spacial resolution,
-and hence can be beat down by averaging over a large number of universes.
-A numerical estimate of the error of the peak height with $N=1$ is
-$\lesssim20\%$, and thus with $N=2500,$ we achieve an error of peak
-height $<0.5\%$. An example is shown in Fig. {[}insert{]} 
-
-
-\subsection{Theoretical determination \label{sub:Theoretical-determination}}
-
-To test our understanding of the time-offset, and to verify our derivation
-in Eq. \eqref{eq:main} makes sense, we must check the curve obtained
-in Fig. {[}insert{]} against one from the multiplicative factor in
-Eq. \eqref{eq:main}. In particular, we would really like to compare
-the peak location as well as height. For the latter, the most useful
-information comes in its comparison with that of an equivalent baseline.
-Thus in Fig. {[}insert{]} below we show on the left comparison of
-the convolution of an equivalent baseline, normalized to 1 at the
-peak, whose location is at 0 offset as expected. On the right we show
-comparison of the baseline pair found in the grid search. The peaks
-are normalized with the same factor as the peak height on the left,
-i.e. the two plots have thus the same scale on the vertical axis.
-The height of the plot on the right thus quantifies the added sensitivity. 
-
-\begin{figure}[H]
-\includegraphics[width=\linewidth]{redun_agree}
-
-\includegraphics[width=\linewidth]{simucorroff}
-
-\caption{The PAPER-64 layout. Top panel shows the antenna positions drawn to
-scale, bottom panel show the antenna labels and distances. }
-\end{figure}
 
 
 \subsection{Expected Sensitivity Contributions}
 
-In section \eqref{sub:Gaussian-sky-simulation} and \eqref{sub:Theoretical-determination}
-we showed the delays and amount of overlap for the baselines with
-separation sep10 vs sep11. In the top panel of Fig. \eqref{fig:sensplot} below
+Having verified Eq. \eqref{eq:main}, we can thus predict the sensitivity contributions of a
+particular baseline pair simply by computing the integral. 
+Having computed all of the baseline pairs, we find that baseline pairs that are mirror images of each other 
+give the same amount of redundancies (peak height), with the opposite time offset, as expected from symmetry. 
+For example, sep1,0:1,1 is mirror image of sep1,0:1,-1 and thus these two baseline pairs
+give the same sensibility contribution. Thus in our results we shall only show a subset of representative baseline pairs 
+that give different informations. 
+
+In the top panel of Fig. \eqref{fig:sensplot} below
 we show the peak heights and locations for a variety of baseline combinations.
 We see that baseline pairs that have crossings at a smaller time delay
 tend to have higher correlations. In other words, correlation peaks
