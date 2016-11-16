@@ -28,16 +28,13 @@ Aaron R. Parsons\altaffilmark{1}\altaffilmark{2}
 
 \altaffiltext{1}{Astronomy Dept., U. California, Berkeley, CA}
 \altaffiltext{2}{Radio Astronomy Lab., U. California, Berkeley, CA}
-%\altaffiltext{3}{Berkeley Center for Cosmological Physics, Berkeley, CA}
-%\altaffiltext{3}{Dept. of Physics and Astronomy, U. Pennsylvania, Philadelphia, PA}
-%\altaffiltext{8}{School of Earth and Space Exploration, Arizona State U., Tempe, AZ}
 
 \begin{abstract}
 We introduce an accurate method to extract additional sensitivity from data of redundant radio arrays. 
-Using the 64 element version of Precision Array for Probing the Epoch of Reionization (PAPER-64), we illustrate 
+Using the latest and final 128-element version of Precision Array for Probing the Epoch of Reionization (PAPER-64), we illustrate 
 how our method finds optimal baselines to cross correlate, including baselines that are slightly different in length and orientation. 
 We predict the sensitivity improvements of including each baseline pairs. The extremely natural and simple implementation of this method
-would increase the sensitivity of PAPER-64 by up to [~50] percent. 
+would increase the sensitivity of PAPER-128 by up to [~50] percent. 
 \end{abstract}
 
 \section{Introduction}
@@ -83,7 +80,8 @@ challenge of using the avoidance technique is thus the sensitivity, or
 the signal to noise ratio. This is the motivation for the design of
 the maximum redundancy arrays such as PAPER and HERA. While traditional
 imaging arrays focus on Fourier mode uv coverage, the redundant arrays
-have many tightly packed antennas at equal spacing. Since baselines
+focus on redundant measurements of the same Fourier mode
+with many tightly packed antennas at equal spacing. Since baselines
 of the same length and orientation measure the same Fourier modes
 on the sky, the maximum redundancy arrays is able to increase the
 signal to noise ratio by averaging over measurements of the same baseline.
@@ -127,11 +125,12 @@ with this method and with section 5 we conclude.
 
 \subsection{Rough Idea}
 \begin{figure}[H]
-\includegraphics[width=\linewidth]{64layout}
+\includegraphics[width=\linewidth]{antpos128}
 
-\caption{The PAPER-64 layout. Each blue dot corresponds to the location of
+\caption{The PAPER-128 layout. Each blue dot corresponds to the location of
 an antenna. Top panel shows the antenna positions drawn to scale,
-bottom panel show the antenna labels and distances.\label{fig:The-PAPER-64}
+bottom panel show the antenna labels and distances, excluding the outlier
+antennas.\label{fig:AntPos}
 The numbering of the antennas the bottom panel are original labels
 during instrument assembly and does not bear significant
 meaning. Baselines corresponding to the same separations are called
@@ -140,14 +139,14 @@ red arrow are equivalent, with separation denoted by sep1,0, for the
 antennas are separated by 1 unit east and 0 unit north. Similarly,
 the baselines labeled with the yellow and green arrows are examples
 of sep1,1 and sep-1,1, respectively. Note sep1,0 and sep-1,0 for example
-are the same baselines and should not be counted twice. }
+are the same baselines and should not be counted twice.}
 \end{figure}
 
 
-We shall use the 64-antenna PAPER array to demonstrate. 
-The PAPER-64 array is located in the Karoo desert in South Africa (30:43:17.5
+We shall use the 128-element PAPER array to demonstrate. 
+The PAPER array is located in the Karoo desert in South Africa (30:43:17.5
 S, 21:25:41.8 E). The layout pattern with antenna labels are show
-in Fig. \ref{fig:The-PAPER-64}. We see the antenna spacing in North-South
+in Fig. \ref{fig:AntPos}. We see the antenna spacing in North-South
 directions are comparatively close (4m), so that baselines such as
 0\_44 and 0\_7 are very close to equivalent. In the bottom panel,
 the two baselines labeled with the red arrow are equivalent, with
@@ -157,8 +156,9 @@ the yellow and green arrows are examples of sep1,1 and sep-1,1, respectively.
 Note sep1,0 and sep-1,0 for example are the same baselines and should
 not be counted twice. Turns out antennas in purely north-south baselines
 are close enough to induce cross talks, and hence are not suitable
-for use. The original PAPER-64 analysis thus used three classes of baselines,
-sep1,0, sep1,1 and sep-1,1 \cite{Ali2015}. There each of these classes
+for use. The original PAPER-64 analysis used three classes of baselines, here
+equivalent to 
+sep2,0, sep2,1 and sep-2,1 \cite{Ali2015}. There each of these classes
 of baselines are cross multiplied to itself. We shall see that in addition these
 baseline classes can be cross multiplied with a time offset.
 
@@ -166,35 +166,35 @@ baseline classes can be cross multiplied with a time offset.
 Given a point source on the sky, each baseline maps the
 source to a point in uv plane. As the earth rotates with respect to
 the source, the point traces out tracks in the uv-plane. 
-The uv tracks of PAPER-64 over 7.2 hours, at 0.15GHz, for a source that passes through zenith, are shown in Fig. \ref{fig:Tracks-of-PAPER-64}. 
+The uv tracks of PAPER-128 over 7.2 hours, at 0.15GHz, for a source that passes through zenith, are shown in Fig. \ref{fig:Tracks}. 
 
 
 \begin{figure}[H]
-\includegraphics[width=\linewidth]{TRACKSpt3days}
-\caption{Tracks of PAPER-64 for a hypothetical source that passes through zenith.
-These tracks are traced out over 0.3 sidereal days, or roughly 7.2
+\includegraphics[width=\linewidth]{tracks128}
+\caption{Tracks of PAPER-128 (grid only, excluding outliers) for a hypothetical source that passes through zenith.
+These tracks are traced out over 0.2 sidereal days, or roughly 4.8
 hours. Color represents different baselines. Frequency is $\nu=0.15\text{GHz}$.
-As the earth rotates, tracks are traced out counterclockwise. \label{fig:Tracks-of-PAPER-64}}
+As the earth rotates, tracks are traced out counterclockwise. \label{fig:Tracks}}
 \end{figure}
 
 Roughly speaking, we can identify
 redundancy of near-equivalent baselines as crossings
 of the uv tracks. Although this is a valid quick method to identify some baselines to cross-multiply, we find
-that it is not accurate enough for time offset determination. The reason is, for wide beam antennas such as PAPER-64, the sources are not point-like. 
+that it is not accurate enough for time offset determination. The reason is, for wide beam antennas such as PAPER, the sources are not point-like. 
 In other words, when tracks of
 one point of the sky are crossing in uv-plane, those corresponding to another is not. To accurately
 constrain redundancy we must take into account of finite beam width. A more rigorous treatment is thus required.  
-We show the beam of PAPER-64 in Fig.\ref{fig:Beam-of-PAPER-64.} for reference:
+We show the beam of PAPER antennas in Fig.\ref{fig:Beam} for reference:
 
 \begin{figure}[H]
 \includegraphics[width=\linewidth]{BEAM}
 
-\caption{Beam of PAPER-64. Shown here is the values of $A$ (Eq. \eqref{eq:Vis1})
+\caption{Beam of PAPER antennas. Shown here is the values of $A$ (Eq. \eqref{eq:Vis1})
 for frequency of $\nu=150\text{MHz}$. Notice $A$ is a ``baseline's
-beam''. Since all antennas in PAPER-64 have the same beam, $A$ here
+beam''. Since all antennas in PAPER have the same beam, $A$ here
 is just the square of an antenna beam, and is normalized to 1 at the
 center. The circles centered around zenith (center of beam) here are
-spaced 10 degrees apart. Such a wide beam limits the accuracy of the uv track-crossing as a method of redundancy search. \label{fig:Beam-of-PAPER-64.}}
+spaced 10 degrees apart. Such a wide beam limits the accuracy of the uv track-crossing as a method of redundancy search. \label{fig:Beam}}
 \end{figure}
 
 
@@ -476,6 +476,8 @@ or in other words are mirror images of each other, by summing over them to get a
 instead of plotting 1,1:1,1 and 1,-1:1,-1 separately, we plot 1,1:1,1 with twice the multiplicity. Similarly, baseline pairs such as 
 1,0:1,1 also get the factor of 2 because they are identical to 1,0:1,-1. Baseline pairs such as 1,0:1,0, or 1,1:1,-1 do not get
 the factor of 2 because their mirror images are themselves. 
+
+\subsection{Validation with PAPER-128 Data}
 
 \section{Conclusion}
 
