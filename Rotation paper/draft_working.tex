@@ -96,7 +96,8 @@ This effect is used extensively to improve uv coverage in imaging with minimum r
 a maximally redundant array, baselines that are slightly different
 rotate into each other at a time delay. Here we present a method to
 improve the sensitivity of the maximum redundancy arrays by including
-the uv redundancy of different baselines at a time lag. 
+the uv redundancy of different baselines at a time lag. It's worth noting 
+as recent progress the authors of \cite{wterm} proposes an algorithmic search approach to extract information from near-equivalent baselines. We here propose a simple and elegant theoretical formalism that in addition allows us to identify baselines to cross-correlate and predict the weight of sensitivity. 
 
 Baselines of the same length and orientation are traditionally called
 ``redundant baselines'', because they measure the same Fourier mode
@@ -474,11 +475,22 @@ instead of plotting 1,1:1,1 and 1,-1:1,-1 separately, we plot 1,1:1,1 with twice
 1,0:1,1 also get the factor of 2 because they are identical to 1,0:1,-1. Baseline pairs such as 1,0:1,0, or 1,1:1,-1 do not get
 the factor of 2 because their mirror images are themselves. 
 
-\subsection{Validation with PAPER-128 Data}
-Unlike the simulated clean EOR signal, real data are dominated by foreground and thermal noise, neither of which turns out to exhibit the correlation pattern seen in Fig.  \ref{fig:numerics}. Foreground exhibits long-range correlations and would lead to high responses at wide range of time-offsets. Instrumental noise fo different baselines/antenna-pairs, on the other hand, are uncorrelated and thus exhibit responses consistent with zero at all time offsets. 
+\subsection{Notes on Data, Foreground and Noise}
+Unlike the simulated clean EOR signal, real data are dominated by foreground and thermal noise, neither of which turns out to exhibit the correlation pattern seen in Fig.  \ref{fig:numerics}. Foreground exhibits long-range correlations and would lead to high responses at wide range of time-offsets. Instrumental noise for different baselines/antenna-pairs, on the other hand, are uncorrelated and thus exhibit responses consistent with zero at all time offsets. 
+To illustrate, we use the second observing season of PAPER-128 data, taken from Jan. 21st to March 7th of 2014. To illustrate the effect of noise and foreground, we use the data before fringe-rate and delay filtering. 
 
 \section{Conclusion}
 
+
+\appendix
+\section{\\Hera Analysis}
+\begin{widetext}
+\begin{figure}[H]
+\includegraphics[scale=0.55]{HeraAntpos}
+
+\caption{Planned Hydrogen Epoch of Reionization Array antenna configurations\label{fig:HeraAntpos}}
+\end{figure}
+\end{widetext}
 \bibliographystyle{apj}
 %\nocite{*}
 \bibliography{draft_working}
