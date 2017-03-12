@@ -296,8 +296,8 @@ sky, and the third to fourth line follows from the assumption that
 the 3D power spectrum varies negligibly over the region of interest
 so that $\hat{P_{21}}(k+k_{2})\approx\hat{P_{21}}(k)$. Since $\Gamma$
 is a sky rotation, it doesn't affect $\nu$, hence we have taken $\nu_{r}$
-outside the parenthesis. Notice that the phase factor $\exp\left[-i2\pi\eta\left(\nu-\nu'\right)\right]$
-drops out in the end. 
+outside the parenthesis. Notice that the phase factor $\exp\left[-i2\pi\tau\left(\nu-\nu'\right)\right]$
+drops out in the end. This is significant because this means that correlation is peaked at the same time-offset for all delay channels. 
 
 Finally, since the beam pattern and bandwidth are given in $\hat{s}$
 and $\nu$, we convert the integral back to these coordinates to get
@@ -326,7 +326,7 @@ in Eq.(\ref{eq:final}) for various time offsets. Thus we shall first test its ro
 \subsection{Numerical Test \label{sec:Techniquet}}
 
 To test the robustness of Eq.(\ref{eq:final}), we need to compare the amplitude and phase of the integral
-for a pair of baselines with products of simulated visibilities of those baselines. Without loss of generality, we shall use a single frequency channel of $150$MHz for the following analysis. 
+for a pair of baselines with products of simulated visibilities of those baselines. For computational simplicity, we shall use a single frequency channel of $150$MHz for the comparison. We may use this simplification without compromising generality because Eq. (\ref{eq:final}) is valid for a range of frequency channels if an only if it's valid for each single channels (i.e. when $\phi(\nu)$ is proportional to a delta function). 
 
 For the simulation, we take N random realizations of the sky
 on a healpix map (\cite{Heal}, \cite{HealPrimer}) \footnote{We use functionalities in the python package AIPY for healpix mapping
@@ -390,12 +390,17 @@ chosen. \label{fig:Beam-fringe-pattern}}
 \end{widetext}
 
 
-
-
 \subsection{Expected Sensitivity Contributions}
-
 Having verified Eq. \eqref{eq:main}, we can thus predict the sensitivity contributions of a
-particular baseline pair simply by computing the integral. 
+particular baseline pair simply by computing the integral.
+Having verified the validity of Eq.(\ref{eq:final}) from a single channel, we must point out that the peak height, or sensitivity contribution do depend on the frequency channels and shape of bandpass. This is because different frequency channels differ slighly in their phases at peak correlation and average incoherently. In Fig.\ref{fig:freqdiff} we compare two channels 0.16 GHz and 0.17 GHz. Top pannels shows the equivalent baseline pairs sep1,0 against itself, and bottom shows sep1,0 against sep1,1. We see that although the magnitude, drawn by the wide curves match up, the phases do not. This means the wider the frequency profile, the more destructive the interference, and lower the sensitivity contribution. 
+\begin{figure}[H]
+\includegraphics[width=\linewidth]{freqdiff}
+\label{fig:freqdiff}
+\caption{Comparisons of the peak phases of two different frequencies. Top panels shows equivalent baselines, bottom shows a pair of near-equivalents. The dot-dashed lines of each color are the imaginary parts, and the solid lines are the real parts. For near-equivalent case, we also draw the magnitude by the broad envelops. We see that although the magnitude line up for two frequencies, the phases do not. This means there will be destructive interference when cross multiplying delay-space visibilities. }
+\end{figure}
+
+ 
 Intuitively we expect the sensitivity to depend on both the uv coverage of the baseline and the patch of sky inside the beam. A larger beam like PAPER-beam would tolerate larger time-offsets because more sky area can coincide in the two beams. To keep the flow of the discussion, we shall focus on results of PAPER-128, and present the results for HERA in the Appendix. 
 Having computed all of the baseline pairs, we find that baseline pairs that are mirror images of each other 
 give the same amount of redundancies (peak height), with the opposite time offset, as expected from symmetry. 
