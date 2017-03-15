@@ -96,8 +96,7 @@ This effect is used extensively to improve uv coverage in imaging with minimum r
 a maximally redundant array, baselines that are slightly different
 rotate into each other at a time delay. Here we present a method to
 improve the sensitivity of the maximum redundancy arrays by including
-the uv redundancy of different baselines at a time lag. It's worth noting 
-as recent progress the authors of \cite{wterm} proposes an algorithmic search approach to extract information from near-equivalent baselines. We here propose a simple and elegant theoretical formalism that in addition allows us to identify baselines to cross-correlate and predict the weight of sensitivity. 
+the uv redundancy of different baselines at a time lag. Recently the authors of \cite{wterm} proposed an algorithmic search approach to extract information from all near-equivalent baselines. We here propose a simple and elegant theoretical formalism that in addition allows us to identify good baselines to cross-correlate and predict the weight of sensitivity with speed and accuracy. 
 
 Baselines of the same length and orientation are traditionally called
 ``redundant baselines'', because they measure the same Fourier mode
@@ -256,8 +255,7 @@ Thus $d\nu=-dr/Y$ and $d^{3}r=-X^{2}Yd\Omega d\nu$.
 We can thus rewrite the delayed transformed visibility as 
 \small
 \[
-\boxed{\begin{aligned}V(b,\tau) & =\frac{1}{X^{2}Y}\int_{H}d^{3}rA(\vec{r})\phi(r)I(\vec{r})\exp\left[-2\pi i\left(\frac{b}{c}\cdot\hat{r}+\tau\right)\nu_{r}\right]\end{aligned}
-}.
+\begin{aligned}V(b,\tau) & =\frac{1}{X^{2}Y}\int_{H}d^{3}rA(\vec{r})\phi(r)I(\vec{r})\exp\left[-2\pi i\left(\frac{b}{c}\cdot\hat{r}+\tau\right)\nu_{r}\right]\end{aligned}.
 \]
 \normalsize
 Here $(r_{x},r_{y},r_{z})=(X\hat{s}_{x},X\hat{s}_{y},Y\nu)$, and
@@ -305,9 +303,9 @@ the general relation between the delay-transformed visibilities and
 the power spectrum:
 
 \begin{equation}
-\boxed{\begin{aligned} & \langle V^{*}(b,\tau)V(b',\tau')\rangle\\
+\begin{aligned} & \langle V^{*}(b,\tau)V(b',\tau')\rangle\\
  & =\left(\frac{2k_{B}}{\lambda^{2}}\right)^{2}P(k_{b,\tau})\int\frac{d\Omega d\nu}{X^{2}Y}|A^{*}(\hat{s},\nu)A(\hat{\Gamma s},\nu)||\phi(\nu)|^{2}\\
- & \qquad \qquad \qquad \qquad \exp\left[-i2\pi\nu\left(\hat{s}\cdot\frac{b}{c}-\hat{\Gamma s}\cdot\frac{b'}{c}\right)\right].\end{aligned}}
+ & \qquad \qquad \qquad \qquad \exp\left[-i2\pi\nu\left(\hat{s}\cdot\frac{b}{c}-\hat{\Gamma s}\cdot\frac{b'}{c}\right)\right].\end{aligned}
 \label{eq:final}
 \end{equation}
 So roughly speaking the cross multiplications of visibilities at a time delay
@@ -321,12 +319,26 @@ If this result is robust, then we can achieve all our goals stated in the introd
 candidate baseline pairs, to find the optimal time offset, and to quantify the sensibility, by computing the integral
 in Eq.(\ref{eq:final}) for various time offsets. Thus we shall first test its robustness numerically.
 
+\subsection{Rephasing \label{sec:rephs}}
+Before we discuss tests, there is one subtlety when applying Eq. \ref{eq:final}. The optimal time offset is given by the $\Gamma$ that maximizes the integral. However, first integrating over the spatial dimension $\Omega$, we see the phase term at peak time-offset is inevitably frequency dependent. This frequency dependence of the phase would lead to destructive interference when we integrate over frequency.
+
+The physical origin of this frequency dependent phase is due to the two visibilities having different phase centers. By default the two visibilities are both phased to zenith at the same time. When they are cross-correlated, they must be rephased to the account for the movement of the zenith. Thus in practice we must rephase the visibilities before delay transform. 
+
+
+In Fig.\ref{fig:freqdiff} we compare two channels 0.16 GHz and 0.17 GHz.  Top panels show the equivalent baseline pairs sep1,0 against itself, and bottom panels show sep1,0 against sep1,1. The left two panels have zero rephasing, and the right two are rephased to a time offset of 0.055 sidereal days, the optimal time offset for the given baseline pair. We see that in bottom left panel, although the magnitude, drawn by the wide curves match up, the phases do not. This means the wider the frequency profile, the more destructive the interference, and lower the sensitivity contribution. In the rephased case, the phases of the near-equivalent case match up. We should use the correponding rephasing for each baseline pair maximum sensitivity. 
+
+\begin{figure}[H]
+\includegraphics[width=1.1\linewidth]{rephs}
+\label{fig:freqdiff}
+\caption{Comparisons of the peak phases of two different frequencies. Top panels shows equivalent baselines, bottom shows a pair of near-equivalents. The dot-dashed lines of each color are the imaginary parts, and the solid lines are the real parts. For near-equivalent case, we also draw the magnitude by the broad envelops. }
+\end{figure}
+
 
 \section{Analysis}
 \subsection{Numerical Test \label{sec:Techniquet}}
 
 To test the robustness of Eq.(\ref{eq:final}), we need to compare the amplitude and phase of the integral
-for a pair of baselines with products of simulated visibilities of those baselines. For computational simplicity, we shall use a single frequency channel of $150$MHz for the comparison. We may use this simplification without compromising generality because Eq. (\ref{eq:final}) is valid for a range of frequency channels if an only if it's valid for each single channels (i.e. when $\phi(\nu)$ is proportional to a delta function). 
+for a pair of baselines with products of simulated visibilities of those baselines. For computational simplicity, we shall use a single frequency channel of $150$MHz for the comparison. We may use this simplification without compromising generality because Eq. (\ref{eq:final}) is valid for a range of frequency channels if an only if it's valid for each single channels, provided that different channels are combined with rephasing as desscribed in Sec. \ref{sec:rephs}. 
 
 For the simulation, we take N random realizations of the sky
 on a healpix map (\cite{Heal}, \cite{HealPrimer}) \footnote{We use functionalities in the python package AIPY for healpix mapping
@@ -385,22 +397,15 @@ indeed cancels out as we expect.
 
 \caption{Beam fringe pattern of sep2,0(left), sep2,1 at a time delay (middle),
 and their conjugate product. Frequency of $\nu=0.15\text{GHz}$ is
-chosen. \label{fig:Beam-fringe-pattern}}
+chosen and only the real components are shown. \label{fig:Beam-fringe-pattern}}
 \end{figure}
 \end{widetext}
 
 
 \subsection{Expected Sensitivity Contributions}
+
 Having verified Eq. \eqref{eq:main}, we can thus predict the sensitivity contributions of a
 particular baseline pair simply by computing the integral.
-Having verified the validity of Eq.(\ref{eq:final}) from a single channel, we must point out that the peak height, or sensitivity contribution do depend on the frequency channels and shape of bandpass. This is because different frequency channels differ slighly in their phases at peak correlation and average incoherently. In Fig.\ref{fig:freqdiff} we compare two channels 0.16 GHz and 0.17 GHz. Top pannels shows the equivalent baseline pairs sep1,0 against itself, and bottom shows sep1,0 against sep1,1. We see that although the magnitude, drawn by the wide curves match up, the phases do not. This means the wider the frequency profile, the more destructive the interference, and lower the sensitivity contribution. 
-\begin{figure}[H]
-\includegraphics[width=\linewidth]{freqdiff}
-\label{fig:freqdiff}
-\caption{Comparisons of the peak phases of two different frequencies. Top panels shows equivalent baselines, bottom shows a pair of near-equivalents. The dot-dashed lines of each color are the imaginary parts, and the solid lines are the real parts. For near-equivalent case, we also draw the magnitude by the broad envelops. We see that although the magnitude line up for two frequencies, the phases do not. This means there will be destructive interference when cross multiplying delay-space visibilities. }
-\end{figure}
-
- 
 Intuitively we expect the sensitivity to depend on both the uv coverage of the baseline and the patch of sky inside the beam. A larger beam like PAPER-beam would tolerate larger time-offsets because more sky area can coincide in the two beams. To keep the flow of the discussion, we shall focus on results of PAPER-128, and present the results for HERA in the Appendix. 
 Having computed all of the baseline pairs, we find that baseline pairs that are mirror images of each other 
 give the same amount of redundancies (peak height), with the opposite time offset, as expected from symmetry. 
@@ -439,7 +444,7 @@ these baselines, or the size of the equivalency classes in a mathematical
 language. By these we mean how many physical antenna pairs have the
 same length and orientation. Looking at Fig. \ref{fig:sensplot}
 we see for example sep1,0 will have higher redundancy than sep2,0,
-or sep1,1. The latest release of PAPER-64 data uses the 128-equivalent baselines sep2,1,
+or sep1,1. The latest release of PAPER-128 data uses the 128-equivalent baselines sep2,1,
 sep2,0 and sep2,-1 \cite{Ali2015}, and achieved a $2\sigma$ upper
 limit of $22.4mK^{2}$. There, the three sets of equivalent baselines
 are only cross multiplied by itself. Assuming that each baseline delivers
@@ -480,12 +485,12 @@ instead of plotting 1,1:1,1 and 1,-1:1,-1 separately, we plot 1,1:1,1 with twice
 1,0:1,1 also get the factor of 2 because they are identical to 1,0:1,-1. Baseline pairs such as 1,0:1,0, or 1,1:1,-1 do not get
 the factor of 2 because their mirror images are themselves. 
 
-\subsection{Notes on Data, Foreground and Noise}
-Unlike the simulated clean EOR signal, real data are dominated by foreground and thermal noise, neither of which turns out to exhibit the correlation pattern seen in Fig.  \ref{fig:numerics}. Foreground exhibits long-range correlations and would lead to high responses at wide range of time-offsets. Instrumental noise for different baselines/antenna-pairs, on the other hand, are uncorrelated and thus exhibit responses consistent with zero at all time offsets. 
-To illustrate, we use the second observing season of PAPER-128 data, taken from Jan. 21st to March 7th of 2014. To illustrate the effect of noise and foreground, we use the data before fringe-rate and delay filtering. 
+%\subsection{Notes on Data, Foreground and Noise}
+%Unlike the simulated clean EOR signal, real data are dominated by foreground %and thermal noise, neither of which turns out to exhibit the correlation %pattern seen in Fig.  \ref{fig:numerics}. Foreground exhibits long-range %correlations and would lead to high responses at wide range of time-offsets. %Instrumental noise for different baselines/antenna-pairs, on the other hand, are uncorrelated and thus exhibit responses consistent with zero at all time offsets. 
+%To illustrate, we use the second observing season of PAPER-128 data, taken from Jan. 21st to March 7th of 2014. To illustrate the effect of noise and foreground, we use the data before fringe-rate and delay filtering. 
 
 \section{Conclusion}
-
+Redundant arrays are designed to maximize sensitivity. Current generations of redundant radio arrays, such as those probing the power spectrum of the epoch of reionization could benefit from data analysis techniques that improve the sensitivity. We present an intuitive analysis of cross-multiplying baselines that are close in length and orientation to each other. Given an antenna array configuration, our method quickly identifies the best baseline pairs to cross-multiply and predict the expected sensitivity contribution. With the predicted result one can improve existing power-spectrum pipelines through 3 simple steps. 1). Rephase the visibilities prior to delay transforming by the zenith displacement (or more accurately by the phase predicted by our numerical analysis). 2). Shift the visibilities in time. 3) Cross multiply the visibilities of the two baselines  to form the power-spectrum. 4) Finally combine the different baseline pairs by appropriate inverse-covariance weighting that takes into account the predicted sensitivity contributions of each case. 
 
 \appendix
 \section{\\Hera Analysis}
