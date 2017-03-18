@@ -135,7 +135,7 @@ equivalent. In the bottom panel, the two baselines labeled with the
 red arrow are equivalent, with separation denoted by sep1,0, for the
 antennas are separated by 1 unit east and 0 unit north. Similarly,
 the baselines labeled with the yellow and green arrows are examples
-of sep1,1 and sep-1,1, respectively. Note sep1,0 and sep-1,0 for example
+of sep1,1 and sep1,-1, respectively. Note sep1,0 and sep-1,0 for example
 are the same baselines and should not be counted twice.}
 
 \end{figure}
@@ -149,13 +149,13 @@ directions are comparatively close (4m), so that baselines such as
 the two baselines labeled with the red arrow are equivalent, with
 separation denoted by sep1,0, for the antennas are separated by 1
 unit east and 0 unit north. Similarly, the baselines labeled with
-the yellow and green arrows are examples of sep1,1 and sep-1,1, respectively.
+the yellow and green arrows are examples of sep1,1 and sep1,-1, respectively.
 Note sep1,0 and sep-1,0 for example are the same baselines and should
 not be counted twice. Antennas in purely north-south baselines
 are close enough to induce cross talks, and hence are not suitable
 for use. The original PAPER-64 analysis (\cite{Ali2015}) used three classes of baselines, here
 equivalent to 
-sep2,0, sep2,1 and sep-2,1 \cite{Ali2015} of PAPER-128. There each of these classes
+sep2,0, sep2,1 and sep2,-1 \cite{Ali2015} of PAPER-128. There each of these classes
 of baselines are cross multiplied to itself. We shall see that in addition these
 baseline classes can be cross multiplied with a time offset.
 
@@ -309,11 +309,12 @@ the power spectrum:
 In other words the power spectrum estimate from visibilities of a baseline pair is given by 
 \begin{equation}
  P(k_{b,\tau}) = \left(\frac{\lambda^{2}}{2k_{B}}\right)^{2} \frac{\langle V^{*}(\boldsymbol{b},\tau)V(\boldsymbol{b'},\tau')\rangle}{\Theta}, 
+ \label{eq:opp}
 \end{equation}
 where the weight
 \begin{equation}
 \Theta =\int\frac{d\Omega d\nu}{X^{2}Y}|A^{*}(\hat{\boldsymbol{s}},\nu)A(\hat{\Gamma s},\nu)||\phi(\nu)|^{2} e^{-2\pi i\nu\left(\hat{\boldsymbol{s}}\cdot\frac{\boldsymbol{b}}{c}-\hat{\Gamma s}\cdot\frac{\boldsymbol{b'}}{c}\right)}. 
-\label{eq:opp}
+\label{eq:Theta}
 \end{equation}
 
 
@@ -327,7 +328,7 @@ $\boldsymbol{b}=\boldsymbol{b'}$, $\hat{\boldsymbol{s}}=\hat{\Gamma s}$, and Eq.
 
 If this result is robust, then we can achieve all our goals stated in the introduction, i.e. to identify 
 candidate baseline pairs, to find the optimal time offset, and to quantify the sensibility, by computing the weight $\Theta$ from
-Eq.(\ref{eq:opp}) for various time offsets. Thus we shall first test its robustness numerically.
+Eq.(\ref{eq:Theta}) for various time offsets. Thus we shall first test its robustness numerically.
 
 \subsection{Rephasing \label{sec:rephs}}
 Before we discuss tests, there is one subtlety when applying Eq. \ref{eq:final}. The optimal time offset is given by the $\Gamma$ that maximizes the absolute value of the weight $\Theta$. However, $\Theta$ is in general complex. First integrating over the spatial dimension $\Omega$, we see the phase term at peak time-offset is inevitably frequency dependent. This frequency dependence of the phase would lead to destructive interference when we integrate over frequency.
@@ -430,28 +431,27 @@ to the sky and hence the less overlaps in patch of sky surveyed, b) smaller opti
 time-offset corresponds to smaller differences in orientation, and hence in length of
 baselines in PAPER. 
 
+\begin{widetext}
 \begin{figure}[H]
-\includegraphics[width=\linewidth]{sensitivity}
+\includegraphics[scale=0.5]{sensitivity}
 \label{fig:sensplot}
 \caption{Relative sensitivity contributions of selected baseline combinations in PAPER-128. In the legend m,n:p,q denotes cross
 multiplying PAPER-128 baselines of east-west, north-south separations (m,n) and (p,q) respectively. The top
 panel shows the peak height (degree of correlation) of each baseline
 combination, while the bottom panel multiplies the heights by the
-corresponding multiplicities as in Eq. \eqref{eq:sensul}, and in some cases an extra factor of 2 (explained in text). 
+corresponding multiplicities as in Eq. \eqref{eq:sensul}, and in some cases an extra factor of $\sqrt{2}$ (explained in text). 
 In weighting by the multiplicity (bottom), we have chosen to fix the sensitivity 
 contribution of 1,0:1,0 to unity. }
-
-
 \end{figure}
-
+\end{widetext}
 
 To determine that actual relative contribution to sensitivity of these
 baseline pairs, we have to take into account of the multiplicities of
 these baselines, or the size of the equivalency classes in a mathematical
 language. By these we mean how many physical antenna pairs have the
 same length and orientation. Looking at Fig. \ref{fig:sensplot}
-we see for example sep1,0 will have higher redundancy than sep2,0,
-or sep1,1. The latest release of PAPER-128 data uses the 128-equivalent baselines sep2,1,
+we see for example sep1,0 will have higher multiplicity than sep2,0,
+or sep1,1. The latest release of PAPER-64 data uses the 128-equivalent baselines sep2,1,
 sep2,0 and sep2,-1 \cite{Ali2015}, and achieved a $2\sigma$ upper
 limit of $22.4mK^{2}$. There, the three sets of equivalent baselines
 are only cross multiplied by itself. Assuming that each baseline delivers
@@ -459,48 +459,53 @@ the same quality of data (i.e. they have the same height of correlation
 peaks, which is in our normalization equal to unity), the relative
 contribution to sensitivity can be estimated. 
 
-First we can average of the visibilities of the baselines of the same
-separations. Since the core of PAPER-128 has 16 by 7 antenna configuration, there
-are $(16-|m|)\times(7-|n|)$ copies of the baseline sepm,n. This means
+First we can average of the visibilities of the equivalent baselines. Since the core of PAPER-128 has 16 by 7 antenna configuration, there
+are $M=(16-|m|)\times(7-|n|)$ copies of the baseline sepm,n. This means
 that if we add visibility measurements of all these equivalent baselines,
-we get a factor of $\sqrt{(16-|m|)\times(7-|n|)}$ reduction in noise
-level. The sensitivity contribution of sepm,n, being the signal to
-noise ratio of the power spectrum, is thus proportional to $(16-|m|)\times(7-|n|)$.
-Next we can average over the power-spectrum taken from baselines of
-the different separations. Thus the total cumulative sensitivity is
-given by 
+we get a factor of $\sqrt{M}$ reduction in noise
+level $\sigma_N$ of the visibility. The sensitivity contribution of sepm,n, cross multiplied with sepm',n'  thus roughly speaking scales as $\sqrt{\left((16-|m|)(7-|n|)(16-|m'|)(7-|n'|)\right)}=\sqrt{MM'}$.
+For cross-multiplications of near-equivalent baselines of
+types sepm,n and sepm',n', we get a effective weight: 
+
 \begin{equation}
-\frac{P_{S}}{P_{N}}\propto\sqrt{\sum_{(n,m)}\left((16-|m|)\times(7-|n|)\right)^{2}},\label{eq:sensequiv}
+\widetilde{\Theta}_{bb'} \propto \Theta_{bb'}\times\sqrt{MM'}.\label{eq:sensul}
 \end{equation}
-where the sum is only over pairs of m and n. If we now include power
-spectrum from cross-multiplications of near-equivalent baselines of
-types sepm,n and sepm',n', we get a general cumulative sensitivity:
-\small
+
+We are being sloppy here for simplicity. As we derive in Appendix \ref{sec:appB}, this weight should be corrected by a factor proportional to the signal to noise ratio of a single-baseline visibility $\rho_0=\sigma_S^2/\sigma_N^2$:
+
 \begin{equation}
-\frac{P_{S}}{P_{N}}\propto\sqrt{\sum_{(n,m,n',m')}\Omega_{mnm'n'}\left((16-|m|)(7-|n|)(16-|m'|)(7-|n'|)\right)},\label{eq:sensul}
+\label{eq:tildereal}
+\widetilde{\Theta}_{bb'}=\frac{\Theta_{bb'}\sqrt{M_bM_{b'}}}{\sqrt{1 + \rho_0 \left(M_b+M_{b'} \right)}}.
 \end{equation}
-\normalsize
-where $\Omega$ is the correlation peak height show in top panel of Fig. \eqref{fig:sensplot},
-and the sum is again only over tuples of m,n,m',n'. This form now
-includes the equivalent baselines in Eq. \eqref{eq:sensequiv}, with
-$\Omega_{m=m',n=n'}=1$. 
+
 Shown in the bottom panel of Fig. \eqref{fig:sensplot} is the peak heights weighted
-by this multiplicity factor (before taking the square root), with one difference. The difference is, 
-since we have "folded over" the negative time delays, we have combined baseline pairs that are identical modulus parity, 
-or in other words are mirror images of each other, by summing over them to get an extra factor of two. For example, 
+by the multiplicity factor. Points that have zero time delay are the equivalent baseline pairs and their weighted correlation values simply reflect the multiplicity factor. For clarity of presentation we have "folded over" the negative time delays and combined baseline pairs that are identical modulus parity, 
+or in other words are mirror images of each other, by summing over them to get an extra factor of $\sqrt{2}$. For example, 
 instead of plotting 1,1:1,1 and 1,-1:1,-1 separately, we plot 1,1:1,1 with twice the multiplicity. Similarly, baseline pairs such as 
 1,0:1,1 also get the factor of 2 because they are identical to 1,0:1,-1. Baseline pairs such as 1,0:1,0, or 1,1:1,-1 do not get
-the factor of 2 because their mirror images are themselves. 
+the factor of $\sqrt{2}$ because their mirror images are themselves. 
 
-Finally we combine the different power spectrum measurements by inverse covariance weighting:
+
+
+
+Finally we estimate the power spectrum by inverse covariance weighting:
 \begin{equation}
- P(k_{\tau}) = \frac{\sum_{bb'}P(k_{b,\tau})\Theta_{bb'}^2}{\sum_{bb'}\Theta_{bb'}^2}.
+\begin{aligned}
+ P(k_{\tau}) &= \frac{\sum_{bb'}P(k_{b,\tau})/\sigma_P^2(bb')}{\sum_{bb'}\sigma_P^2(bb')}, \\
+ &= \frac{\sum_{bb'}P(k_{b,\tau})\widetilde{\Theta}_{bb'}^2}{\sum_{bb'}\widetilde{\Theta}_{bb'}^2},
+ \end{aligned}
 \end{equation}
-So the total noise covariance scales as 
+where the sum is over classes of baseline pairs. 
+Thus the total signal to noise ratio is given by
 \begin{equation}
-\sigma_N^2 \sim \frac{\sum_{bb'}\Theta_{bb'}}{\sum_{bb'}\Theta_{bb'}^2}.
+\rho \propto \frac{\sum_{bb'}^N\widetilde{\Theta}_{bb'}^2}{\sum_{bb'}^N\widetilde{\Theta}_{bb'}},
 \end{equation}
-With the baseline pairs show in Fig. \ref{fig:sensplot}, we see we get about $10\%$ improvement. 
+
+
+where $N$ is the total classes of baseline pairs used. When all the $\widetilde{\Theta}$ are unity, $\rho$ improves by $1/\sqrt{N}$ scaling. When $\Theta<1$ it's clear that adding more baselines is not always going to lead to improvement. Thus for given antenna array we should restrict antenna pairs with $\widetilde{\Theta}$ above a certain $\widetilde{\Theta}_{min}$ for maximum sensitivity. 
+
+
+To move forward we must give an estimate of $\rho_0$ in Eq.\ref{eq:tildereal}. 
 
 %\subsection{Notes on Data, Foreground and Noise}
 %Unlike the simulated clean EOR signal, real data are dominated by foreground %and thermal noise, neither of which turns out to exhibit the correlation %pattern seen in Fig.  \ref{fig:numerics}. Foreground exhibits long-range %correlations and would lead to high responses at wide range of time-offsets. %Instrumental noise for different baselines/antenna-pairs, on the other hand, are uncorrelated and thus exhibit responses consistent with zero at all time offsets. 
@@ -515,9 +520,57 @@ Redundant arrays are designed to maximize sensitivity. Current generations of re
 \begin{figure}[H]
 \includegraphics[scale=0.55]{HeraAntpos}
 
-\caption{Planned Hydrogen Epoch of Reionization Array antenna configurations\label{fig:HeraAntpos}}
+\caption{Planned Hydrogen Epoch of Reionization Array antenna configurations. For HERA350, only the 320 elements in the core are shown. \label{fig:HeraAntpos}}
 \end{figure}
 \end{widetext}
+
+\section{\\Derivation of Noise Covariance \label{sec:appB}}
+
+Now to be a little more careful about the scaling relations above, we combine the different power spectrum measurements by inverse covariance weighting \footnote{In practice techniques such as bootstrapping is often used, see for example \citep{Ali2015}}. We shall separate the visibility and power spectrum into signal and noise contributions:
+\begin{equation}
+\begin{aligned}
+V &= V_S+V_N,\\
+P &= P_S+P_N.
+\end{aligned}
+\end{equation}
+We shall denote the noise covariance of power spectrum and visibility
+\begin{equation}
+\begin{aligned}
+\sigma_V^2 &= \langle |V_N|^2 \rangle,\\
+\sigma_P^2 &= \langle P_N^2 \rangle.
+\end{aligned}
+\end{equation}
+One may notice that we have used a single covariance for the complex quantity visibility. It's simple to show that the same result holds if we use a separate real and imaginary components, as long as they are independent of each other. In fact, for simplicity and without loss of generality we shall treat the visibility as a real quantity in the rest of this derivation. 
+Note that though we can assume $\langle V_N^{odd-power}\rangle=0$, the same is not true for $P_N$. 
+
+Then the variance of $P$ constructed with visibilities $V_1$ and $V_2$ from two baseline classes can be estimated\footnote{We assume all noise terms to be independent for simplicity, in practice the correlation of different measurements ifrom equivalent baselines are alleviated by grouping the baselines in the class and the days of observation, as in \cite{Ali2015}}:
+\begin{equation}
+\begin{aligned}
+\sigma_P^2 &= \langle P^2\rangle -\langle P \rangle^2,\\
+&\propto \langle \frac{(V_{1S}+V_{1N})^2 (V_{2S}+V_{2N})^2}{\Theta^2} \rangle - \langle \frac{(V_{1S}+V_{1N}) (V_{2S}+V_{2N})}{\Theta} \rangle ^2,\\
+&= \frac{1}{\Theta^2} \left( V_{1S}^2\sigma_{V2}^2+V_{2S}^2\sigma_{V1}^2+\langle V_{1N}^2 V_{2N}^2\rangle\right), \\
+&= \frac{1}{\Theta^2} \left[ V_{S}^2(\sigma_{V2}^2+\sigma_{V1}^2) + \sigma_{V1}^2 \sigma_{V2}^2\right], 
+\end{aligned}
+\end{equation}
+
+where in the second last line we have substituted visibility noise covariance. In the final line we used Wick's theorem and the fact that the signal from two visibilities are equal. 
+
+Recall from the discussion on multiplicities we can write
+\begin{equation}
+\sigma_V^2=\frac{\sigma_0^2}{M},
+\end{equation}
+where $\sigma_0$ is some single-baseline noise level. Letting $\rho_0=V_S^2/\sigma_0^2$ be the signal to noise ratio for a single baseline, we can write
+
+\begin{equation}
+\begin{aligned}
+\sigma_P^2 & \propto  \frac{\sigma_0^4}{\Theta^2} \left[ \rho_0 \left(\frac{1}{M_1}+\frac{1}{M_2} \right) + \frac{1}{M_1 M_2}\right], \\
+&\propto \frac{1}{\widetilde{\Theta}_{12}^2},
+\end{aligned}
+\end{equation}
+where we have defined a slightly modified version of the effective weight (compare with Eq. \ref{eq:sensul}):
+\begin{equation}
+\widetilde{\Theta}_{12}=\frac{\Theta_{12}\sqrt{M_1M_{2}}}{\sqrt{1 + \rho_0 \left(M_1+M_{2} \right)}}.
+\end{equation}
 \bibliographystyle{apj}
 %\nocite{*}
 \bibliography{draft_working}
