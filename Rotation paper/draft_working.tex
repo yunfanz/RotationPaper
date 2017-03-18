@@ -504,8 +504,12 @@ Thus the total signal to noise ratio is given by
 
 where $N$ is the total classes of baseline pairs used. When all the $\widetilde{\Theta}$ are unity, $\rho$ improves by $1/\sqrt{N}$ scaling. When $\Theta<1$ it's clear that adding more baselines is not always going to lead to improvement. Thus for given antenna array we should restrict antenna pairs with $\widetilde{\Theta}$ above a certain $\widetilde{\Theta}_{min}$ for maximum sensitivity. 
 
-
-To move forward we must give an estimate of $\rho_0$ in Eq.\ref{eq:tildereal}. 
+To move forward we must give an estimate of $\rho_0$ in Eq.\ref{eq:tildereal}. Assuming a reionization signal of $\Delta_{21cm}^2\sim 30mK^2$, observation at 150MHz ($z=8.5$), 120 days of observation with PAPER antennas, we have roughly
+(See Eq.(20) in \cite{first-paper})
+\begin{equation}
+\rho_0 \sim 0.001\left[\frac{L}{40m}\right] \left[\frac{0.1hMpc^{-1}}{k}\right]^3, 
+\end{equation}
+where $L$ is the baseline length. 
 
 %\subsection{Notes on Data, Foreground and Noise}
 %Unlike the simulated clean EOR signal, real data are dominated by foreground %and thermal noise, neither of which turns out to exhibit the correlation %pattern seen in Fig.  \ref{fig:numerics}. Foreground exhibits long-range %correlations and would lead to high responses at wide range of time-offsets. %Instrumental noise for different baselines/antenna-pairs, on the other hand, are uncorrelated and thus exhibit responses consistent with zero at all time offsets. 
