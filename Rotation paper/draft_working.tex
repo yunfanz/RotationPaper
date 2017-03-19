@@ -32,7 +32,7 @@ Aaron R. Parsons\altaffilmark{1}\altaffilmark{2}
 \begin{abstract}
 We introduce an accurate method to extract additional sensitivity from data of redundant radio arrays. Our method efficiently finds optimal baselines to cross correlate, including baselines that are slightly different in length and orientation. 
 Using the latest and final 128-element version of Precision Array for Probing the Epoch of Reionization (PAPER-128), as well as the planned 37, 128, 240 and 350 element versions of the Hydrogen Epoch of Reionization Array (HERA) now under development, we illustrate how our method applies to different array configurations and predict the sensitivity improvements of including each baseline pairs. The extremely natural and simple implementation of this method
-would increase the sensitivity of PAPER-128 by about to $10\%$, and increase the out-rigger imaging sensitivity of HERA-350 by a factor of 2. 
+would increase the sensitivity of PAPER-128 by about to $30\%$, and increase the out-rigger imaging sensitivity of HERA-350 by a factor of 2. 
 \end{abstract}
 
 \section{Introduction}
@@ -336,12 +336,12 @@ Before we discuss tests, there is one subtlety when applying Eq. \ref{eq:final}.
 The physical origin of this frequency dependent phase lies the two visibilities having different phase centers. By default the two visibilities are both phased to zenith at the same time. When they are cross-correlated, they must be rephased to the account for the movement of the zenith. Thus in practice we must rephase the visibilities before delay transform. 
 
 
-In Fig.\ref{fig:freqdiff} we compare two channels 0.16 GHz and 0.17 GHz.  Top panels show the equivalent baseline pairs sep1,0 against itself, and bottom panels show sep1,0 against sep1,1. The left two panels have zero rephasing, and the right two are rephased to a time offset of 0.055 sidereal days, the optimal time offset for the given baseline pair. We see that in bottom left panel, although the magnitude, drawn by the wide curves match up for the two frequencies, the phases do not. This means the wider the frequency profile, the more destructive the interference, and lower the sensitivity contribution. In the rephased case, the phases of the near-equivalent case match up and can be added without compromising sensitivity. We should thus rephase the data separately for each set of baseline pairs. 
+In Fig.\ref{fig:freqdiff} we compare two channels 0.16 GHz and 0.17 GHz. The top two panels have zero rephasing, and the bottom two are rephased to a time offset of 0.055 sidereal days, the optimal time offset for the given baseline pair. The first and third panels show the equivalent baseline pairs sep1,0 against itself, and second and fourth panels show sep1,0 against sep1,1. We see that in the un-rephased case in the second panel, although the magnitude of correlations match up for the two frequencies, the phases do not. This means summing over frequency leads to destructive interference and signal loss. The wider the frequency profile, the more destructive the interference would be. In the rephased case, the phases of the near-equivalent case match up and can be added without compromising sensitivity. We should thus rephase the data separately for each set of baseline pairs. 
 
 \begin{figure}[H]
 \includegraphics[width=1.1\linewidth]{rephs}
 \label{fig:freqdiff}
-\caption{Comparisons of the peak phases of two different frequencies. Top panels shows equivalent baselines, bottom shows a pair of near-equivalents. The dot-dashed lines of each color are the imaginary parts, and the solid lines are the real parts. For near-equivalent case, we also draw the magnitude by the broad envelops. }
+\caption{Comparisons of the peak phases of two different frequencies. First and third panels shows equivalent baselines, second and fourth show a pair of near-equivalents. For visual simplicity only the real parts are shown. }
 \end{figure}
 
 
@@ -384,7 +384,7 @@ i.e. the two plots have thus the same scale on the vertical axis.
 The height of the plot thus quantifies the added sensitivity. We see at a peak of around 0.055 sidereal days, or 1.32 hours, the two baselines are maximally redundant. 
 
 \begin{figure}[H]
-\includegraphics[width=\linewidth]{corr}
+\includegraphics[width=\linewidth]{opp}
 \label{fig:numerics}
 \caption{Numerical comparisons of the visibility correlation peaks to the $\Omega$ factor in Eq.(\ref{eq:final}). We generated 2400 instances of Gaussian random sky on healpix maps, computed visibilities and cross correlated them to find the correlation.  Top panel shows the equivalent baseline pairs sep1,0 against itselt, bottom show set1,0:1:1.  Evaluations of weight $\Theta$ are shown with solid curves, and the visibility correlations of simulated random sky is given with dashed lines. In both cases blue denotes real part, green the imaginary part, and red the magnitude. We see that in both cases the theory and simulation line up in both amplitude and phase.}
 \end{figure}
@@ -399,18 +399,18 @@ patterns for baselines sep2,0 and sep2,1, delayed by 0.0325 sidereal days,
 and the right panel shows their cross product. The fringe pattern
 indeed cancels out as we expect. 
 
-%\begin{widetext}
+\begin{widetext}
 \begin{figure}[H]
-%\includegraphics[scale=0.5]{fringe_res}
-\includegraphics[width=\linewidth]{fringe_res}
+\includegraphics[scale=0.5]{fringe_res}
+%\includegraphics[width=\linewidth]{fringe_res}
 \caption{Beam fringe pattern of sep2,0(left), sep2,1 at a time delay (middle),
 and their conjugate product. Frequency of $\nu=0.15\text{GHz}$ is
 chosen and only the real components are shown. \label{fig:Beam-fringe-pattern}}
 \end{figure}
-%\end{widetext}
+\end{widetext}
 
 
-\subsection{Expected Sensitivity Contributions}
+\subsection{Expected Sensitivity Contributions \label{sec:sensitivity}}
 
 Having verified Eq. \eqref{eq:final}, we can thus predict the sensitivity contributions of a
 particular baseline pair simply by computing the integral.
@@ -421,7 +421,7 @@ For example, sep1,0:1,1 is mirror image of sep1,0:1,-1 and these two baseline pa
 give the same sensibility contribution. Thus in our results we shall only show a subset of representative baseline pairs 
 that give different informations. 
 
-In the top panel of Fig. \eqref{fig:sensplot} below
+In the top panel of Fig. \ref{fig:sensplot}
 we show the peak heights and locations for a variety of baseline combinations.
 We see that baseline pairs that have crossings at a smaller time delay
 tend to have higher correlations. In other words, correlation peaks
@@ -433,7 +433,7 @@ baselines in PAPER.
 
 \begin{widetext}
 \begin{figure}[H]
-\includegraphics[scale=0.5]{sensitivity}
+\includegraphics[scale=0.6]{sensitivity}
 \label{fig:sensplot}
 \caption{Relative sensitivity contributions of selected baseline combinations in PAPER-128. In the legend m,n:p,q denotes cross
 multiplying PAPER-128 baselines of east-west, north-south separations (m,n) and (p,q) respectively. The top
@@ -441,7 +441,7 @@ panel shows the peak height (degree of correlation) of each baseline
 combination, while the bottom panel multiplies the heights by the
 corresponding multiplicities as in Eq. \eqref{eq:sensul}, and in some cases an extra factor of $\sqrt{2}$ (explained in text). 
 In weighting by the multiplicity (bottom), we have chosen to fix the sensitivity 
-contribution of 1,0:1,0 to unity. }
+contribution of 1,0:1,0 to unity. The same symbols and colors correspond in the top and bottom panel, with half of the legend shown in each. }
 \end{figure}
 \end{widetext}
 
@@ -453,7 +453,7 @@ same length and orientation. Looking at Fig. \ref{fig:sensplot}
 we see for example sep1,0 will have higher multiplicity than sep2,0,
 or sep1,1. The latest release of PAPER-64 data uses the 128-equivalent baselines sep2,1,
 sep2,0 and sep2,-1 \cite{Ali2015}, and achieved a $2\sigma$ upper
-limit of $22.4mK^{2}$. There, the three sets of equivalent baselines
+limit of $(22.4mK)^{2}$. There, the three sets of equivalent baselines
 are only cross multiplied by itself. Assuming that each baseline delivers
 the same quality of data (i.e. they have the same height of correlation
 peaks, which is in our normalization equal to unity), the relative
@@ -465,20 +465,13 @@ that if we add visibility measurements of all these equivalent baselines,
 we get a factor of $\sqrt{M}$ reduction in noise
 level $\sigma_N$ of the visibility. The sensitivity contribution of sepm,n, cross multiplied with sepm',n'  thus roughly speaking scales as $\sqrt{\left((16-|m|)(7-|n|)(16-|m'|)(7-|n'|)\right)}=\sqrt{MM'}$.
 For cross-multiplications of near-equivalent baselines of
-types sepm,n and sepm',n', we get a effective weight: 
+types sepm,n and sepm',n', we get an effective weight: 
 
 \begin{equation}
 \widetilde{\Theta}_{bb'} \propto \Theta_{bb'}\times\sqrt{MM'}.\label{eq:sensul}
 \end{equation}
 
-We are being sloppy here for simplicity. As we derive in Appendix \ref{sec:appB}, this weight should be corrected by a factor proportional to the signal to noise ratio of a single-baseline visibility $\rho_0=\sigma_S^2/\sigma_N^2$:
-
-\begin{equation}
-\label{eq:tildereal}
-\widetilde{\Theta}_{bb'}=\frac{\Theta_{bb'}\sqrt{M_bM_{b'}}}{\sqrt{1 + \rho_0 \left(M_b+M_{b'} \right)}}.
-\end{equation}
-
-Shown in the bottom panel of Fig. \eqref{fig:sensplot} is the peak heights weighted
+Shown in the bottom panel of Fig. \ref{fig:sensplot} is the peak heights weighted
 by the multiplicity factor. Points that have zero time delay are the equivalent baseline pairs and their weighted correlation values simply reflect the multiplicity factor. For clarity of presentation we have "folded over" the negative time delays and combined baseline pairs that are identical modulus parity, 
 or in other words are mirror images of each other, by summing over them to get an extra factor of $\sqrt{2}$. For example, 
 instead of plotting 1,1:1,1 and 1,-1:1,-1 separately, we plot 1,1:1,1 with twice the multiplicity. Similarly, baseline pairs such as 
@@ -496,21 +489,46 @@ Finally we estimate the power spectrum by inverse covariance weighting:
  \end{aligned}
 \end{equation}
 where the sum is over classes of baseline pairs. 
-Thus the total signal to noise ratio is given by
+We define the estimator sensitivity to be the inverse of the power-spectrum noise variance:
 \begin{equation}
-\rho \propto \frac{\sum_{bb'}^N\widetilde{\Theta}_{bb'}^2}{\sum_{bb'}^N\widetilde{\Theta}_{bb'}},
+\rho \propto \frac{1}{\sigma_P^2} = \sum_{bb'}^N\widetilde{\Theta}^2_{bb'},
 \end{equation}
 
+So far we have been sloppy in Eq. \ref{eq:sensul} for simplicity. As we derive in Appendix \ref{sec:appB}, this weight should be corrected by a factor proportional to the signal to noise ratio of a single-baseline visibility $\rho_0=\sigma_S^2/\sigma_N^2$:
 
-where $N$ is the total classes of baseline pairs used. When all the $\widetilde{\Theta}$ are unity, $\rho$ improves by $1/\sqrt{N}$ scaling. When $\Theta<1$ it's clear that adding more baselines is not always going to lead to improvement. Thus for given antenna array we should restrict antenna pairs with $\widetilde{\Theta}$ above a certain $\widetilde{\Theta}_{min}$ for maximum sensitivity. 
+\begin{equation}
+\label{eq:tildereal}
+\widetilde{\Theta}_{bb'}=\frac{\Theta_{bb'}\sqrt{M_bM_{b'}}}{\sqrt{1 + \rho_0 \left(M_b+M_{b'} \right)}}.
+\end{equation}
 
 To move forward we must give an estimate of $\rho_0$ in Eq.\ref{eq:tildereal}. Assuming a reionization signal of $\Delta_{21cm}^2\sim 30mK^2$, observation at 150MHz ($z=8.5$), 120 days of observation with PAPER antennas, we have roughly
 (See Eq.(20) in \cite{first-paper})
 \begin{equation}
 \rho_0 \sim 0.001\left[\frac{L}{40m}\right] \left[\frac{0.1hMpc^{-1}}{k}\right]^3, 
 \end{equation}
-where $L$ is the baseline length. 
+where $L$ is the baseline length. We assumed for simplicity only a single $L$ even in the near-equivalent case because only baselines of nearly equal length would have high redundancy (see Fig.\ref{fig:pairplot}). 
 
+As expected, baseline-pairs that have smaller $\widetilde{\Theta}$ contribute less to the sensitivity. To further quantify the sensitivity contribution of a given array we run our algorithm over all possible baseline-pairs of three arrays, PAPER128, HERA128 and HERA243. In Fig. \ref{fig:osens} we plot $\rho$ against the minimum $\widetilde{\Theta}$. $\rho(\widetilde{\Theta}_{min})$ is thus the sensitivity of the array when baseline-pairs that have $\widetilde{\Theta}>\widetilde{\Theta}_{min}$ are included. The dashed lines represent the values when only the equivalent baseline-pairs are used. We see that in all cases using the near-equivalent baselines lead to more and more significant improvements with lower $\widetilde{\Theta_{min}}$, or in other words when worse baseline pairs are used. The maximum benefits are expected to be around $30\%$. Note that here we normalized $\rho$ such that the contribution of the top single baseline equivalent-pair class, such as (sep0,1:0,1 in the PAPER128 case) are 1. This plot therefore does not compare sensitivity across the different arrays. The stepwise pattern in the PAPER128 case is characteristic of the rectangular grid; as we step to lower $\widetilde{\Theta}$ large groups of baseline pair classes get included in "batch". 
+
+In Fig. \ref{fig:pairplot} we present a comparison of 4 different properties for baselines that contribute well to the sensitivity ($\widetilde{\Theta}>0.1$, where again the weight for the top class of equivalent pair is normalized to 1). The $dT$ vs. $\Theta$ and $dT$ vs. $\widetilde{\Theta}$ plots are familiar from Fig. \ref{fig:sensplot}. Interestingly the near-equivalent baselines form a "U" shape in $dT, \Theta$ plane [TODO]. Note these near equivalent baselines have around the same $\Theta$ as in PAPER128, but much lower $\widetilde{\Theta}$. This is because they are longer baselines with lower multiplicity. 
+
+
+%\begin{centered}
+\begin{figure}[H]
+\includegraphics[width=\linewidth]{osens}
+\label{fig:osens}
+\caption{Sensitivity of redundant arrays as a function of the minimum effective weight. Dashed lines represent when only equivalent baseline pairs are used, while solid lines indicate use of both the equivalent and near-equivalent baselines are used. The y-axis is normalized independently for each array such that the contribution of the top single equivalent pair class is unity, and thus does not indicate a comparison across the different arrays shown.  }
+\end{figure}
+%\end{centered}
+
+
+\begin{widetext}
+\begin{figure}[H]
+\includegraphics[scale=0.5]{pairplot}
+\label{fig:pairplot}
+\caption{Pairplots of the top contributing baseline pairs in three arrays. Plotted properties are optimal time delay $dT$, peak height $\Theta$, effective weight $\widetilde{\Theta}$ and baseline length $L$. Only those points with $\widetilde{\Theta}>0.1$ are shown (again the weight for the top class of equivalent pair is normalized to 1). Only one baseline length is shown since all top contributing pairs have very similar lengths as expected.}
+\end{figure}
+\end{widetext}
 %\subsection{Notes on Data, Foreground and Noise}
 %Unlike the simulated clean EOR signal, real data are dominated by foreground %and thermal noise, neither of which turns out to exhibit the correlation %pattern seen in Fig.  \ref{fig:numerics}. Foreground exhibits long-range %correlations and would lead to high responses at wide range of time-offsets. %Instrumental noise for different baselines/antenna-pairs, on the other hand, are uncorrelated and thus exhibit responses consistent with zero at all time offsets. 
 %To illustrate, we use the second observing season of PAPER-128 data, taken from Jan. 21st to March 7th of 2014. To illustrate the effect of noise and foreground, we use the data before fringe-rate and delay filtering. 
@@ -530,14 +548,14 @@ Redundant arrays are designed to maximize sensitivity. Current generations of re
 
 \section{\\Derivation of Noise Covariance \label{sec:appB}}
 
-Now to be a little more careful about the scaling relations above, we combine the different power spectrum measurements by inverse covariance weighting \footnote{In practice techniques such as bootstrapping is often used, see for example \citep{Ali2015}}. We shall separate the visibility and power spectrum into signal and noise contributions:
+In this appendix we give a brief derivation of the effective weight quoted in \ref{sec:sensitivity}. We combine the different power spectrum measurements by inverse variance weighting \footnote{In practice techniques such as bootstrapping is often used, see for example \citep{Ali2015}}. We shall separate the visibility and power spectrum into signal and noise contributions:
 \begin{equation}
 \begin{aligned}
 V &= V_S+V_N,\\
 P &= P_S+P_N.
 \end{aligned}
 \end{equation}
-We shall denote the noise covariance of power spectrum and visibility
+We shall denote the noise variance of power spectrum and visibility
 \begin{equation}
 \begin{aligned}
 \sigma_V^2 &= \langle |V_N|^2 \rangle,\\
