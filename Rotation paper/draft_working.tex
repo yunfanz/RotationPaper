@@ -504,9 +504,9 @@ So far we have been sloppy in Eq. \ref{eq:sensul} for simplicity. As we derive i
 To move forward we must give an estimate of $\rho_0$ in Eq.\ref{eq:tildereal}. Assuming a reionization signal of $\Delta_{21cm}^2\sim 30mK^2$, observation at 150MHz ($z=8.5$), 120 days of observation with PAPER antennas, we have roughly
 (See Eq.(20) in \cite{first-paper})
 \begin{equation}
-\rho_0 \sim 0.001\left[\frac{L}{40m}\right] \left[\frac{0.1hMpc^{-1}}{k}\right]^3, 
+\rho_0 \sim 0.001\left[\frac{40m}{L}\right] \left[\frac{0.1hMpc^{-1}}{k}\right]^3, 
 \end{equation}
-where $L$ is the baseline length. We assumed for simplicity only a single $L$ even in the near-equivalent case because only baselines of nearly equal length would have high redundancy (see Fig.\ref{fig:pairplot}). 
+where $L$ is the baseline length in meters. We assumed for simplicity only a single $L$ even in the near-equivalent case because only baselines of nearly equal length would have high redundancy (see Fig.\ref{fig:pairplot}). 
 
 As expected, baseline-pairs that have smaller $\widetilde{\Theta}$ contribute less to the sensitivity. To further quantify the sensitivity contribution of a given array we run our algorithm over all possible baseline-pairs of three arrays, PAPER128, HERA128 and HERA243. In Fig. \ref{fig:osens} we plot $\rho$ against the minimum $\widetilde{\Theta}$. $\rho(\widetilde{\Theta}_{min})$ is thus the sensitivity of the array when baseline-pairs that have $\widetilde{\Theta}>\widetilde{\Theta}_{min}$ are included. The dashed lines represent the values when only the equivalent baseline-pairs are used. We see that in all cases using the near-equivalent baselines lead to more and more significant improvements with lower $\widetilde{\Theta_{min}}$, or in other words when worse baseline pairs are used. The maximum benefits are expected to be around $30\%$. Note that here we normalized $\rho$ such that the contribution of the top single baseline equivalent-pair class, such as (sep0,1:0,1 in the PAPER128 case) are 1. This plot therefore does not compare sensitivity across the different arrays. The stepwise pattern in the PAPER128 case is characteristic of the rectangular grid; as we step to lower $\widetilde{\Theta}$ large groups of baseline pair classes get included in "batch". 
 
@@ -538,13 +538,13 @@ Redundant arrays are designed to maximize sensitivity. Current generations of re
 
 \appendix
 \section{\\Hera Analysis}
-\begin{widetext}
+%\begin{widetext}
 \begin{figure}[H]
-\includegraphics[scale=0.55]{HeraAntpos}
+\includegraphics[width=1.1\linewidth]{HeraAntpos}
 
 \caption{Planned Hydrogen Epoch of Reionization Array antenna configurations. For HERA350, only the 320 elements in the core are shown. \label{fig:HeraAntpos}}
 \end{figure}
-\end{widetext}
+%\end{widetext}
 
 \section{\\Derivation of Noise Covariance \label{sec:appB}}
 
