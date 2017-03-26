@@ -1,5 +1,5 @@
-\documentclass[preprint2,numberedappendix,tighten,twocolappendix]{aastex6}  % USE THIS TO MAKE BIB, THEN FORMAT USING EMULATEAPJ
-%\documentclass[twocolumn,apj,numberedappendix]{emulateapj}
+%\documentclass[preprint2,numberedappendix,tighten,twocolappendix]{aastex6}  % USE THIS TO MAKE BIB, THEN FORMAT USING EMULATEAPJ
+\documentclass[twocolumn,apj,numberedappendix]{emulateapj}
 \shorttitle{Adding Sensitivity to 21cm Inteferometric Probes of Reionization}
 \shortauthors{Zhang\&Parsons}
 \usepackage{float}
@@ -14,7 +14,7 @@
 \citestyle{aa}
 \renewcommand\[{\begin{equation}}
 \renewcommand\]{\end{equation}}
-
+\graphicspath{{../figures/}}
 
 \begin{document}
 
@@ -32,7 +32,7 @@ Aaron R. Parsons\altaffilmark{1}\altaffilmark{2}
 \begin{abstract}
 We introduce an accurate method to extract additional sensitivity from data of redundant radio arrays. Our method efficiently finds optimal baselines to cross correlate, including baselines that are slightly different in length and orientation. 
 Using the latest and final 128-element version of Precision Array for Probing the Epoch of Reionization (PAPER-128), as well as the planned 37, 128, 240 and 350 element versions of the Hydrogen Epoch of Reionization Array (HERA) now under development, we illustrate how our method applies to different array configurations and predict the sensitivity improvements of including each baseline pairs. The extremely natural and simple implementation of this method
-would increase the sensitivity of PAPER-128 by about to $30\%$, and increase the out-rigger imaging sensitivity of HERA-350 by a factor of 2. 
+would increase the sensitivity of PAPER-128 and different configurations of HERA by about to $20\%$ to $60\%$, with HERA-350 benefitting the most from the technique. 
 \end{abstract}
 
 \section{Introduction}
@@ -87,7 +87,7 @@ that the sensitivity required for detection is a factor of 10 away.
 This paper explores a new technique to add sensitivity to the analysis
 of redundant arrays, by making use of the earth's rotation. This technique
 can be applied to redundant arrays such as PAPER and HERA to increase
-the sensitivity by up to a factor of [1.5]. 
+the sensitivity by up to a factor of 1.3. 
 
 The earth's rotation causes the baselines to pick up different modes of the sky with time. 
 This effect is used extensively to improve uv coverage in imaging with minimum redundancy arrays. In
@@ -127,29 +127,27 @@ with this method for HERA and PAPER-128 and with section 4 we conclude.
 \caption{The PAPER-128 layout. Each blue dot corresponds to the location of
 an antenna. Top panel shows the antenna positions drawn to scale,
 bottom panel show the antenna labels and distances, excluding the outlier
-antennas.\label{fig:AntPos}
+antennas.
 The numbering of the antennas the bottom panel are original labels
 during instrument assembly and does not bear significant
 meaning. Baselines corresponding to the same separations are called
-equivalent. In the bottom panel, the two baselines labeled with the
-red arrow are equivalent, with separation denoted by sep1,0, for the
+equivalent. In the bottom panel, the two baselines (5,77) and (40,85) are an example of equivalent pair, with separation denoted by sep1,0, for the
 antennas are separated by 1 unit east and 0 unit north. Similarly,
-the baselines labeled with the yellow and green arrows are examples
+the baselines (5,69) and (5,85) are examples
 of sep1,1 and sep1,-1, respectively. Note sep1,0 and sep-1,0 for example
 are the same baselines and should not be counted twice.}
-
+\label{fig:AntPos}
 \end{figure}
 
-We shall use the 128-element PAPER array to demonstrate. 
+We shall use the 128-element PAPER array to demonstrate, and extend our results to several HERA configurations in Sec \ref{sec:arrconf}. 
 The PAPER array is located in the Karoo desert in South Africa (30:43:17.5
 S, 21:25:41.8 E). The layout pattern with antenna labels are show
 in Fig. \ref{fig:AntPos}. We see the antenna spacing in North-South
 directions are comparatively close (4m), so that baselines such as
-0\_44 and 0\_7 are very close to equivalent. In the bottom panel,
-the two baselines labeled with the red arrow are equivalent, with
-separation denoted by sep1,0, for the antennas are separated by 1
-unit east and 0 unit north. Similarly, the baselines labeled with
-the yellow and green arrows are examples of sep1,1 and sep1,-1, respectively.
+0\_44 and 0\_7 are very close to equivalent. In the bottom panel, the two baselines (5,77) and (40,85) are an example of equivalent pair, with separation denoted by sep1,0, for the
+antennas are separated by 1 unit east and 0 unit north. Similarly,
+the baselines (5,69) and (5,85) are examples
+of sep1,1 and sep1,-1, respectively.
 Note sep1,0 and sep-1,0 for example are the same baselines and should
 not be counted twice. Antennas in purely north-south baselines
 are close enough to induce cross talks, and hence are not suitable
@@ -171,7 +169,8 @@ We show in Fig. \ref{fig:Tracks} uv tracks of PAPER-128 over 4.8 hours, at 0.15G
 \caption{Tracks of PAPER-128 (grid only, excluding outliers) for a hypothetical source that passes through zenith.
 These tracks are traced out over 0.2 sidereal days, or roughly 4.8
 hours. Color represents different baselines. Frequency is $\nu=0.15\text{GHz}$.
-As the earth rotates, tracks are traced out counterclockwise. \label{fig:Tracks}}
+As the earth rotates, tracks are traced out counterclockwise. }
+\label{fig:Tracks}
 \end{figure}
 
 Roughly speaking, we can identify
@@ -340,8 +339,9 @@ In Fig.\ref{fig:freqdiff} we compare two channels 0.16 GHz and 0.17 GHz. The top
 
 \begin{figure}[H]
 \includegraphics[width=1.1\linewidth]{rephs}
-\label{fig:freqdiff}
+
 \caption{Comparisons of the peak phases of two different frequencies. First and third panels shows equivalent baselines, second and fourth show a pair of near-equivalents. For visual simplicity only the real parts are shown. }
+\label{fig:freqdiff}
 \end{figure}
 
 
@@ -373,8 +373,9 @@ height $<0.5\%$.
 
 \begin{figure}[h]
 \includegraphics[width=\linewidth]{opp}
-\label{fig:numerics}
+
 \caption{Numerical comparisons of the visibility correlation peaks to the $\Omega$ factor in Eq.(\ref{eq:final}). We generated 2400 instances of Gaussian random sky on healpix maps, computed visibilities and cross correlated them to find the correlation.  Top panel shows the equivalent baseline pairs sep1,0 against itselt, bottom show set1,0:1:1.  Evaluations of weight $\Theta$ are shown with solid curves, and the visibility correlations of simulated random sky is given with dashed lines. In both cases blue denotes real part, green the imaginary part, and red the magnitude. We see that in both cases the theory and simulation line up in both amplitude and phase.}
+\label{fig:numerics}
 \end{figure}
 
 
@@ -438,7 +439,7 @@ baselines in PAPER.
 \begin{figure}[H]
 \centering
 \includegraphics[width=\textwidth]{sensitivity}
-\label{fig:sensplot}
+
 
 \caption{Relative sensitivity contributions of selected baseline combinations in PAPER-128. In the legend m,n:p,q denotes cross
 multiplying PAPER-128 baselines of east-west, north-south separations (m,n) and (p,q) respectively. The top
@@ -447,6 +448,7 @@ combination, while the bottom panel multiplies the heights by the
 corresponding multiplicities as in Eq. \eqref{eq:sensul}, and in some cases an extra factor of $\sqrt{2}$ (explained in text). 
 In weighting by the multiplicity (bottom), we have chosen to fix the sensitivity 
 contribution of 1,0:1,0 to unity. The same symbols and colors correspond in the top and bottom panel, with half of the legend shown in each. }
+\label{fig:sensplot}
 \end{figure}
 \end{widetext}
 
@@ -478,7 +480,9 @@ types sepm,n and sepm',n', we get an effective weight:
 
 Shown in the bottom panel of Fig. \ref{fig:sensplot} is the peak heights weighted
 by the multiplicity factor. Points that have zero time delay are the equivalent baseline pairs and their weighted correlation values simply reflect the multiplicity factor. For clarity of presentation we have "folded over" the negative time delays and combined baseline pairs that are identical modulus parity, 
-or in other words are mirror images of each other, by summing over them to get an extra factor of $\sqrt{2}$. For example, 
+or in other words are mirror images of each other
+%\footnote{The parity symmetry is partially broken unless the array is located at the poles. But we are ignoring this here for illustrative purposes. See Fig. \ref{fig:pairplot} for a more accurate result. }
+, by summing over them to get an extra factor of $\sqrt{2}$. For example, 
 instead of plotting 1,1:1,1 and 1,-1:1,-1 separately, we plot 1,1:1,1 with twice the multiplicity. Similarly, baseline pairs such as 
 1,0:1,1 also get the factor of 2 because they are identical to 1,0:1,-1. Baseline pairs such as 1,0:1,0, or 1,1:1,-1 do not get
 the factor of $\sqrt{2}$ because their mirror images are themselves. 
@@ -514,29 +518,30 @@ To move forward we must give an estimate of $\rho_0$ in Eq.\ref{eq:tildereal}. A
 where $L$ is the baseline length. We only need a single characteristic $L$ even in the near-equivalent case because only baselines of nearly equal length would have high redundancy.As expected, baseline-pairs that have smaller $\widetilde{\Theta}$ contribute less to the sensitivity. 
 
 \subsection{Array Configuration Comparisons \label{sec:arrconf}}
-To further quantify the sensitivity contribution of a given array we run our algorithm over all possible baseline-pairs of  PAPER128, HERA37, HERA128, HERA243 and HERA350. The HERA antenna configurations are shown in Fig. \ref{fig: HeraAntpos}.The  
-hexagonal design is the densest pattern of antenna-packing. The lack of short baselines that are visually close to each other means that we expect to see only longer near-equivalent baselines. These longer baselines have lower multiplicities, but also there would be many more classes of baselines, especially given the gap in the larger versions. 
-In Fig. \ref{fig:osens} we plot $\rho$ against the minimum $\widetilde{\Theta}$. $\rho(\widetilde{\Theta}_{min})$ is thus the sensitivity of the array when baseline-pairs that have $\widetilde{\Theta}>\widetilde{\Theta}_{min}$ are included. The dashed lines represent the values when only the equivalent baseline-pairs are used.  We see that in all cases using the near-equivalent baselines lead to more and more significant improvements with lower $\widetilde{\Theta}_{min}$, or in other words when worse baseline pairs are used. The small HERA37, with no gap (like in HERA350) or short near-equivalent baselines (like in PAPER 128), will not benefit much from the near-equivalent baselines. The maximum benefits for other cases are expected to be around $10\% to 30\%$. PAPER128 is designed with highly redundant near-equivalent baselines, and thus  these baselines start contributing at higher $\widetilde{\Theta}_{min}$, but the gapped HERA configurations will benefit even more from near-equivalent baselines due to there being more classes of baseline pairs. Note that here we normalized $\rho$ such that the contribution of the top single baseline equivalent-pair class, such as (sep0,1:0,1 in the PAPER128 case) are 1. This plot therefore does not compare sensitivity across the different arrays. The stepwise pattern case is characteristic of a regular grid; as we step to lower $\widetilde{\Theta}$ large groups of baseline pair classes get included in "batch". 
+We run our algorithm over all possible baseline-pairs of  PAPER128, HERA37, HERA128, HERA243 and HERA350. The HERA antenna configurations are shown in Fig. \ref{fig:HeraAntpos} in the Appendix. The  
+hexagonal design is the densest pattern of antenna-packing. The larger arrays are designed with a "gap" dividing the antennas into three different regions. The gaps are designed so as to improve UV-coverage and ease calibration without compromising sensitivity, but also produces much more near-equivalent baselines than the versions without the gap. The motivations behind the designs are explained in \cite{HERAconfiguration}.  The lack of short baselines that are visually close to each other, as well as the shorter beam (Fig.\ref{fig:Beam}) means that we expect to see only longer near-equivalent baselines. The lower multiplicities per class of baselines is made up with the larger number of classes of baseline-pairs, especially given the gap in the larger versions. 
+
+Having gotten a sense of the sensitivity from a given pair of baselines, we'd like to study the cumulative sensitivity of the array depending on which baseline pairs we include. Evidently we should prefer the pairs with larger $\widetilde{\Theta}$. In Fig. \ref{fig:osens} we plot $\rho$ against the minimum $\widetilde{\Theta}$. $\rho(\widetilde{\Theta}_{min})$ is the sensitivity of the array when baseline-pairs that have $\widetilde{\Theta}>\widetilde{\Theta}_{min}$ are included. The dashed lines represent the values when only the equivalent baseline-pairs are used.  We see that in all cases using the near-equivalent baselines lead to more and more significant improvements with lower $\widetilde{\Theta}_{min}$, or in other words when worse baseline pairs are used. The small HERA37, with no gap (like in HERA350) or short near-equivalent baselines (like in PAPER 128), will not benefit much from the near-equivalent baselines. The maximum benefits for other cases are expected to be around $20\%$ to $60\%$. PAPER128 is designed with highly redundant near-equivalent baselines, and thus  these baselines start contributing at higher $\widetilde{\Theta}_{min}$, but the gapped HERA configurations will benefit even more from near-equivalent baselines at low $\widetilde{\Theta}_{min}$ due to there being more classes of such pairs. Note that here we normalized $\rho$ such that the contribution of the top equivalent baseline pair, such as (sep0,1:0,1 in the PAPER128 case) are 1. This plot therefore does not compare the absolute sensitivity across the different arrays. The stepwise pattern is characteristic of a regular grid; as we step to lower $\widetilde{\Theta}$ large groups of baseline pair classes get included in "batch". 
 %\begin{centered}
 \begin{figure}[H]
 \includegraphics[width=\linewidth]{osens}
+\caption{Sensitivity of redundant arrays as a function of the minimum effective weight. Dashed lines represent when only equivalent baseline pairs are used, while solid lines indicate use of both the equivalent and near-equivalent baselines are used. The y-axis is normalized independently for each array such that the contribution of the top single equivalent pair class is unity, and thus does not indicate a comparison of absolute sensitivity across the different arrays shown.  }
 \label{fig:osens}
-\caption{Sensitivity of redundant arrays as a function of the minimum effective weight. Dashed lines represent when only equivalent baseline pairs are used, while solid lines indicate use of both the equivalent and near-equivalent baselines are used. The y-axis is normalized independently for each array such that the contribution of the top single equivalent pair class is unity, and thus does not indicate a comparison across the different arrays shown.  }
 \end{figure}
 %\end{centered}
 
 
-In Fig. \ref{fig:pairplot} we present a comparison of 4 different properties for baselines that contribute well to the sensitivity ($\widetilde{\Theta}>0.1$, where again the weight for the top class of equivalent pair is normalized to 1). The $dT$ vs. $\Theta$ and $dT$ vs. $\widetilde{\Theta}$ plots are familiar from Fig. \ref{fig:sensplot}. We only show 3 of the mentioned arrays for visual clarity. The other two results are similar except for intuitive differences. We make a few observations (these are in no way an exhaustive list):
+In Fig. \ref{fig:pairplot} we present a comparison of 4 different properties for baselines that contribute well to the sensitivity ($\widetilde{\Theta}>0.05$, where again the weight for the top class of equivalent pair is normalized to 1). The $dT$ vs. $\Theta$ and $dT$ vs. $\widetilde{\Theta}$ plots are familiar from Fig. \ref{fig:sensplot}. We only show 3 of the mentioned arrays for visual clarity. The other two results are similar barring intuitive differences. We make a few observations:
 \begin{itemize}
 
 \item Mapping of equivalent baseline pairs: the equivalent baselines are located in key points in the plots. They are the vertical bars in the lower left four plots and the highest peak in the first three histograms, the upper "diagonal edge" in the $\widetilde{\Theta}$ vs. $dT$ and the dot of $\Theta=1$. 
 
 
-\item Longer baselines roughly peak at lower time-offset, and lower multiplicity. This is intuitive for PAPER since the for the same north-south distance the rotation angle is smaller with longer east-west distance. 
+\item Longer baselines roughly peak at lower time-offset, and lower multiplicity. This is intuitive for PAPER since  for the same north-south separation the rotation angle is smaller with longer east-west separation. 
 
-\item Interestingly for HERA the near-equivalent baselines form a "U" shape in $dT, \Theta$ plane, somewhat counter-intuitive at first especially given out last point. Turns out the "U" pattern is characteristic of the hexagonal array-layout. 
+\item Interestingly for HERA the near-equivalent baselines form multiple "U" shapes in $dT, \Theta$ plane, somewhat counter-intuitive especially given out last point. This is characteristic of the hexagonal layout. Baselines of equal length are more redundant at the right time delay than ones that are slightly different in length, though the latter has a shorter optimal time-delay. 
  
-\item The top near-equivalent pairs in HERA the same $\Theta$ as in PAPER128, but much lower $\widetilde{\Theta}$. This is because they are longer baselines with lower multiplicity. In the end these baseline classes still lead to high contributions to total sensitivity (Fig. \ref{fig:osens}) simply because there are a lot more baseline pairs for HERA.  
+\item The top near-equivalent pairs in HERA the same $\Theta$ as in PAPER128, but much lower $\widetilde{\Theta}$. This is because they are longer baselines with lower multiplicity. In the end these baseline classes still lead to high contributions to total sensitivity (Fig. \ref{fig:osens}) because there are a lot more such baseline pairs for HERA.  
 
 
 
@@ -547,27 +552,31 @@ In Fig. \ref{fig:pairplot} we present a comparison of 4 different properties for
 
 
 
-\begin{widetext}
-\begin{figure}[H]
-\includegraphics[width=\textwidth]{pairplot}
-\label{fig:pairplot}
-\caption{Pairplots of the top contributing baseline pairs in three arrays. Plotted properties are optimal time delay $dT$, peak height $\Theta$, effective weight $\widetilde{\Theta}$ and baseline length $L$. Only those points with $\widetilde{\Theta}>0.1$ are shown (again the weight for the top class of equivalent pair is normalized to 1). Only one baseline length is shown since all top contributing pairs have very similar lengths as expected. The scatter plots are shown with transparency so that darker regions indicate degeneracies. }
-\end{figure}
-\end{widetext}
+
 %\subsection{Notes on Data, Foreground and Noise}
 %Unlike the simulated clean EOR signal, real data are dominated by foreground %and thermal noise, neither of which turns out to exhibit the correlation %pattern seen in Fig.  \ref{fig:numerics}. Foreground exhibits long-range %correlations and would lead to high responses at wide range of time-offsets. %Instrumental noise for different baselines/antenna-pairs, on the other hand, are uncorrelated and thus exhibit responses consistent with zero at all time offsets. 
 %To illustrate, we use the second observing season of PAPER-128 data, taken from Jan. 21st to March 7th of 2014. To illustrate the effect of noise and foreground, we use the data before fringe-rate and delay filtering. 
 
 \section{Conclusion}
-Redundant arrays are designed to maximize sensitivity. Current generations of redundant radio arrays, such as those probing the power spectrum of the epoch of reionization could benefit from data analysis techniques that improve the sensitivity. We present an intuitive analysis of cross-multiplying baselines that are close in length and orientation to each other. Given an antenna array configuration, our method quickly identifies the best baseline pairs to cross-multiply and predict the expected sensitivity contribution. With the predicted result one can improve existing power-spectrum pipelines through 3 simple steps. 1). Rephase the visibilities prior to delay transforming by the zenith displacement (or more accurately by the phase predicted by our numerical analysis). 2). Shift the visibilities in time. 3) Cross multiply the visibilities of the two baselines  to form the power-spectrum. 4) Finally combine the different baseline pairs by appropriate inverse-variance weighting that takes into account the predicted sensitivity contributions of each case. 
+Redundant arrays are designed to maximize sensitivity. Current generations of redundant radio arrays, such as those probing the power spectrum of the epoch of reionization could benefit from data analysis techniques that improve the sensitivity. We present an intuitive analysis of cross-multiplying baselines that are close in length and orientation to each other. Given an antenna array configuration, our method quickly identifies the best baseline pairs to cross-multiply and predict the expected sensitivity contribution. With the predicted result one can improve existing power-spectrum pipelines through 3 simple steps. 1). Rephase the visibilities prior to delay transforming by the zenith displacement (or more accurately by the phase predicted by our numerical analysis). 2). Shift the visibilities in time. 3) Cross multiply the visibilities of the two baselines  to form the power-spectrum. 4) Finally combine the different baseline pairs by appropriate inverse-variance weighting that takes into account the predicted sensitivity contributions of each case. We showed that such techniques could lead to $20\%$ to $60\%$ increase in sensitivity for PAPER and HERA. 
+\begin{widetext}
+\begin{figure}[H]
+\includegraphics[width=\textwidth]{pairplot}
+
+\caption{Pairplots of the top contributing baseline pairs in three arrays. Plotted properties are optimal time delay $dT$, peak height $\Theta$, effective weight $\widetilde{\Theta}$ and baseline length $L$. Only those points with $\widetilde{\Theta}>0.05$ are shown (the weight for the top class of equivalent pair is normalized to 1). Only one baseline length is shown since all top contributing pairs have very similar lengths as expected. The scatter plots are shown with transparency so that darker regions indicate degeneracies. Scatter points of the 3 arrays overlap, in order indicated by the legend. }
+\label{fig:pairplot}
+\end{figure}
+\end{widetext}
+
+\pagebreak
 
 \appendix
 \section{\\Hera Antenna Configurations}
 \begin{widetext}
 \begin{figure}[H]
 \includegraphics[width=0.9\textwidth]{HeraAntpos}
-
-\caption{Planned Hydrogen Epoch of Reionization Array antenna configurations. HERA 37 is expected to complete and start collecting data in summer of 2017, and the other three are planned configurations in the next phases. For HERA350, only the 320 elements in the core are shown. \label{fig:HeraAntpos}}
+\label{fig:HeraAntpos}
+\caption{Planned Hydrogen Epoch of Reionization Array antenna configurations. HERA 37 is expected to complete and start collecting data in summer of 2017, and the other three are planned configurations in the next phases. For HERA350, only the 320 elements in the core are shown. }
 \end{figure}
 \end{widetext}
 
