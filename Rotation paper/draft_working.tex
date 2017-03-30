@@ -23,94 +23,94 @@
 %\maketitle
 \author{
 Yunfan Gerry Zhang \altaffilmark{1},
-Aaron R. Parsons\altaffilmark{1}\altaffilmark{2}
+Adrian C. Liu \altaffilmark{1, 2},
+Aaron R. Parsons\altaffilmark{1, 2}
 }
 
 \altaffiltext{1}{Astronomy Dept., U. California, Berkeley, CA}
 \altaffiltext{2}{Radio Astronomy Lab., U. California, Berkeley, CA}
 
 \begin{abstract}
-We introduce an accurate method to extract additional sensitivity from data of redundant radio arrays. Our method efficiently finds optimal baselines to cross correlate, including baselines that are slightly different in length and orientation. 
-Using the latest and final 128-element version of Precision Array for Probing the Epoch of Reionization (PAPER-128), as well as the planned 37, 128, 240 and 350 element versions of the Hydrogen Epoch of Reionization Array (HERA) now under development, we illustrate how our method applies to different array configurations and predict the sensitivity improvements of including each baseline pairs. The extremely natural and simple implementation of this method
+The observational effort to measure the primordial 21cm power spectrum with radio interferometers require high sensitivity, or signal to noise ratio. We introduce a straightforward and accurate method to extract additional sensitivity from data of redundant radio arrays. Our method efficiently finds optimal baselines to cross correlate, including baselines that are slightly different in length and orientation, and quantifies the sensitivity contributions of given baselines. 
+Using the configurations and beams of the latest and final 128-element version of Precision Array for Probing the Epoch of Reionization (PAPER-128), as well as the planned 37, 128, 240 and 350 element versions of the Hydrogen Epoch of Reionization Array (HERA) now under development, we illustrate how our method applies to different arrays and predict the sensitivity improvements of including each baseline pairs. We show that inclusion of non-perfectly redundant baselines 
 would increase the sensitivity of PAPER-128 and different configurations of HERA by about to $20\%$ to $60\%$, with HERA-350 benefitting the most from the technique. 
 \end{abstract}
 
 \section{Introduction}
 
-The epoch of reionization, or cosmic dawn represents the last key
-stage of the universe's early evolution. Study of this event stands at
+The epoch of reionization, or cosmic dawn, represents the last key
+stage of our universe's early evolution. Study of this event stands at
 the intersection of cosmology and astrophysics. Understanding this
 event is important not only because it is a scientific goal
 of its own, but also because it can provide crucial information
 to fundamental physics of inflation, neutrino mass and phenomenology
-of the first stars and galaxies (e.g. \cite{LiuOpticalDepth}). 
+of the first stars and galaxies (e.g. \citealt{LiuOpticalDepth, Liu2016b, Mao2008, DEw21cm, Bull2015, Oyama20131186} etc.). 
 
 Arguably the most promising observational probe of the epoch of reionization
 comes from measurement of the ``spin-flip'' transition of neutral
-hydrogen of characteristic wavelength 21cm \cite{Furlanetto2006181,PritchardLoeb}.
+hydrogen of characteristic wavelength 21cm \citep{Furlanetto2006181,PritchardLoeb}.
 While probes such as quasar spectra rely on emission and scattering
 of free electrons, and are thus limited to the lower redshifts towards the end of reionization, the 21cm line directly probes the
 abundance and distribution of neutral hydrogen, and thus would potentially
-shed light on all stages of reionization. Radio interferometry efforts
+shed light on all stages of reionization. Radio interferometric efforts
 to measure the 21cm power spectrum has been a top priority in recent years of astronomy.
 Current generation instruments include the Precision Array for Probing
-the Epoch of Reionization (PAPER) \cite{Ali2015,paper32}, Murchison
-Widefield Array (MWA) \cite{MWA}, Low Frequency Array (LOFAR) \cite{LOFAR}. Next generation instruments such as the Hydrogen Epoch of Reionization
-Array (HERA) (e.g. \cite{HERA,HERAconfiguration,HERABEAM1,HERADISH2})
-and the Square Kilometer Array Low (SKA low) (e.g. \cite{SKA1}) are
-in planning and construction. 
+the Epoch of Reionization (PAPER) \citep{Ali2015,paper32}, Murchison
+Widefield Array (MWA) \citep{Bowman2013, Tingay2013}, Low Frequency Array (LOFAR) \citep{LOFAR}. Next generation instruments such as the Hydrogen Epoch of Reionization
+Array (HERA) (e.g. \citealt{HERA,HERAconfiguration,HERABEAM1,HERADISH2}) currently under construction
+and the Square Kilometer Array Low (SKA-low) (e.g. \citealt{SKA1}) in planning. 
 
-One of the main challenges of interferometric observations of cosmic
-21cm line is foreground contamination. Both sources within our
-galaxy, and to a lesser distant sources outside of our galaxy emit
-radio contaminations (via for example synchrotron processes) up to five orders of magnitude stronger than the
+One of the main challenges of observations of cosmic
+21cm line, interferometric or global, is foreground contamination. Both sources within our
+galaxy, and to a lesser extent distant sources outside of our galaxy emit
+radio contamination (via for example synchrotron processes) up to five orders of magnitude stronger than the
 reionization signal. There are two common methods to deal with the
-foreground contamination. In the first, sometimes called the foreground
+foreground contamination in power spectrum measurements. In the first, sometimes called the foreground
 removal technique, individual sources are identified and removed in the image domain.
-The other technique, commonly referred to as 'foreground avoidance',
-makes use of the fact that most common foreground contaminations have a smooth
-spectrum, and thus is constrained to a Fourier domain ``foreground
-wedge'' \cite{wedge1,wedge2}. Thus contamination can be avoided
-by restricting our observation to ``outside the wedge'', where the data is currently noise dominated. The main
+The other technique, commonly referred to as ``foreground avoidance'',
+makes use of the fact that most common foreground contaminants have smooth
+spectra, and thus is constrained to a Fourier domain ``foreground
+wedge'' \citep{wedge1,wedge2}. Thus, contamination can be avoided
+by restricting our observation to ``outside the wedge'', where theoretically foreground contamination is limited and noise becomes dominant. The main
 challenge of using the avoidance technique is thus the sensitivity, or
 the signal to noise ratio. This is the motivation for the design of
 the maximum redundancy arrays such as PAPER and HERA. Traditional
-imaging arrays are designed to image localized bright sources and thus favor non-redundant patterns for uv coverage. The redundant arrays on the other hand
+imaging arrays are designed to image localized bright sources and thus favor non-redundant patterns for $uv$ coverage. The redundant arrays, on the other hand,
 focus on high-sensitivity measurements of the same Fourier mode
 with many tightly packed antennas at equal spacing. Since baselines
 of the same length and orientation measure the same Fourier modes
 on the sky, a maximum redundancy array is able to increase the
 signal to noise ratio by averaging over measurements of the same baseline.
 \cite{Ali2015} provides the newest upper limit to the power spectrum
-measurements with the 64-element version of PAPER(henceforth referred to as PAPER-64). From some models we roughly expect
+measurements with the 64-element version of PAPER (henceforth referred to as PAPER-64). From some models we roughly expect
 that the sensitivity required for detection is a factor of 10 away.
-This paper explores a new technique to add sensitivity to the analysis
-of redundant arrays, by making use of the earth's rotation. This technique
-can be applied to redundant arrays such as PAPER and HERA to increase
-the sensitivity by up to a factor of 1.3. 
 
+
+This paper explores a new technique to add sensitivity to the power spectrum analysis
+of redundant arrays, by making use of the earth's rotation. 
 The earth's rotation causes the baselines to pick up different modes of the sky with time. 
-This effect is used extensively to improve uv coverage in imaging with minimum redundancy arrays. In
-a maximally redundant array, baselines that are slightly different
-rotate into each other at a time delay. Here we present a method to
+This effect is used extensively to improve $uv$ coverage in imaging with minimum redundancy arrays. In
+a maximally redundant array, we can make use of the fact that baselines that are slightly different
+rotate into each other at a time delay to extract power-spectrum from their respective visibilities. Here we present a method to
 improve the sensitivity of the maximum redundancy arrays by including
-the uv redundancy of different baselines at a time lag. Recently the authors of \cite{wterm} proposed an algorithmic search approach to extract information from all near-equivalent baselines. We here present a simple and elegant theoretical formalism that in addition allows us to identify good baselines to cross-correlate and predict the weight of sensitivity with speed and accuracy. 
+the $uv$ redundancy of different baselines at a time lag. Recently, \cite{wterm} proposed an algorithmic approach to extract information from near-equivalent baselines, by carefully treating the $w$-term in the fringe pattern to obtain weights for cross-correlation. The algorithm makes use of a time dependent coordinate system ('moving grid') and is thus computationally expensive. We here present a formalism that allows us to compute such weights by simply performing a numerical integral. This allows us to identify good baselines to cross-correlate and predict the weight of sensitivity with speed and accuracy, thereby making the power spectrum estimation from a large number of baseline pairs computationally tractable. 
 
 Baselines of the same length and orientation are traditionally called
 ``redundant baselines'', because they measure the same Fourier mode
 in the sky. In order to eliminate confusion and ambiguity, we shall
-introduce slightly different terminology. We'll call baselines that
+introduce slightly different terminology. We shall call baselines that
 are the same length and orientation ``equivalent baselines'', inspired
 by the mathematical notion of equivalency classes. Two equivalent
 baselines will be redundant with each other simultaneously at all
 times. Non-equivalent baselines can also be partially redundant if their
-respected time series is shifted with respect to one another by a
-certain delay. In other words, one baseline can be ``rotated into''
-another. We call these ``near-equivalent baselines''. It is our
+respected time series is shifted with respect to one another by some delay. In other words, one baseline can be ``rotated into''
+another. We call these ``near-equivalent baselines''. Exactly how ``near" is ``near-enough" depends on the array configuration. All non-equivalent baselines contribute non-zero sensitivity to the power spectrum analysis It is our
 goal to a) identify the near-equivalent baselines that give good
-redundancy, b) to find the optimal time offset for a given pair of baselines, and
+redundancy, b) to find the optimal time offset\footnote{By optimal we mean the time offset that corresponds to maximal redundancy. } for a given pair of baselines, and
 c) to quantify the sensitivity improvement associated with cross multiplying
-such a pair of near-equivalent baselines. In section
+such a pair of near-equivalent baselines. 
+
+The rest of this paper is organized as follows. In section
 2 we explain the theoretical basis for this cross multiplication.
 In section 3 we present numerical tests of
 this technique as well as the expected sensitivity improvement
@@ -126,7 +126,7 @@ with this method for HERA and PAPER-128 and with section 4 we conclude.
 
 \caption{The PAPER-128 layout. Each blue dot corresponds to the location of
 an antenna. Top panel shows the antenna positions drawn to scale,
-bottom panel show the antenna labels and distances, excluding the outlier
+bottom panel show the antenna labels and distances, excluding the outrigger
 antennas.
 The numbering of the antennas the bottom panel are original labels
 during instrument assembly and does not bear significant
@@ -139,7 +139,7 @@ are the same baselines and should not be counted twice.}
 \label{fig:AntPos}
 \end{figure}
 
-We shall use the 128-element PAPER array to demonstrate, and extend our results to several HERA configurations in Sec \ref{sec:arrconf}. 
+We shall use the 128-element PAPER array to demonstrate our method, and extend our results to several HERA configurations in Sec \ref{sec:arrconf}. 
 The PAPER array is located in the Karoo desert in South Africa (30:43:17.5
 S, 21:25:41.8 E). The layout pattern with antenna labels are show
 in Fig. \ref{fig:AntPos}. We see the antenna spacing in North-South
@@ -150,8 +150,8 @@ the baselines (5,69) and (5,85) are examples
 of sep1,1 and sep1,-1, respectively.
 Note sep1,0 and sep-1,0 for example are the same baselines and should
 not be counted twice. Antennas in purely north-south baselines
-are close enough to induce cross talks, and hence are not suitable
-for use. The original PAPER-64 analysis (\cite{Ali2015}) used three classes of baselines, here
+are close enough to induce cross-talk, and hence are not suitable
+for use. The original PAPER-64 analysis \citep{Ali2015} used three classes of baselines, here
 equivalent to 
 sep2,0, sep2,1 and sep2,-1 \cite{Ali2015} of PAPER-128. There each of these classes
 of baselines are cross multiplied to itself. We shall see that in addition these
@@ -159,34 +159,34 @@ baseline classes can be cross multiplied with a time offset.
 
 
 Given a point source on the sky, each baseline maps the
-source to a point in uv plane. As the earth rotates with respect to
-the source, the point traces out tracks in the uv-plane. 
-We show in Fig. \ref{fig:Tracks} uv tracks of PAPER-128 over 4.8 hours, at 0.15GHz, for a source that passes through zenith. 
+source to a point in $uv$ plane. As the earth rotates with respect to
+the source, the point traces out tracks in the $uv$ plane. 
+We show in Fig. \ref{fig:Tracks} $uv$ tracks of PAPER-128 over 4.8 hours, at 0.15GHz, for a source that passes through zenith. 
 
 
 \begin{figure}[H]
 \includegraphics[width=\linewidth]{tracks128}
-\caption{Tracks of PAPER-128 (grid only, excluding outliers) for a hypothetical source that passes through zenith.
+\caption{Tracks of PAPER-128 (grid only, excluding outriggers) for requency $\nu=0.15\text{GHz}$ and a hypothetical source that passes through zenith.
 These tracks are traced out over 0.2 sidereal days, or roughly 4.8
-hours. Color represents different baselines. Frequency is $\nu=0.15\text{GHz}$.
+hours. Color represents different baselines. 
 As the earth rotates, tracks are traced out counterclockwise. }
 \label{fig:Tracks}
 \end{figure}
 
 Roughly speaking, we can identify
 redundancy of near-equivalent baselines as crossings
-of the uv tracks. Although this is a valid quick method to identify some baselines to cross-multiply, we find
-that it is not accurate enough for time offset determination. The reason is that UV tracks are traces of a point source, which though adequate for traditional narrow beam imaging, are not applicable for wide-beam receivers like that of PAPER.
-Here the uv-imprint of the sky for a given baseline and frequency is really a cloud that's the track convolved with the appropriate point-spread function. To accurately
-constrain redundancy, a more rigorous treatment is thus required. 
-We show sample beams of HERA and PAPER antennas in Fig.\ref{fig:Beam} for reference. 
+of the $uv$ tracks. As we see in Fig. \ref{fig:Tracks}, there are many such crossings. Crossing tracks, however does not imply perfect redundancy. The reason lies in the finite size of the beams. We show sample beams of HERA and PAPER antennas in Fig. \ref{fig:Beam} for reference. The inaccuracy is expected to be even more significant for the smaller HERA beam, which has a larger corresponding $uv$ point spread function. 
+
+Thus although it is a valid quick method to identify some baselines to cross-multiply, track-crossing is
+not accurate enough for time offset determination, nor can give estimate of the degree of redundancy. To determine the time-offset corresponding to maximal redundancy, we must develop a more general  formalism that accounts for the point spread function of the finite beams, and estimates the degree of redundancy for general combination of baselines at a general time-offset, as we do in the next section.  
+
 
 \begin{figure}[H]
 \includegraphics[width=1.2\linewidth]{Beams}
 
 \caption{Sample beam response of HERA (left) and PAPER (right) antennas, both
-for frequency of $\nu=150\text{MHz}$ and Stokes $I$ polarization. Notice $A$ in this paper is a ``baseline's beam'', equivalent to squares of the antenna beams shown here. The circles centered around zenith (center of beam) here are
-spaced 10 degrees apart. The finite size of the beams limits the accuracy of the uv track-crossing as a method of redundancy search. \label{fig:Beam}}
+for frequency of $\nu=150\text{MHz}$ and Stokes $I$ polarization. Notice $A$ in this paper is a ``baseline's beam'', equivalent to squares of the antenna voltage beams shown here. The circles centered around zenith (center of beam) here are
+spaced 10 degrees apart. The finite size of the beams limits the accuracy of the $uv$ track-crossing as a method of redundancy search. \label{fig:Beam}}
 \end{figure}
 
 
@@ -198,7 +198,7 @@ the product of visibilities of two different baselines to the power spectrum.
 
 
 We take the visibility as commonly defined in the literature (e.g.
-\cite{first-paper}): 
+\citealt{first-paper}): 
 \begin{equation}
 \begin{aligned}V_{\nu}(\boldsymbol{b}) & =\int d\Omega A_{\nu}(\hat{\boldsymbol{s}})\phi(\nu)I_{\nu}(\hat{\boldsymbol{s}})\exp\left[-2\pi i\frac{\nu}{c}\boldsymbol{b}\cdot\hat{\boldsymbol{s}}\right],\\
  & \approx\frac{2k_{B}}{\lambda^{2}}\int d\Omega A_{\nu}(\hat{\boldsymbol{s}})\phi(\nu)T(\hat{\boldsymbol{s}})\exp\left[-2\pi i\frac{\nu}{c}\boldsymbol{b}\cdot\hat{\boldsymbol{s}}\right],
@@ -210,10 +210,10 @@ length, $\hat{\boldsymbol{s}}$ and $\Omega$ are a direction in the
 sky and its corresponding solid angle. $A_{\nu}$ is the (frequency
 dependent) beam, and $I$ is the specific intensity, which has been
 related to $T$, the brightness temperature in the Rayleigh-Jeans
-limit. Note that $A$ here is the baseline beam, i.e. product of two antenna beams, examples of which are shown in Fig.\ref{fig:Beam}. $\phi(\nu)$ is the frequency bandpass profile. In practice,
-power spectrum measurements are typically taken from a few ten MHz centered around the corresponding redshift of interest (e.g. 150 MHz for z=9.5). 
+limit. $k_B$ is Boltzmann's constant. Note that $A$ here is the baseline beam, i.e. product of two antenna voltage beams, examples of which are shown in Fig. \ref{fig:Beam}. $\phi(\nu)$ is the frequency bandpass profile. In practice,
+power spectrum measurements are typically taken from a few ten MHz centered around the corresponding redshift of interest (e.g. 150 MHz for z=9.5). We take a moment to note that in Eq. \ref{eq:Vis1}, and our subsequent discussion, no flat-sky approximation has been made. The angular integral is performed over the dome $d\Omega$. 
 
-We define the delay transformed visibility \cite{delay-transform}:
+We define the delay-transformed visibility \citep{delay-transform}:
 \small
 \begin{equation}
 \begin{aligned}V(\boldsymbol{b},\tau) & =\int d\nu V_{\nu}(\boldsymbol{b})\phi(\nu)\exp\left[-2\pi i\nu\tau\right],\\
@@ -229,14 +229,13 @@ an integral over observation coordinates $\hat{\boldsymbol{s}}$ and $\nu$. Ultim
 we would like to relate the data, collected with coordinates $\hat{\boldsymbol{s}}$
 and $\nu$, to the power spectrum, written with cosmological coordinates
 $\boldsymbol{r}$ and $\boldsymbol{k}$. We start by noticing that
-{[}Gerry: change all r and k into bold{]} 
 \[
 \begin{aligned}r & =\frac{c}{H_{0}}\int_{0}^{z}\frac{dz'}{E(z')},\\
  & \approx\frac{c}{H_{0}}\int_{0}^{z_{0}}\frac{dz'}{E(z')}-\frac{c(1+z)^{2}}{\nu_{21}H_{0}E(z)}\left(\nu-\nu_{0}\right),\\
  & \equiv D_{c}-Y\Delta\nu,
 \end{aligned}
 \]
-where $\nu_{21}=1420MHz$ is the 21cm transition rest frequency, $\nu_{0}$
+where $\nu_{21}=1420$MHz is the 21cm transition rest frequency, $\nu_{0}$
 a reference central frequency with corresponding redshift $z_{0}$,
 and 
 \[
@@ -246,15 +245,15 @@ Inverting for $\nu$:
 \begin{equation}
 \nu=\frac{D_{c}-r}{Y}+\nu_{21}.\label{eq:nur}
 \end{equation}
-Thus $d\nu=-dr/Y$ and $d^{3}r=-X^{2}Yd\Omega d\nu$. 
+
 
 We can thus rewrite the delayed transformed visibility as 
 \small
 \[
-\begin{aligned}V(\boldsymbol{b},\tau) & =\frac{1}{X^{2}Y}\int_{H}d^{3}rA(\boldsymbol{r})\phi(r)I(\boldsymbol{r})\exp\left[-2\pi i\left(\frac{\boldsymbol{b}}{c}\cdot\hat{\boldsymbol{r}}+\tau\right)\nu_{r}\right]\end{aligned}.
+\begin{aligned}V(\boldsymbol{b},\tau) & =\frac{2k_{B}}{\lambda^{2}}\int_{H}\frac{d^{3}r}{X^{2}Y}A(\boldsymbol{r})\phi(r)T(\boldsymbol{r})\exp\left[-2\pi i\left(\frac{\boldsymbol{b}}{c}\cdot\hat{\boldsymbol{r}}+\tau\right)\nu_{r}\right]\end{aligned}.
 \]
 \normalsize
-Here $(r_{x},r_{y},r_{z})=(X\hat{\boldsymbol{s}}_{x},X\hat{\boldsymbol{s}}_{y},Y\nu)$, and
+Here $(r_{x},r_{y},r_{z})=(X\hat{\boldsymbol{s}}_{x},X\hat{\boldsymbol{s}}_{y},Y\nu)$, and so $d\nu=-dr/Y$ and $d^{3}r=-X^{2}Yd\Omega d\nu$. 
 $(Xk_{x},Xk_{y},Yk_{z})=\frac{2\pi}{c}(b_{x},b_{y},\tau)$ relate
 the cosmological coordinates $r$ and $k$ to the measured coordinates.
 We have written $\nu_{r}$ to remind us that $\nu$ and $r$ are related
@@ -264,7 +263,7 @@ for all baselines.
 
 With a time offset, the beam pattern has moved relative to the sky.
 Here we choose to fix the sky, and denote the rotated coordinates
-of the beam pattern with the operator $\Gamma$. With implicit bounds
+of the beam pattern with the 3 dimensional rotation operator $\Gamma$. With implicit bounds
 of integrals from $-\infty$ to $\infty$, we have:
 \begin{widetext}
 \begin{equation}
@@ -272,10 +271,9 @@ of integrals from $-\infty$ to $\infty$, we have:
  & =\left(\frac{2k_{B}}{X^{2}Y\lambda^{2}}\right)^{2}\int d^{3}rd^{3}r'\left(\langle T^{*}(\boldsymbol{r})T(\boldsymbol{r'})\rangle\right)A^{*}(\boldsymbol{r})A(\Gamma r')\Phi_{b,\tau}(\boldsymbol{r},\Gamma r'),\\
  & =\left(\frac{2k_{B}}{X^{2}Y\lambda^{2}}\right)^{2}\int d^{3}rd^{3}r'\left(\int\frac{d^{3}\kappa}{(2\pi)^{3}}\frac{d^{3}\kappa'}{(2\pi)^{3}}\langle T^{*}(\boldsymbol{\kappa})T(\boldsymbol{\kappa'})\rangle e^{-i(\boldsymbol{\kappa}\cdot \boldsymbol{r}-\boldsymbol{\kappa'}\cdot\boldsymbol{r'})}\right)A^{*}(\boldsymbol{r})A(\Gamma r')\Phi_{b,\tau}(\boldsymbol{r},\Gamma r'),\\
  & =\left(\frac{2k_{B}}{X^{2}Y\lambda^{2}}\right)^{2}\int d^{3}rd^{3}r'\left(\int\frac{d^{3}\kappa}{(2\pi)^{3}}P(\kappa)e^{-i\boldsymbol{\kappa}\cdot(\boldsymbol{r}-\boldsymbol{r'})}\right)A^{*}(\boldsymbol{r})A(\Gamma r')\Phi_{b,\tau}(\boldsymbol{r},\Gamma r'),\\
- & =\left(\frac{2k_{B}}{X^{2}Y\lambda^{2}}\right)^{2}\int d^{3}rd^{3}r'\xi(\boldsymbol{r}-\boldsymbol{r'})A^{*}(\boldsymbol{r})A(\Gamma r')\Phi_{b,\tau}(\boldsymbol{r},\Gamma r'),\\
  & \approx\left(\frac{2k_{B}}{X^{2}Y\lambda^{2}}\right)^{2}P(k_{b,\tau})\int d^{3}rd^{3}r'\delta_{D}^{(3)}(\boldsymbol{r}-\boldsymbol{r'})A^{*}(\boldsymbol{r})A(\Gamma r')\Phi_{b,\tau}(\boldsymbol{r},\Gamma r'),\\
  & =\left(\frac{2k_{B}}{X^{2}Y\lambda^{2}}\right)^{2}P(k_{b,\tau})\int d^{3}r|A^{*}(\boldsymbol{r})A(\Gamma r)||\phi(\nu_{r})|^{2}\exp\left[-i2\pi\nu_{r}\left(\hat{\boldsymbol{r}}\cdot\frac{\boldsymbol{b}}{c}-\hat{\Gamma r}\cdot\frac{\boldsymbol{b'}}{c}\right)\right],\\
- & =\left(\frac{2k_{B}}{\lambda^{2}}\right)^{2}P(k_{b,\tau})\int\frac{d\Omega d\nu}{X^{2}Y}|A^{*}(\hat{\boldsymbol{s}},\nu)A(\hat{\Gamma s},\nu)||\phi(\nu)|^{2}\exp\left[-i2\pi\nu\left(\hat{\boldsymbol{s}}\cdot\frac{\boldsymbol{b}}{c}-\hat{\Gamma s}\cdot\frac{\boldsymbol{b'}}{c}\right)\right],
+ & =\left(\frac{2k_{B}}{\lambda^{2}}\right)^{2}P(k_{b,\tau})\int\frac{d\Omega d\nu}{X^{2}Y}|A^{*}(\hat{\boldsymbol{s}},\nu)A(\hat{\Gamma s},\nu)||\phi(\nu)|^{2}\exp\left[-i2\pi\nu\left(\hat{\boldsymbol{s}}\cdot\frac{\boldsymbol{b}}{c}-\Gamma\hat{\boldsymbol{s}}\cdot\frac{\boldsymbol{b'}}{c}\right)\right],
 \end{aligned}
 \label{eq:main}
 \end{equation}
@@ -287,9 +285,9 @@ where in transition from cosmological coordinates back to observing coordinates 
 \end{widetext}
 The second to third line of Eq.(\ref{eq:main}) follows from assumption of Gaussian random
 sky, and the third to fourth line follows from the assumption that
-the 3D power spectrum varies negligibly over the region of interest
-so that $\hat{P_{21}}(k+k_{2})\approx\hat{P_{21}}(k)$. Since $\Gamma$
-is a sky rotation, it doesn't affect $\nu$, hence we have taken $\nu_{r}$
+the 3D power spectrum varies negligibly over the $k$-space of interest
+so that $\hat{P}_{21}(k+k_{2})\approx\hat{P}_{21}(k)$. Since $\Gamma$
+is a sky rotation, it does not affect $\nu$, hence we have taken $\nu_{r}$
 outside the parenthesis. Notice that the phase factor $\exp\left[-i2\pi\tau\left(\nu-\nu'\right)\right]$
 drops out in the end. This means that correlation is peaked at the same time-offset for all delay channels. 
 
@@ -300,8 +298,8 @@ the power spectrum:
 
 \begin{equation}
 \begin{aligned} & \langle V^{*}(\boldsymbol{b},\tau)V(\boldsymbol{b'},\tau')\rangle\\
- & =\left(\frac{2k_{B}}{\lambda^{2}}\right)^{2}P(k_{b,\tau})\int\frac{d\Omega d\nu}{X^{2}Y}|A^{*}(\hat{\boldsymbol{s}},\nu)A(\hat{\Gamma s},\nu)||\phi(\nu)|^{2}\\
- & \qquad \qquad \qquad \qquad \exp\left[-i2\pi\nu\left(\hat{\boldsymbol{s}}\cdot\frac{\boldsymbol{b}}{c}-\hat{\Gamma s}\cdot\frac{\boldsymbol{b'}}{c}\right)\right].\end{aligned}
+ & =\left(\frac{2k_{B}}{\lambda^{2}}\right)^{2}P(k_{b,\tau})\int\frac{d\Omega d\nu}{X^{2}Y}|A^{*}(\hat{\boldsymbol{s}},\nu)A(\Gamma\hat{\boldsymbol{s}},\nu)||\phi(\nu)|^{2}\\
+ & \qquad \qquad \qquad \qquad \exp\left[-i2\pi\nu\left(\hat{\boldsymbol{s}}\cdot\frac{\boldsymbol{b}}{c}-\Gamma\hat{\boldsymbol{s}}\cdot\frac{\boldsymbol{b'}}{c}\right)\right].\end{aligned}
 \label{eq:final}
 \end{equation}
 
@@ -312,30 +310,30 @@ In other words the power spectrum estimate from visibilities of a baseline pair 
 \end{equation}
 where the weight
 \begin{equation}
-\Theta =\int\frac{d\Omega d\nu}{X^{2}Y}|A^{*}(\hat{\boldsymbol{s}},\nu)A(\hat{\Gamma s},\nu)||\phi(\nu)|^{2} e^{-2\pi i\nu\left(\hat{\boldsymbol{s}}\cdot\frac{\boldsymbol{b}}{c}-\hat{\Gamma s}\cdot\frac{\boldsymbol{b'}}{c}\right)}. 
+\Theta =\int\frac{d\Omega d\nu}{X^{2}Y}|A^{*}(\hat{\boldsymbol{s}},\nu)A(\Gamma\hat{\boldsymbol{s}},\nu)||\phi(\nu)|^{2} e^{-2\pi i\nu\left(\hat{\boldsymbol{s}}\cdot\frac{\boldsymbol{b}}{c}-\Gamma\hat{\boldsymbol{s}}\cdot\frac{\boldsymbol{b'}}{c}\right)}. 
 \label{eq:Theta}
 \end{equation}
 
 
 
 So roughly speaking the cross multiplications of visibilities at a time delay
-in uv-space is proportional to the power spectrum times the Fourier
+in $uv$-space is proportional to the power spectrum times the Fourier
 transform of the cross multiplied beam pattern. We can then in principle
 combine information from different baseline pairs if we correct for
 the phase and normalization. As a check, when applied to equivalent baselines,
-$\boldsymbol{b}=\boldsymbol{b'}$, $\hat{\boldsymbol{s}}=\hat{\Gamma s}$, and Eq.(\ref{eq:final}) reduces to Eq.(B9) of \cite{paper32}. 
+$\boldsymbol{b}=\boldsymbol{b'}$, $\hat{\boldsymbol{s}}=\Gamma\hat{\boldsymbol{s}}$, and Eq.(\ref{eq:final}) reduces to Eq.(B9) of \cite{paper32}. 
 
-If this result is robust, then we can achieve all our goals stated in the introduction, i.e. to identify 
-candidate baseline pairs, to find the optimal time offset, and to quantify the sensibility, by computing the weight $\Theta$ from
-Eq.(\ref{eq:Theta}) for various time offsets. Thus we shall first test its robustness numerically.
+With Eq. \ref{eq:opp} and Eq. \ref{eq:Theta} we can for any given baseline pair and time delay, estimate the degree of redundancy, here represented by $\Theta$, thereby achieving all our goals stated in the introduction, i.e. to identify 
+candidate baseline pairs with good redundancy, to find the time offset that maximizes redundancy, and to quantify the degree of such redundancy. We can do all the above simply by computing the weight $\Theta$ from
+Eq.(\ref{eq:Theta}) for various time offsets, without having to actually cross-multiply visibilities at different offsets. This makes the task computationally tractable. 
 
 \subsection{Rephasing \label{sec:rephs}}
 Before we discuss tests, there is one subtlety when applying Eq. \ref{eq:final}. The optimal time offset is given by the $\Gamma$ that maximizes the absolute value of the weight $\Theta$. However, $\Theta$ is in general complex. First integrating over the spatial dimension $\Omega$, we see the phase term at peak time-offset is inevitably frequency dependent. This frequency dependence of the phase would lead to destructive interference when we integrate over frequency.
 
-The physical origin of this frequency dependent phase lies the two visibilities having different phase centers. By default the two visibilities are both phased to zenith at the same time. When they are cross-correlated, they must be rephased to the account for the movement of the zenith. Thus in practice we must rephase the visibilities before delay transform. 
+The physical origin of this frequency-dependent phase lies in the two visibilities having different phase centers. By default the two visibilities are both phased to zenith at the same time. When they are cross-multiplied with a time lag, they must be rephased to the account for the movement of the zenith. Thus in practice we must rephase the visibilities before delay transform. 
 
 
-In Fig.\ref{fig:freqdiff} we compare two channels 0.16 GHz and 0.17 GHz. The top two panels have zero rephasing, and the bottom two are rephased to a time offset of 0.055 sidereal days, the optimal time offset for the given baseline pair. The first and third panels show the equivalent baseline pairs sep1,0 against itself, and second and fourth panels show sep1,0 against sep1,1. We see that in the un-rephased case in the second panel, although the magnitude of correlations match up for the two frequencies, the phases do not. This means summing over frequency leads to destructive interference and signal loss. The wider the frequency profile, the more destructive the interference would be. In the rephased case, the phases of the near-equivalent case match up and can be added without compromising sensitivity. We should thus rephase the data separately for each set of baseline pairs. 
+In Fig. \ref{fig:freqdiff} we compare the cross-multiplied visibilities of both equivalent and near-equivalent baseline pairs for two channels: 0.16 GHz and 0.17 GHz. The top two panels have zero rephasing, and the bottom two are rephased to a time offset of 0.055 sidereal days, the optimal time offset for the given baseline pair. The first and third panels show the equivalent baseline pairs sep1,0 against itself, and second and fourth panels show sep1,0 against sep1,1. We see that in the un-rephased case in the second panel, although the magnitude of correlations match up for the two frequencies, the phases do not. This means summing over frequency leads to destructive interference and signal loss. The wider the frequency profile, the more destructive the interference would be. In the rephased case, the phases of the near-equivalent case match up and can be added without compromising sensitivity. We should thus rephase the data separately for each set of baseline pairs. 
 
 \begin{figure}[H]
 \includegraphics[width=1.1\linewidth]{rephs}
@@ -348,15 +346,15 @@ In Fig.\ref{fig:freqdiff} we compare two channels 0.16 GHz and 0.17 GHz. The top
 \section{Analysis}
 \subsection{Numerical Test \label{sec:Techniquet}}
 
-To test the robustness of Eq.(\ref{eq:final}), we need to compare the amplitude and phase of the integral weight $\Theta$ 
-for a pair of baselines with products of simulated visibilities of those baselines. For computational simplicity, we shall use a single frequency channel of $150$MHz for the comparison. We may use this simplification without compromising generality because Eq. (\ref{eq:final}) is valid for a range of frequency channels if an only if it's valid for each single channels, provided that different channels are combined with rephasing as desscribed in Sec. \ref{sec:rephs}. 
+First we present some numerical tests of our formalism to verify the validity of using $\Theta$ to estimate the degree of redundancy as a function of time lag. To do so, we need to compare the amplitude and phase of the integral weight $\Theta$ 
+for a pair of baselines with products of simulated visibilities of those baselines. For computational simplicity, we shall use a single frequency channel of $150$MHz for the comparison. We may use this simplification without compromising generality because Eq. (\ref{eq:final}) is valid for a range of frequency channels if and only if it's valid for each single channels, provided that different channels are combined with rephasing as described in Sec. \ref{sec:rephs}. 
 
-For the simulation, we take N random realizations of the sky
-on a healpix map (\cite{Heal}, \cite{HealPrimer}) \footnote{We use functionalities in the python package AIPY for healpix mapping
-as well as coordinate transforms. }. For each realization, each pixel is given a Gaussian random value
+For the simulation, we take N=2500 random realizations of the sky
+on a healpix map \citep{Heal, HealPrimer} \footnote{We use functionalities in the python package AIPY for healpix mapping
+as well as coordinate transforms. }, and pick two baselines sep1,0 and sep1,1. For each realization, each pixel is given a Gaussian random value
 of brightness temperature. We then rotate the baseline positions with
-the appropriate rotation matrix, recording the visibilities, for each
-baseline \footnote{As a caveat, there are two obvious ways to achieve the rotation. One
+the appropriate rotation matrix, multiplying the sky by the primary beam to get the visibilities, for each
+baseline\footnote{There are two obvious ways to achieve the rotation. One
 can either fix the sky and rotate the baselines, or the other way
 around. We found however, that we must not physically rotate the sky
 map, for the numerical round-offs due to finite resolutions of the
@@ -364,7 +362,7 @@ map turns out to be significant. Thus we let the sky, represented
 by the healpix map, be fixed, and rotate the baselines. }. The resulting visibilities for the two baselines are then convolved
 via the Fourier convolution theorem, to obtain values of the cross
 correlation as a function of time-offset. The peak of the curve then
-corresponds to maximum redundancy. The accuracy of this result is
+corresponds to maximum redundancy.  We do this for both the equivalent (sep1,0 against sep1,0) and near-equivalent (sep1,0 against sep1,1) case. The accuracy of this result is
 limited by (simulated) cosmic variance and finite spacial resolution,
 and hence can be beat down by averaging over a large number of universes.
 A numerical estimate of the error of the peak height with $N=1$ is
@@ -374,15 +372,15 @@ height $<0.5\%$.
 \begin{figure}[h]
 \includegraphics[width=\linewidth]{opp}
 
-\caption{Numerical comparisons of the visibility correlation peaks to the $\Omega$ factor in Eq.(\ref{eq:final}). We generated 2400 instances of Gaussian random sky on healpix maps, computed visibilities and cross correlated them to find the correlation.  Top panel shows the equivalent baseline pairs sep1,0 against itselt, bottom show set1,0:1:1.  Evaluations of weight $\Theta$ are shown with solid curves, and the visibility correlations of simulated random sky is given with dashed lines. In both cases blue denotes real part, green the imaginary part, and red the magnitude. We see that in both cases the theory and simulation line up in both amplitude and phase.}
+\caption{Numerical comparisons of the visibility correlation peaks to the $\Omega$ factor in Eq.(\ref{eq:final}). We generated 2400 instances of Gaussian random sky on healpix maps, computed visibilities and cross correlated them to find the correlation.  Top panel shows the equivalent baseline pairs sep1,0 against sep1,0, bottom panel shows set1,0 against sep1,1.  Evaluations of weight $\Theta$ are shown with solid curves, and the visibility correlations of simulated random sky is given with dashed lines. In both cases blue denotes real part, green the imaginary part, and red the magnitude. We see that in both cases the theory and simulation line up in both amplitude and phase.}
 \label{fig:numerics}
 \end{figure}
 
 
 The comparison is show in Fig. \ref{fig:numerics}. 
-Since the sensitivity contribution is inferred from height of the peak of the cross-multiplied visibilities as a function of time. 
-We first compare the simulation to the analytical weight $\Theta$ for a pair of equivalent baselines, then normalize the peaks 
-of the near-equivalent baselines to that of the equivalent ones. 
+Sensitivity contribution is inferred from height of the peak of the cross-multiplied visibilities as a function of time. 
+We first compare the simulation to the analytical weight $\Theta$ for a pair of equivalent baselines (sep1,0, sep1,0), then normalize the peaks 
+of the near-equivalent baselines (sep1,0, sep1,1) to that of the equivalent ones. 
 In Fig. \ref{fig:numerics}  we show on the top comparison of
 the convolution of an equivalent baseline of PAPER-128, normalized to 1 at the
 peak, whose location is at zero time offset as expected. On the bottom we show
@@ -403,27 +401,38 @@ patterns for baselines sep2,0 and sep2,1, delayed by 0.0325 sidereal days,
 and the right panel shows their cross product. The fringe pattern
 indeed cancels out as we expect. 
 
-\begin{widetext}
-\begin{figure}[H]
-\includegraphics[scale=0.5]{fringe_res}
-%\includegraphics[width=\linewidth]{fringe_res}
+
+\begin{figure*}[h!]
+\includegraphics[width=\linewidth]{fringe_res}
 \caption{Beam fringe pattern of sep2,0(left), sep2,1 at a time delay (middle),
-and their conjugate product. Frequency of $\nu=0.15\text{GHz}$ is
-chosen and only the real components are shown. \label{fig:Beam-fringe-pattern}}
-\end{figure}
-\end{widetext}
+and their conjugate product (right). Frequency of $\nu=0.15\text{GHz}$ is
+chosen and only the real components are shown. The colorbar values are normalized such that the peak of the original beam is 1. \label{fig:Beam-fringe-pattern}}
+\end{figure*}
+
+
+\begin{figure*}[h!]
+\includegraphics[width=\linewidth]{sensitivity}
+
+\caption{Relative sensitivity contributions of selected baseline combinations in PAPER-128. In the legend m,n:p,q denotes cross
+multiplying PAPER-128 baselines of east-west, north-south separations (m,n) and (p,q) respectively. The top
+panel shows the peak height (degree of correlation) of each baseline
+combination, while the bottom panel multiplies the heights by the
+corresponding multiplicities as in Eq. \eqref{eq:sensul}, and in some cases an extra factor of $\sqrt{2}$ (explained in text). 
+In weighting by the multiplicity (bottom), we have chosen to fix the sensitivity 
+contribution of 1,0:1,0 to unity. The same symbols and colors correspond in the top and bottom panel, with half of the legend shown in each. }
+\label{fig:sensplot}
+\end{figure*}
 
 
 \subsection{ Sensitivity \label{sec:sensitivity}}
 
 Having verified Eq. \eqref{eq:final}, we can thus predict the sensitivity contributions of a
-particular baseline pair simply by computing the integral.
-Intuitively we expect the sensitivity to depend on both the uv coverage of the baseline and the patch of sky inside the beam. A larger beam like PAPER-beam would tolerate larger time-offsets because more sky area can coincide in the two beams. To keep the flow of the discussion, we shall focus on results of PAPER-128, and present the results for HERA in the Appendix. 
+particular baseline pair simply by computing the integral Eq. \.
+Intuitively we expect the sensitivity to depend on both the $uv$ coverage of the baseline and the patch of sky inside the beam. A larger beam like that of PAPER would tolerate larger time-offsets because more sky area can coincide in the two beams \footnote{Larger beams also imply smaller spread in $uv$ space. This could lead to either larger or smaller redundancy, which depends on the overlap of two such point spread functions.}
 Having computed all of the baseline pairs, we find that baseline pairs that are mirror images of each other 
 give the same amount of redundancies (peak height), with the opposite time offset, as expected from symmetry. 
 For example, sep1,0:1,1 is mirror image of sep1,0:1,-1 and these two baseline pairs
-give the same sensibility contribution. Thus in our results we shall only show a subset of representative baseline pairs 
-that give different informations. 
+give the same sensibility contribution. Thus we shall only show a subset of representative baseline pairs to illustrate the contributions from different classes of baseline pairs. For a more complete result see Fig. \ref{fig:pairplot}.  
 
 In the top panel of Fig. \ref{fig:sensplot}
 we show the peak heights and locations for a variety of baseline combinations.
@@ -435,34 +444,19 @@ to the sky and hence the less overlaps in patch of sky surveyed, b) smaller opti
 time-offset corresponds to smaller differences in orientation, and hence in length of
 baselines in PAPER. 
 
-\begin{widetext}
-\begin{figure}[H]
-\centering
-\includegraphics[width=\textwidth]{sensitivity}
 
 
-\caption{Relative sensitivity contributions of selected baseline combinations in PAPER-128. In the legend m,n:p,q denotes cross
-multiplying PAPER-128 baselines of east-west, north-south separations (m,n) and (p,q) respectively. The top
-panel shows the peak height (degree of correlation) of each baseline
-combination, while the bottom panel multiplies the heights by the
-corresponding multiplicities as in Eq. \eqref{eq:sensul}, and in some cases an extra factor of $\sqrt{2}$ (explained in text). 
-In weighting by the multiplicity (bottom), we have chosen to fix the sensitivity 
-contribution of 1,0:1,0 to unity. The same symbols and colors correspond in the top and bottom panel, with half of the legend shown in each. }
-\label{fig:sensplot}
-\end{figure}
-\end{widetext}
 
 To determine that actual relative contribution to sensitivity of these
 baseline pairs, we have to take into account of the multiplicities of
-these baselines, or the size of the equivalency classes in a mathematical
-language. By these we mean how many physical antenna pairs have the
+these baselines. By these we mean how many physical antenna pairs have the
 same length and orientation. Looking at Fig. \ref{fig:sensplot}
 we see for example sep1,0 will have higher multiplicity than sep2,0,
 or sep1,1. The latest release of PAPER-64 data uses the 128-equivalent baselines sep2,1,
-sep2,0 and sep2,-1 \cite{Ali2015}, and achieved a $2\sigma$ upper
-limit of $(22.4mK)^{2}$. There, the three sets of equivalent baselines
+sep2,0 and sep2,-1 \citep{Ali2015}, and achieved a $2\sigma$ upper
+limit of $(22.4\text{mK})^{2}$. There, the three sets of equivalent baselines
 are only cross multiplied by itself. Assuming that each baseline delivers
-the same quality of data (i.e. they have the same height of correlation
+the same quality of data (meaning they have the same height of correlation
 peaks, which is in our normalization equal to unity), the relative
 contribution to sensitivity can be estimated. 
 
@@ -479,7 +473,7 @@ types sepm,n and sepm',n', we get an effective weight:
 \end{equation}
 
 Shown in the bottom panel of Fig. \ref{fig:sensplot} is the peak heights weighted
-by the multiplicity factor. Points that have zero time delay are the equivalent baseline pairs and their weighted correlation values simply reflect the multiplicity factor. For clarity of presentation we have "folded over" the negative time delays and combined baseline pairs that are identical modulus parity, 
+by the multiplicity factor. Points that have zero time delay are the equivalent baseline pairs and their weighted correlation values simply reflect the multiplicity factor. For clarity of presentation we have ``folded over'' the negative time delays and combined baseline pairs that are identical modulus parity, 
 or in other words are mirror images of each other
 %\footnote{The parity symmetry is partially broken unless the array is located at the poles. But we are ignoring this here for illustrative purposes. See Fig. \ref{fig:pairplot} for a more accurate result. }
 , by summing over them to get an extra factor of $\sqrt{2}$. For example, 
@@ -490,7 +484,7 @@ the factor of $\sqrt{2}$ because their mirror images are themselves.
 
 
 
-Finally we estimate the power spectrum by inverse covariance weighting:
+Having defined the modified weight $\widetilde{\Theta}$, we can estimate the power spectrum by inverse covariance weighting:
 \begin{equation}
 \begin{aligned}
  P(k_{\tau}) &= \frac{\sum_{bb'}P(k_{b,\tau})/\sigma_P^2(bb')}{\sum_{bb'}\sigma_P^2(bb')}, \\
@@ -500,10 +494,12 @@ Finally we estimate the power spectrum by inverse covariance weighting:
 where the sum is over classes of baseline pairs. 
 We define the estimator sensitivity to be the inverse of the power-spectrum noise variance:
 \begin{equation}
-\rho \propto \frac{1}{\sigma_P^2} = \sum_{bb'}^N\widetilde{\Theta}^2_{bb'},
+\rho \propto \frac{1}{\sigma_P^2} \propto \frac{1}{\sigma^4_N}\sum_{bb'}^N\widetilde{\Theta}^2_{bb'},
 \end{equation}
+where $\sigma_N$ is a characteristic single-baseline noise level. 
 
-So far we have been sloppy in Eq. \ref{eq:sensul} for simplicity. As we derive in Appendix \ref{sec:appB}, this weight should be corrected by a factor proportional to the signal to noise ratio of a single-baseline visibility $\rho_0=\sigma_S^2/\sigma_N^2$:
+
+The scaling in Eq. \ref{eq:sensul} was rough for simplicity of motivation. As we derive in Appendix \ref{sec:appB}, this weight should be corrected by a factor proportional to the signal to noise ratio of a single-baseline visibility $\rho_0=\sigma_S^2/\sigma_N^2$:
 
 \begin{equation}
 \label{eq:tildereal}
@@ -518,10 +514,10 @@ To move forward we must give an estimate of $\rho_0$ in Eq.\ref{eq:tildereal}. A
 where $L$ is the baseline length. We only need a single characteristic $L$ even in the near-equivalent case because only baselines of nearly equal length would have high redundancy.As expected, baseline-pairs that have smaller $\widetilde{\Theta}$ contribute less to the sensitivity. 
 
 \subsection{Array Configuration Comparisons \label{sec:arrconf}}
-We run our algorithm over all possible baseline-pairs of  PAPER128, HERA37, HERA128, HERA243 and HERA350. The HERA antenna configurations are shown in Fig. \ref{fig:HeraAntpos} in the Appendix. The  
-hexagonal design is the densest pattern of antenna-packing. The larger arrays are designed with a "gap" dividing the antennas into three different regions. The gaps are designed so as to improve UV-coverage and ease calibration without compromising sensitivity, but also produces much more near-equivalent baselines than the versions without the gap. The motivations behind the designs are explained in \cite{HERAconfiguration}.  The lack of short baselines that are visually close to each other, as well as the shorter beam (Fig.\ref{fig:Beam}) means that we expect to see only longer near-equivalent baselines. The lower multiplicities per class of baselines is made up with the larger number of classes of baseline-pairs, especially given the gap in the larger versions. 
+We run our algorithm over all possible baseline-pairs of  PAPER128, HERA37, HERA128, HERA243 and HERA350. The HERA antenna configurations are shown in Fig. \ref{fig:HeraAntpos}. The  
+hexagonal design is the densest pattern of antenna-packing. The larger arrays are designed with a ``gap'' dividing the antennas into three different regions. The gaps are designed so as to improve $uv$ coverage and ease calibration without compromising sensitivity, but also produces many more near-equivalent baselines than the versions without the gap. The motivations behind the designs are explained in \cite{HERAconfiguration}.  The lack of short baselines that are visually close to each other, as well as the smaller beam (Fig. \ref{fig:Beam}) means that we expect to see only longer near-equivalent baselines. The lower multiplicities per class of baselines is made up with the larger number of classes of baseline-pairs, especially given the gap in the larger versions. 
 
-Having gotten a sense of the sensitivity from a given pair of baselines, we'd like to study the cumulative sensitivity of the array depending on which baseline pairs we include. Evidently we should prefer the pairs with larger $\widetilde{\Theta}$. In Fig. \ref{fig:osens} we plot $\rho$ against the minimum $\widetilde{\Theta}$. $\rho(\widetilde{\Theta}_{min})$ is the sensitivity of the array when baseline-pairs that have $\widetilde{\Theta}>\widetilde{\Theta}_{min}$ are included. The dashed lines represent the values when only the equivalent baseline-pairs are used.  We see that in all cases using the near-equivalent baselines lead to more and more significant improvements with lower $\widetilde{\Theta}_{min}$, or in other words when worse baseline pairs are used. The small HERA37, with no gap (like in HERA350) or short near-equivalent baselines (like in PAPER 128), will not benefit much from the near-equivalent baselines. The maximum benefits for other cases are expected to be around $20\%$ to $60\%$. PAPER128 is designed with highly redundant near-equivalent baselines, and thus  these baselines start contributing at higher $\widetilde{\Theta}_{min}$, but the gapped HERA configurations will benefit even more from near-equivalent baselines at low $\widetilde{\Theta}_{min}$ due to there being more classes of such pairs. Note that here we normalized $\rho$ such that the contribution of the top equivalent baseline pair, such as (sep0,1:0,1 in the PAPER128 case) are 1. This plot therefore does not compare the absolute sensitivity across the different arrays. The stepwise pattern is characteristic of a regular grid; as we step to lower $\widetilde{\Theta}$ large groups of baseline pair classes get included in "batch". 
+Having quantified the sensitivity from a given pair of baselines, we study the cumulative sensitivity of the array depending on which baseline pairs we include. Evidently we should prefer the pairs with larger $\widetilde{\Theta}$. In Fig. \ref{fig:osens} we plot $\rho$ against the minimum $\widetilde{\Theta}$. $\rho(\widetilde{\Theta}_{min})$ is the sensitivity of the array when baseline-pairs that have $\widetilde{\Theta}>\widetilde{\Theta}_{min}$ are included. The dashed lines represent the values when only the equivalent baseline-pairs are used.  We see that in all cases using the near-equivalent baselines lead to more and more significant improvements with lower $\widetilde{\Theta}_{min}$, or in other words when worse baseline pairs are used. The small HERA37, with no gap (like in HERA350) or short near-equivalent baselines (like in PAPER 128), will not benefit much from the near-equivalent baselines. The maximum benefits for other cases are expected to be around $20\%$ to $60\%$. PAPER128 is designed with highly redundant near-equivalent baselines, and thus  these baselines start contributing at higher $\widetilde{\Theta}_{min}$, but the gapped HERA configurations will benefit even more from near-equivalent baselines at low $\widetilde{\Theta}_{min}$ due to there being more classes of such pairs. Note that here we normalized $\rho$ such that the contribution of the top equivalent baseline pair, such as (sep0,1:0,1 in the PAPER128 case) are 1. This plot therefore does not compare the absolute sensitivity across the different arrays. The stepwise pattern is characteristic of a regular grid; as we step to lower $\widetilde{\Theta}$ large groups of baseline pair classes get included in ``batch''. 
 %\begin{centered}
 \begin{figure}[H]
 \includegraphics[width=\linewidth]{osens}
@@ -530,6 +526,13 @@ Having gotten a sense of the sensitivity from a given pair of baselines, we'd li
 \end{figure}
 %\end{centered}
 
+\begin{figure*}[h!]
+\includegraphics[width=0.9\textwidth]{HeraAntpos}
+\label{fig:HeraAntpos}
+
+
+\caption{Planned Hydrogen Epoch of Reionization Array antenna configurations. HERA 37 is expected to complete and start collecting data in summer of 2017, and the other three are planned configurations in the next phases. For HERA350, only the 320 elements in the core are shown. }
+\end{figure*}
 
 In Fig. \ref{fig:pairplot} we present a comparison of 4 different properties for baselines that contribute well to the sensitivity ($\widetilde{\Theta}>0.05$, where again the weight for the top class of equivalent pair is normalized to 1). The $dT$ vs. $\Theta$ and $dT$ vs. $\widetilde{\Theta}$ plots are familiar from Fig. \ref{fig:sensplot}. We only show 3 of the mentioned arrays for visual clarity. The other two results are similar barring intuitive differences. We make a few observations:
 \begin{itemize}
@@ -570,18 +573,11 @@ Redundant arrays are designed to maximize sensitivity. Current generations of re
 
 \pagebreak
 
+
+
 \appendix
-\section{\\Hera Antenna Configurations}
-\begin{widetext}
-\begin{figure}[H]
-\includegraphics[width=0.9\textwidth]{HeraAntpos}
-\label{fig:HeraAntpos}
-\caption{Planned Hydrogen Epoch of Reionization Array antenna configurations. HERA 37 is expected to complete and start collecting data in summer of 2017, and the other three are planned configurations in the next phases. For HERA350, only the 320 elements in the core are shown. }
-\end{figure}
-\end{widetext}
-
-\section{\\Derivation of Noise Covariance \label{sec:appB}}
-
+\section{\label{sec:appB}\\Derivation of Noise Covariance \label{sec:appB}}
+\label{sec:appB}
 In this appendix we give a brief derivation of the effective weight quoted in \ref{sec:sensitivity}. We combine the different power spectrum measurements by inverse variance weighting \footnote{In practice techniques such as bootstrapping is often used, see for example \citep{Ali2015}}. We shall separate the visibility and power spectrum into signal and noise contributions:
 \begin{equation}
 \begin{aligned}
