@@ -494,12 +494,12 @@ Having defined the modified weight $\widetilde{\Theta}$, we can estimate the pow
 where the sum is over classes of baseline pairs. 
 We define the estimator sensitivity to be the inverse of the power-spectrum noise variance:
 \begin{equation}
-\rho \propto \frac{1}{\sigma_P^2} \propto \frac{1}{\sigma^4_N}\sum_{bb'}^N\widetilde{\Theta}^2_{bb'},
+\rho \propto \frac{1}{\sigma_P^2} \propto \rho_0^2\sum_{bb'}^N\widetilde{\Theta}^2_{bb'},
 \end{equation}
-where $\sigma_N$ is a characteristic single-baseline noise level. 
+where, if $\sigma_S^2$ and $\sigma_N^2$ are the characteristic signal and noise levels of a single-baseline visibility, $\rho_0=\sigma_S^2/\sigma_N^2$ is the signal to noise ratio. 
 
 
-The scaling in Eq. \ref{eq:sensul} was rough for simplicity of motivation. As we derive in Appendix \ref{sec:appB}, this weight should be corrected by a factor proportional to the signal to noise ratio of a single-baseline visibility $\rho_0=\sigma_S^2/\sigma_N^2$:
+The scaling in Eq. \ref{eq:sensul} was rough for simplicity of motivation. As we derive in Appendix \ref{sec:appB}, this weight should be corrected by a factor proportional $\rho_0$:
 
 \begin{equation}
 \label{eq:tildereal}
