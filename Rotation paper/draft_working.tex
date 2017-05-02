@@ -1,6 +1,6 @@
 %\documentclass[preprint2,numberedappendix,tighten,twocolappendix]{aastex6}  % USE THIS TO MAKE BIB, THEN FORMAT USING EMULATEAPJ
 \documentclass[twocolumn,apj,numberedappendix]{emulateapj}
-\shorttitle{Adding Sensitivity to 21cm Inteferometric Probes of Reionization}
+\shorttitle{Adding Sensitivity to 21\,cm Inteferometric Probes of Reionization}
 \shortauthors{Zhang\&Parsons}
 \usepackage{float}
 \usepackage{amsmath}
@@ -18,7 +18,7 @@
 
 \begin{document}
 
-\title{Adding Sensitivity to 21cm Inteferometric Probes of Reionization by Optimizing Choice of Baselines}
+\title{Adding Sensitivity to 21\,cm Inteferometric Probes of Reionization by Optimizing Choice of Baselines}
 
 %\maketitle
 \author{
@@ -31,7 +31,7 @@ Aaron R. Parsons\altaffilmark{1, 2}
 \altaffiltext{2}{Radio Astronomy Lab., U. California, Berkeley, CA}
 
 \begin{abstract}
-The observational effort to measure the cosmological 21cm power spectrum with radio interferometers requires high sensitivity. We introduce a straightforward and accurate method to extract sensitivity from visibility data. We develop our method in line with existing visibility-based power spectrum pipelines. Our method efficiently finds subsets of baselines to cross correlate, including partially redundant baselines, and quantifies the sensitivity contributions of given baselines. 
+The observational effort to measure the cosmological 21\,cm power spectrum with radio interferometers requires high sensitivity. We introduce a straightforward and accurate method to extract sensitivity from visibility data. We develop our method in line with existing visibility-based power spectrum pipelines. Our method efficiently finds subsets of baselines to cross correlate, including partially redundant baselines, and quantifies the sensitivity contributions of given baselines. 
 Using the 128-element configurations and beams of Precision Array for Probing the Epoch of Reionization (PAPER-128), as well as 4 planned versions of the Hydrogen Epoch of Reionization Array (HERA), we illustrate how our method applies to different arrays and predict the sensitivity improvements of including each baseline pairs. We show that inclusion of non-perfectly redundant baselines 
 would account for $20\%$ to $60\%$ of the sensitivity of PAPER-128 and different configurations of HERA. 
 \end{abstract}
@@ -39,7 +39,7 @@ would account for $20\%$ to $60\%$ of the sensitivity of PAPER-128 and different
 \section{Introduction}
 
 The epoch of reionization represents the last key
-stage of our universe's early evolution. Study of this event stands at
+stage of our Universe's early evolution. Study of this event stands at
 the intersection of cosmology and astrophysics. Understanding this
 event not only serves as a scientific goal
 of its own, but also as a gateway to crucial information
@@ -48,109 +48,97 @@ of the first stars and galaxies (e.g. \citealt{LiuOpticalDepth, Liu2016b, Mao200
 
 Arguably the most promising observational probe of the epoch of reionization
 comes from measurement of the ``spin-flip'' transition of neutral
-hydrogen of characteristic wavelength 21cm \citep{Furlanetto2006181,PritchardLoeb}.
-Other observational studies of reionization include for example Gunn-Peterson measurements of quasi-stellar objects \citep{Fan2006}. GP tests rely on Ly$\alpha$ absorption, and are thus insensitive to the degree of ionization and can only probe the end stage of reionization. The 21cm line can in comparison directly probe the
+hydrogen of characteristic wavelength 21\,cm \citep{Furlanetto2006181,PritchardLoeb}.
+Other observational studies of reionization include for example Gunn-Peterson measurements of quasi-stellar objects \citep{Fan2006}. GP tests rely on Ly$\alpha$ absorption, and thus easily saturate with small degree of ionization and can only probe the end stage of reionization. The 21\,cm line can in comparison directly probe the
 abundance and distribution of neutral hydrogen, and thus would potentially
 shed light on all stages of reionization. Radio interferometric efforts
-to measure the 21cm power spectrum has been a top priority in recent years of astronomy.
+to measure the 21\,cm power spectrum has been a top priority in recent years of astronomy.
 Current-generation instruments include the Precision Array for Probing
 the Epoch of Reionization (PAPER) \citep{Ali2015,paper32}, Murchison
 Widefield Array (MWA) \citep{Bowman2013, Tingay2013}, Low Frequency Array (LOFAR) \citep{LOFAR}. Next-generation instruments include the Hydrogen Epoch of Reionization
 Array (HERA) (e.g. \citealt{HERA,HERAconfiguration,HERABEAM1,HERADISH2})  under construction, 
 and the Square Kilometer Array Low (SKA-low) (e.g. \citealt{SKA1}), which is currently in planning. 
 
-One of the main challenges of observations of the cosmic
-21cm line is foreground contamination. Both sources within our
-galaxy, and to a lesser extent distant sources outside of our galaxy emit
-radio contamination (via for example synchrotron processes) up to five orders of magnitude stronger than the
-reionization signal. There are two common methods to deal with the
-foreground contamination in power spectrum measurements. In the first, sometimes called  ``foreground
-removal" technique, individual sources are identified and removed in the image domain.
-The other technique, commonly referred to as ``foreground avoidance'', form power-spectrum directly from the visibilities, an arguably more natural approach from an instrumental point of view.  
-Earlier studies have shown that the Fourier signature of smooth-spectrum foreground contaminants are constrained to a ``foreground
-wedge'' \citep{wedge1,wedge2}. Contamination can thus be avoided
-by restricting our observation to ``outside the wedge'', where theoretically foreground contamination is limited and noise becomes dominant. The main
-challenge of using the avoidance technique is thus sensitivity. This is the motivation for the design of
-the maximum redundancy arrays such as PAPER and HERA. Traditional
-imaging arrays are designed to image localized bright sources and thus favor non-redundant patterns for $uv$ coverage. The redundant arrays, on the other hand,
-focus on repeated measurements of the same Fourier mode
-with regular grids of antennas. Since baselines
-of the same length and orientation measure the same Fourier modes
-on the sky, a maximum redundancy array increases the
-signal to noise ratio by averaging over measurements of the same baseline.
-\cite{Ali2015} provides the newest upper limit to the power spectrum
-measurements with the 64-element version of PAPER (henceforth referred to as PAPER-64). 
+These modern low-frequency radio interferometers aimed at measuring the 21\,cm signal bears designs dramatically different from traditional instruments built for imaging localized bright sources.  With the goal of detecting a cosmological signal 5 orders of magnitude fainter than foreground contaminations, current efforts are sensitivity starved. Maximum-redundancy arrays are thus designed to repeatedly measure the same Fourier signal to increase sensitivity. Ranging upwards from 100 elements, these arrays are typically of the drift-scan type to limit cost. 
 
-While an imaging based power-spectrum pipeline naturally includes all redundancy information, visibility-based pipelines until now only cross multiply simultaneously redundant baselines. Here we present a method to
-improve the sensitivity output of the visibility-based power-spectrum pipelines by including pairs of partially redundant baselines. To extract maximal partial redundancy we make use of the earth's rotation. 
-The earth's rotation causes the baselines in a drift-scan array to pick up different modes of the sky with time. In a maximally redundant array, we use the fact that baselines that are slightly different
-rotate into each other at a time delay to extract power-spectrum from their respective visibilities.  Our contribution is twofold. First we introduce a formalism to include pairs of partially-redundant baselines. Secondly we show how to use the formalism to automaticaly preselect baseline pairs and time offsets, making the problem computationally efficient. Recently, \cite{wterm} proposed an algorithmic approach to extract information from partially redundant baselines, by carefully treating the $w$-term in the fringe pattern to obtain weights for cross-correlation. The algorithm makes use of a time dependent coordinate system (``moving grid'') and is thus computationally expensive. We here present a formalism that allows us to compute such weights by simply performing a numerical integral. This allows us to identify good baselines to cross-correlate and predict the weight of sensitivity with speed and accuracy, thereby making the power spectrum estimation from a large number of baseline pairs computationally tractable. By using pairs of baselines, we also reduce additional mode mixing. As discussed in \cite{Hazelton2013}, the varying shapes of overlapping regions in $uv$ space of all contributing baselines lead to chromaticities in the response. By considering only pairs of baselines, we fix shapes of overlapping regions, and only let their sizes vary with frequency, just as in the case of fully redundant baselines.  
+Analysis pipelines of such maximum-redundancy arrays typically fall into two categories. In the first, more traditional technique, image is formed in Fourier domain through rotation synthesis, then foreground is either removed or avoided to construct a power spectrum. The second, lately popular technique works directly with visibilities from baselines and cross multiply them to form the power spectrum. Due to its more natural focus on the instrumental output of visibilities, this technique is shown to fair better in dealing with systematics such as RFIs and instrumental cross-talks, and thus tend to provide good limits on the power spectrum. \cite{Ali2015} provides the newest upper limit to the power spectrum
+measurements with the 64-element version of PAPER (henceforth referred to as PAPER-64). However, there is one caveat with existing visibility-based pipelines. While an imaging based power-spectrum pipeline naturally includes all redundancy information, visibility-based pipelines until now only cross multiply fully redundant baselines, in other words baselines of the same length and orientation.
 
-Baselines of the same length and orientation are traditionally called
-``redundant baselines'', because they measure the same Fourier mode
-in the sky. In order to eliminate confusion and ambiguity, we shall
-introduce slightly different terminology. We shall call baselines that
-are the same length and orientation ``equivalent baselines'', inspired
-by the mathematical notion of equivalency classes. Two equivalent
-baselines will be redundant with each other simultaneously at all
-times. Non-equivalent baselines can also be partially redundant, with their partial redundancy maximized if their
-respected time series is shifted with respect to one another by some delay. In other words, one baseline can be ``rotated into''
-another. We call these ``near-equivalent baselines''. Exactly how ``near" is ``near-enough" depends on the array configuration. All non-equivalent baselines contribute non-zero sensitivity to the power spectrum analysis It is our
-goal to a) identify the near-equivalent baselines that give good
-redundancy, b) to find the optimal time offset\footnote{By optimal we mean the time offset that corresponds to maximal redundancy. } for a given pair of baselines, and
-c) to quantify the sensitivity improvement associated with cross multiplying
-such a pair of near-equivalent baselines. 
+Baselines of different length and orientation still contain partially redundant information. The use of partially redundant baselines is in principle not a fundamental limitation of visibility-based pipelines. In fact, most instrumental reports to date do include partial redundancy. Recently, \cite{wterm} proposed an algorithmic approach to extract power-spectrum from partially redundant baselines in tracking measurements, by carefully treating the $w$-term in the fringe pattern to obtain weights for cross-correlation. Our work parallels this effort by focusing on arrays of the drift-scan type that do not have tracking capabilities, such as PAPER, HERA and SKA.
+The Earth's rotation causes the baselines in a drift-scan array to pick up different modes of the sky with time. Rotation-synthesis makes use of the rotation-induced $uv$ coverage map to form image. In a visibility based pipeline, we can extract the same rotation-induced redundancy. In this point of view, baselines that are slightly different in length and orientation
+rotate into each other at a time delay. We can thus cross-multiply time-shifted visibilities, with the proper weighting, to form power spectrum.  Due to the large number of elements of modern arrays (upward of 100), the task of cross-multiplying every baseline against every other, scaling as number of array element to the fourth power, can be computationally formidable. Our contribution is thus twofold. First we introduce a formalism to include pairs of partially-redundant baselines in a visibility based power spectrum pipeline. Secondly we show how to use the formalism to automaticaly preselect baseline pairs and time offsets, making the problem computationally efficient. More precisely, our formalism allows one to simultaneously a) identify the baselines that give good
+redundancy, b) find the time offset that corresponds to maximal redundancy for a given pair of baselines, and
+c) quantify the sensitivity associated with cross multiplying
+such a pair of partially redundant baselines, which in turns is used as weight to combine measurements in a power spectrum pipeline. 
 
-The rest of this paper is organized as follows. In section
-2 we introduce the formalism for weighting partially redundant/near-equivalent baselines.
-In section 3 we present numerical tests of
+[TODO: this paragraph would potentially be promoted to a section] By using pairs of baselines, we also reduce additional mode mixing. As discussed in \cite{Hazelton2013}, the varying shapes of overlapping regions in $uv$ space of all contributing baselines lead to chromaticities in the response. By considering only pairs of baselines, we fix shapes of overlapping regions, and only let their sizes vary with frequency, just as in the case of fully redundant baselines.  
+
+
+
+The rest of this paper is organized as follows. In section 2 we introduce some terminology and notations to be used for the rest of the paper. In section
+3 we introduce the formalism for weighting partially redundant baselines.
+In section 4 we present numerical tests of
 this technique as well as the expected sensitivity improvement
-with this method for HERA and PAPER-128 and with section 4 we conclude. 
+with this method for HERA and PAPER-128 and with section 5 we conclude. 
+
+\section{Notation and Terminology}
+
+In order to eliminate confusion and ambiguity, we
+introduce some terminology for the rest of this paper, some of which differs from what is commonly found in the literature. 
+
+First, we make the distinction of a \textit{``baseline''}, which refers to two specific antennas, and a \textit{``class of baselines''}, which refers to all baselines of the same length and orientation in a given array. 
+
+Baselines of the same class are traditionally called
+``redundant baselines'', because they measure the same Fourier mode
+in the sky.  We shall call baselines in the same class \textit{``equivalent baselines''}, and reserve the word \textit{``redundancy''} of two baselines in reference to a variable function of the relative time-offsets of their visibility time series. With this terminology, two equivalent
+baselines are fully redundant with each other simultaneously at all
+times. Non-equivalent baselines also have partial redundancy, which is maximized if their
+respected time series are shifted with respect to one another by some delay. In other words, one baseline can be ``rotated into''
+another if they are \textit{``near-equivalent''}.
+
+\begin{figure}[H]
+\includegraphics[width=\linewidth]{antpos128}
+
+\caption{The PAPER-128 layout. Each dot corresponds to the location of
+an antenna. Top panel shows the antenna positions drawn to scale;
+bottom panel show the antenna labels and distances, excluding the outrigger
+antennas.
+The numbering of the antennas the bottom panel are original labels
+during instrument assembly and does not bear significant
+meaning. In the bottom panel, the two baselines (5,77) and (40,85) are an example of equivalent pair, with separation denoted by \{1, 0\}, for the
+antennas are separated by 1 unit east and 0 unit north. Similarly,
+the baselines (5,69) and (5,85) are examples
+of the classes \{1, 1\} and \{1,-1\}, respectively. Note \{1, 0\} and \{-1, 0\} for example
+are the same baseline classes and should not be counted twice.}
+\label{fig:AntPos}
+\end{figure}
+
+We shall use the 128-element PAPER array (henceforth as PAPER-128) to motivate our formalism and demonstrate our method, and extend our results to several HERA configurations in Sec \ref{sec:arrconf}. 
+The PAPER array is located in the Karoo desert in South Africa (30:43:17.5
+S, 21:25:41.8 E). The layout pattern with antenna labels are show
+in Fig. \ref{fig:AntPos}. The array consists of a 112-element grid and 16 "outriggers" used primarily to aid calibration. We see the antenna spacing in North-South
+directions are comparatively close (4m), so that baselines such as
+(0, 44) and (0, 7) are very close to equivalent. In the bottom panel, the two baselines (5, 77) and (40, 85) are an example of equivalent pair, with separation denoted by \{1, 0\}, for the
+antennas are separated by 1 unit east and 0 unit north. Similarly,
+the baselines (5, 69) and (5, 85) are examples
+of \{1, 1\} and \{1, -1\}, respectively.
+Note \{1, 0\} and \{-1, 0\} for example are the same classes and should
+not be counted twice. Antennas in purely north-south baselines
+are close enough to induce cross-talk, and hence are not suitable
+for use. The PAPER-64 analysis of \cite{Ali2015} used three classes of baselines, the PAPER-128
+equivalent of which are 
+\{2, 0\}, \{2, 1\} and \{2, -1\}. There each of these classes
+of baselines are cross multiplied to itself. 
 
 
 \section{Method}
 
 \subsection{Rough Idea}
 
-\begin{figure}[H]
-\includegraphics[width=\linewidth]{antpos128}
-
-\caption{The PAPER-128 layout. Each blue dot corresponds to the location of
-an antenna. Top panel shows the antenna positions drawn to scale,
-bottom panel show the antenna labels and distances, excluding the outrigger
-antennas.
-The numbering of the antennas the bottom panel are original labels
-during instrument assembly and does not bear significant
-meaning. Baselines corresponding to the same separations are called
-equivalent. In the bottom panel, the two baselines (5,77) and (40,85) are an example of equivalent pair, with separation denoted by \{1, 0\}, for the
-antennas are separated by 1 unit east and 0 unit north. Similarly,
-the baselines (5,69) and (5,85) are examples
-of \{1, 1\} and \{1,-1\}, respectively. Note \{1, 0\} and \{-1, 0\} for example
-are the same baselines and should not be counted twice.}
-\label{fig:AntPos}
-\end{figure}
-
-We shall use the 128-element PAPER array to demonstrate our method, and extend our results to several HERA configurations in Sec \ref{sec:arrconf}. 
-The PAPER array is located in the Karoo desert in South Africa (30:43:17.5
-S, 21:25:41.8 E). The layout pattern with antenna labels are show
-in Fig. \ref{fig:AntPos}. We see the antenna spacing in North-South
-directions are comparatively close (4m), so that baselines such as
-(0, 44) and (0, 7) are very close to equivalent. In the bottom panel, the two baselines (5, 77) and (40, 85) are an example of equivalent pair, with separation denoted by \{1, 0\}, for the
-antennas are separated by 1 unit east and 0 unit north. Similarly,
-the baselines (5, 69) and (5, 85) are examples
-of \{1, 1\} and \{1, -1\}, respectively.
-Note \{1, 0\} and \{-1, 0\} for example are the same baselines and should
-not be counted twice. Antennas in purely north-south baselines
-are close enough to induce cross-talk, and hence are not suitable
-for use. The original PAPER-64 analysis \citep{Ali2015} used three classes of baselines, here
-equivalent to 
-\{2, 0\}, \{2, 1\} and \{2, -1\} \cite{Ali2015} of PAPER-128. There each of these classes
-of baselines are cross multiplied to itself. We shall see that in addition these
-baseline classes can be cross multiplied with a time offset.
 
 
 Given a point source on the sky, each baseline maps the
-source to a point in $uv$ plane. As the earth rotates with respect to
+source to a point in $uv$ plane. As the Earth rotates with respect to
 the source, the point traces out tracks in the $uv$ plane. 
 We show in Fig. \ref{fig:Tracks} $uv$ tracks of PAPER-128 over 4.8 hours, at 0.15GHz, for a source that passes through zenith. 
 
@@ -160,7 +148,7 @@ We show in Fig. \ref{fig:Tracks} $uv$ tracks of PAPER-128 over 4.8 hours, at 0.1
 \caption{Tracks of PAPER-128 (grid only, excluding outriggers) for requency $\nu=0.15\text{GHz}$ and a hypothetical source that passes through zenith.
 These tracks are traced out over 0.2 sidereal days, or roughly 4.8
 hours. Color represents different baselines. 
-As the earth rotates, tracks are traced out counterclockwise. }
+As the Earth rotates, tracks are traced out counterclockwise. }
 \label{fig:Tracks}
 \end{figure}
 
@@ -226,7 +214,7 @@ $\boldsymbol{r}$ and $\boldsymbol{k}$. We start by noticing that
  & \equiv D_{c}-Y\Delta\nu,
 \end{aligned}
 \]
-where $\nu_{21}=1420$MHz is the 21cm transition rest frequency, $\nu_{0}$
+where $\nu_{21}=1420$MHz is the 21\,cm transition rest frequency, $\nu_{0}$
 a reference central frequency with corresponding redshift $z_{0}$,
 and 
 \[
@@ -497,7 +485,7 @@ Having defined the modified weight $\widetilde{\Theta}$, we can estimate the pow
  \end{aligned}
 \end{equation}
 where the sum is over classes of baseline pairs. 
-We define the estimator sensitivity to be the inverse of the power-spectrum noise variance:
+We define the estimator sensitivity to be the inverse of the power spectrum noise variance:
 \begin{equation}
 \rho \propto \frac{1}{\sigma_P^2} \propto \rho_0^2\sum_{bb'}^N\widetilde{\Theta}^2_{bb'},
 \end{equation}
@@ -546,7 +534,7 @@ Having quantified the sensitivity from a given pair of baselines, we study the c
 %To illustrate, we use the second observing season of PAPER-128 data, taken from Jan. 21st to March 7th of 2014. To illustrate the effect of noise and foreground, we use the data before fringe-rate and delay filtering. 
 
 \section{Conclusion}
-Redundant arrays are designed to maximize sensitivity. Current generations of redundant radio arrays, such as those probing the power spectrum of the epoch of reionization could benefit from data analysis techniques that improve the sensitivity. We present an intuitive analysis of cross-multiplying baselines that are close in length and orientation to each other. Given an antenna array configuration, our method quickly identifies the best baseline pairs to cross-multiply and predict the expected sensitivity contribution. With the predicted result one can improve existing power-spectrum pipelines through 3 simple steps. 1). Rephase the visibilities prior to delay transforming by the zenith displacement (or more accurately by the phase predicted by our numerical analysis). 2). Shift the visibilities in time. 3) Cross multiply the visibilities of the two baselines  to form the power-spectrum. 4) Finally combine the different baseline pairs by appropriate inverse-variance weighting that takes into account the predicted sensitivity contributions of each case. We showed that such techniques could lead to $20\%$ to $60\%$ increase in sensitivity for PAPER and HERA. 
+Redundant arrays are designed to maximize sensitivity. Current generations of redundant radio arrays, such as those probing the power spectrum of the epoch of reionization could benefit from data analysis techniques that improve the sensitivity. We present an intuitive analysis of cross-multiplying baselines that are close in length and orientation to each other. Given an antenna array configuration, our method quickly identifies the best baseline pairs to cross-multiply and predict the expected sensitivity contribution. With the predicted result one can improve existing power-spectrum pipelines through 3 simple steps. 1). Rephase the visibilities prior to delay transforming by the zenith displacement (or more accurately by the phase predicted by our numerical analysis). 2). Shift the visibilities in time. 3) Cross multiply the visibilities of the two baselines  to form the power spectrum. 4) Finally combine the different baseline pairs by appropriate inverse-variance weighting that takes into account the predicted sensitivity contributions of each case. We showed that such techniques could lead to $20\%$ to $60\%$ increase in sensitivity for PAPER and HERA. 
 
 
 \pagebreak
