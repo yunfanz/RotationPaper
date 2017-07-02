@@ -96,7 +96,7 @@ another if they are \textit{near-equivalent}.
 \begin{figure}[H]
 \includegraphics[width=\linewidth]{antpos128}
 
-\caption{The PAPER-128 layout. Each dot corresponds to the location of
+\caption{The PAPER128 layout. Each dot corresponds to the location of
 an antenna. Top panel shows the antenna positions drawn to scale;
 bottom panel show the antenna labels and distances of the 112-element grid, in other words excluding the outrigger antennas.
 The numbering of the antennas in the bottom panel are original labels
@@ -319,7 +319,7 @@ As we see in Eq. \ref{eq:Thetanu}, $\Theta_{\nu}$ at the peak of correlation is 
  
 %Doing so is also crucial to reduction of additional mode mixing, as discussed in \cite{Hazelton2013}. Shapes of overlapping regions of pairs of baselines are fixed with respect to frequency. 
 
-To illustrate the effect of rephasing, we compare in Fig. \ref{fig:freqdiff} real parts of $\Theta_{\nu}$ of both equivalent and near-equivalent baseline pairs for two channels: 0.16 GHz and 0.17 GHz. The top two panels have zero rephasing, and the bottom two are rephased to a time offset of 0.055 sidereal days, the optimal time offset for the given baseline pair. The first and third panels show the equivalent baseline pairs \{1,0\}:\{1,0\}, and second and fourth panels show \{1,0\}:\{1,1\}. We see that in the un-rephased case in the second panel, although the magnitude of correlations match up for the two frequencies, the phases do not. This means summing over frequency leads to destructive interference and signal loss. The wider the frequency profile, the more destructive the interference would be. In the rephased case, the phases of the near-equivalent case match up and can be added without compromising sensitivity. We should thus rephase the data separately for each set of baseline pairs. 
+To illustrate the effect of rephasing, we compare in Fig. \ref{fig:freqdiff} real parts of $\Theta_{\nu}$ of both equivalent and near-equivalent baseline pairs for two channels: 0.16 GHz and 0.17 GHz. The top two panels have zero rephasing, and the bottom two are rephased to a time offset of 0.0325 sidereal days, the optimal time offset for the given baseline pair. The first and third panels show the equivalent baseline pairs \{2,0\}:\{2,0\}, and second and fourth panels show \{2,0\}:\{2,1\}. We see that in the un-rephased case in the second panel, although the magnitude of correlations match up for the two frequencies, the phases do not. This means summing over frequency leads to destructive interference and signal loss. The wider the frequency profile, the more destructive the interference would be. In the rephased case, the phases of the near-equivalent case match up and can be added without compromising sensitivity. We should thus rephase the data separately for each set of baseline pairs. 
 
 \begin{figure}[H]
 \includegraphics[width=1.1\linewidth]{rephs}
@@ -332,8 +332,11 @@ To illustrate the effect of rephasing, we compare in Fig. \ref{fig:freqdiff} rea
 
 
 
-The physical origin of $\psi_\nu$ lies in the two visibilities having different phase centers. By default the correlators of a drift-scan array phase the two visibilities both to zenith at the same time. When they are cross-multiplied with a time lag, the visibilities must be rephased before delay transform to the account for the movement of the zenith. One can check that introduction of a phase in Eq. \ref{eq:Vis1} does carry through the derivation to Eq \ref{eq:Thetanu}. The effect of the phase thus roughly corresponds in a shift of the delay mode measured, and we should expect $\psi_{\nu}$ to be in first order a linear function of $\nu$. 
-In Fig. \ref{fig:phi_nu} we show the peak phases for for a given baseline pair of PAPER128 (\{2,0\}:\{2,1\}), comparing the drift-scan phase dependence with that of the same baseline with hypothetical tracking-elements (Eq. \ref{eq:Thetanu} and Eq. \ref{eq:Thetanu_tracking}). In the drift-scan case, we indeed see a linear relation corresponding to a delay of $\Delta\tau\approx17$ns. In the tracking case, because of minimal zenith movement, only second order effects are observed. 
+The physical origin of $\psi_\nu$ lies in the two visibilities having different phase centers. By default the correlators of a drift-scan array phase the two visibilities both to zenith at the same time. When they are cross-multiplied with a time lag, the visibilities must be rephased before delay transform to the account for the movement of the zenith. One can check that introduction of a phase in Eq. \ref{eq:Vis1} does carry through the derivation to Eq \ref{eq:Thetanu}. The effect of the phase thus roughly corresponds in a shift of the delay mode measured, and we should expect $\psi_{\nu}$ to be in first order a linear function of $\nu$:
+\[
+\psi_{\nu}\sim 2\pi\Delta\tau\nu.
+\]
+In Fig. \ref{fig:phi_nu} we show the peak phases for for a given baseline pair of PAPER128 (\{2,0\}:\{2,1\}), comparing the drift-scan phase dependence with that of the same baseline with hypothetical tracking-elements (Eq. \ref{eq:Thetanu} and Eq. \ref{eq:Thetanu_tracking}). In the drift-scan case, we indeed see a linear relation corresponding to a delay of $\Delta\tau\approx17$ns. In the tracking case, because of minimal zenith movement, only second order effects are observed. The origin of the second order effects can be seen as due to the $w$-term, or more precisely the fact that $uvw$ tracks do not cross when their 2 dimensional projections do. We refer the reader to Appendix \ref{sec:appA} for further explanation. 
 
 \begin{figure}[H]
 \includegraphics[width=1\linewidth]{phi_nu}
@@ -345,7 +348,7 @@ In Fig. \ref{fig:phi_nu} we show the peak phases for for a given baseline pair o
 Once rephased, the overall weight can be constructed by $\Theta=\int \Theta_{\nu}d\nu$, and thus
 \begin{equation}
 \begin{aligned} & \langle V^{*}(\boldsymbol{b},\tau)V_{\psi}(\boldsymbol{b'},\tau)\rangle\\
- & =\left(\frac{2k_{B}}{\lambda^{2}}\right)^{2}P(k_{b,\tau})\int\frac{d\Omega d\nu}{X^{2}Y}|A^{*}(\hat{\boldsymbol{s}},\nu)A(\Gamma\hat{\boldsymbol{s}},\nu)|\\
+ & =\left(\frac{2k_{B}}{\lambda^{2}}\right)^{2}P(k_{b,\tau})\int\frac{d\Omega d\nu}{X^{2}Y}|A^{*}(\hat{\boldsymbol{s}},\nu)A(\Gamma\hat{\boldsymbol{s}},\nu)|e^{i\psi_{\nu}}\\
  & \qquad \qquad \qquad \qquad \exp\left[-i2\pi\frac{\nu}{c}\left(\hat{\boldsymbol{s}}\cdot\boldsymbol{b}-\Gamma\hat{\boldsymbol{s}}\cdot\boldsymbol{b'}\right)\right].\end{aligned}
 \label{eq:final_new}
 \end{equation}
@@ -396,21 +399,19 @@ Manageable chromaticity of the instrument is crucial in delay-transform techniqu
 \begin{figure*}[h!]
 \includegraphics[width=\textwidth]{sensitivity_1}
 
-\caption{Relative sensitivity contributions of selected baseline combinations in PAPER-128. In the legend m,n:p,q denotes cross
-multiplying PAPER-128 baselines of east-west, north-south separations (m,n) and (p,q) respectively. The top
-panel shows the peak height (degree of correlation) of each baseline
+\caption{Relative sensitivity contributions of selected baseline combinations in PAPER-128. Each labeled point in the middle and bottom panels correspond to a cross-correlated baseline pair \{m,n\}:\{p,q\}. The shape of the symbol encodes the first baseline \{m,n\}, as displayed in the top left legend panel. The edge and face colors encode the second baseline \{p,q\}, as displayed in the top right legend panel. The middle
+panel shows the peak height ($\Theta$) of each baseline
 combination, while the bottom panel multiplies the heights by the
 corresponding multiplicities as in Eq. \eqref{eq:sensul}. 
-In weighting by the multiplicity (bottom), we have chosen to fix the sensitivity 
-contribution of 1,0:1,0 to unity. The same symbols and colors correspond in the top and bottom panel, with half of the legend shown in each. }
+In both the middle and bottom panels, we have chosen to fix the value  of \{1,0\}:\{1,0\} to unity.  }
 \label{fig:sensplot}
 \end{figure*}
 
-\begin{figure*}[h!]
-\includegraphics[width=0.9\textwidth]{HeraAntpos}
+\begin{figure}[h]
+\includegraphics[width=\linewidth]{HeraAntpos}
 \label{fig:HeraAntpos}
 \caption{Planned Hydrogen Epoch of Reionization Array antenna configurations. HERA 37 is expected to complete and start collecting data in summer of 2017, and the other three are planned configurations in the next phases. For HERA350, only the 320 elements in the core are shown. }
-\end{figure*}
+\end{figure}
 
 \subsection{ Sensitivity \label{sec:sensitivity}}
 
@@ -555,8 +556,9 @@ Redundant arrays are designed to maximize sensitivity. Current generations of re
 
 
 \appendix
-\section{\label{sec:appA}\\Track-crossing}
-In this section we explain the reason why track-crossing, even in $uvw$ space, do not correspond to peak correlation for drift-scan measurements. 
+\section{\\Track-crossing and $w$-term \label{sec:appA}}
+\label{sec:appA}
+In this section we link our results from Section \ref{sec:method} to the traditional views of rotation synthesis and in particular $uv$ tracks. 
 Typical convention of rotation synthesis has rotation operates on $\boldsymbol{b'}$ instead of $\hat{\boldsymbol{s}}$, in which case Eq.\ref{eq:Theta} becomes
 \begin{equation}
 \Theta \equiv\int\frac{d\Omega d\nu}{X^{2}Y}|A^{*}(\hat{\boldsymbol{s}},\nu)A(\Gamma\hat{\boldsymbol{s}},\nu)||\phi(\nu)|^{2} e^{-i2\pi\frac{\nu}{c}\hat{\boldsymbol{s}}\cdot\left(\boldsymbol{b}-\widetilde{\Gamma}\boldsymbol{b'}\right)}, 
@@ -568,11 +570,14 @@ For tracking elements, $\Gamma$ becomes a rotation around zenith:
 \Theta \equiv\int\frac{d\Omega d\nu}{X^{2}Y}|A^{*}(\hat{\boldsymbol{s}},\nu)A(\hat{\boldsymbol{s}},\nu)||\phi(\nu)|^{2} e^{-i2\pi\frac{\nu}{c}\hat{\boldsymbol{s}}\cdot\left(\boldsymbol{b}-\widetilde{\Gamma}\boldsymbol{b'}\right)}, 
 \label{eq:tracking}
 \end{equation}
-We are now in a position to understand the reason that track-crossing, even in $uvw$ space, as mentioned section \ref{sec:tracks}, would not correspond exactly to the peak of correlation. Track-crossing corresponds to vanishing of the exponent
+
+Track-crossing corresponds to vanishing of the exponent
 \[
  \boldsymbol{b}-\widetilde{\Gamma}\boldsymbol{b'} = 0. \label{eq:trackcross}
  \]
-This condition maximizes $\Theta$ if and only if no other term in the integral depends on $\Gamma$. We see from Eq. \ref{tracking} that this condition is satisfied. In a general drift-scan measurement, however, track-crossing point of Eq. \ref{eq:trackcross} does not maximize $\Theta$. 
+If exponent vanishes, $\Theta_{\nu}$ is real, and one would not observe any non-zero phase at the peak. However, with inclusion of the $w$-term, we see that track crossings in $uv$-plane do not actually imply crossing in the $uvw$ space, therefore the exponent Eq. \ref{eq:trackcross} does not vanish and we observe non-zero, frequency dependent peak phases even in the case of tracking arrays, as shown in Fig. \ref{fig:phi_nu}. 
+
+Furthermore, in the case of drift-scan arrays, even a crossing in $uvw$ space does not necessarily correspond to the maximum of correlation. From Eq. \ref{eq:drift}, we see the track-crossing condition Eq. \ref{eq:trackcross} maximizes $\Theta$ if and only if no other term in the integral depends on $\Gamma$. We see that this is true for the tracking case (Eq. \ref{eq:tracking}), but not the drift-scan case (Eq. \ref{eq:drift}). 
 
 
 \section{\label{sec:appB}\\Derivation of Noise Covariance \label{sec:appB}}
