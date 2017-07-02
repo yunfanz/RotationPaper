@@ -8,6 +8,7 @@
 \usepackage[figuresright]{rotating}
 %\usepackage{rotating}
 \usepackage{natbib}
+\usepackage{gensymb}
 %\usepackage{pdflscape}
 %\usepackage{lscape}
 \usepackage{ctable}
@@ -123,7 +124,7 @@ equivalent of which are
 of baselines are cross multiplied within itself. This paper provides the method for inter-class multiplications. To do so we will use the short hand notation $\{m,n\}:\{m',n'\}$ to denote a pair of baseline classes to be cross-multiplied. 
 
 
-\section{Method \label{sec:method}}
+\section{Method \label{sec:method}}\label{sec:method}
 
 \subsection{$uvw$ tracks \label{sec:tracks}}
 
@@ -144,8 +145,8 @@ As the Earth rotates, tracks are traced out counterclockwise. Tracks in $uvw$ sp
 
 Traditionally, we can identify
 redundancy of near-equivalent baselines as crossings
-of the $uv$ tracks, a 2 dimensional projection of Fig. \ref{fig:Tracks}. As we see in Fig. \ref{fig:Tracks}, there would be many such crossings. However, there are several reasons that $uv$ track-crossing do not imply perfect redundancy. In fact, $uv$ track-crossing is
-not accurate enough for time offset determination, nor can it give estimate of the degree of redundancy.  The most obvious reason is that the 3 dimensional $uvw$ tracks do not actually cross. For drift-scan arrays, even a crossing in $uvw$ space does not imply perfect redundancy. This shall become evident in the next section, after we develop a more general formalism that accounts for the point spread function of the finite beams, and estimate the degree of redundancy for general combination of baselines at a general time-offset. 
+of the $uv$ tracks, a 2 dimensional projection of Fig. \ref{fig:Tracks}. As we see in Fig. \ref{fig:Tracks}, there would be many such crossings. However, there are several reasons that $uv$ track-crossing do not imply perfect redundancy. In fact, in our case $uv$ track-crossings are
+not accurate enough for time offset determination, nor can it give estimate of the degree of redundancy.  The most obvious reason is that the 3 dimensional $uvw$ tracks do not actually cross. For drift-scan arrays, even a crossing in $uvw$ space does not imply perfect redundancy. This shall become evident in the next section, after we develop a more general formalism that accounts for the point spread function of the finite beams, and estimate the degree of redundancy for general combination of baselines at a general time-offset. An explicit explanation of track-crossing will be presented in Appendix \ref{sec:appA}. 
 
 
 
@@ -312,7 +313,7 @@ Eq.(\ref{eq:Theta}) for various time offsets, without having to actually cross-m
 
 
 \subsection{Rephasing \label{sec:rephs}}
-As we see in Eq. \ref{eq:Thetanu}, $\Theta_{\nu}$ at the peak of correlation is in general complex, and often far from real. Furthermore, this phase of peak correlation is inevitably frequency dependent. This frequency dependence of the phase would lead to destructive interference when we integrate over frequency, unless we correct $\Theta_{\nu}$ by an extra phase $\psi_\nu$ to cancel its frequency dependence. 
+As we see in Eq. \ref{eq:Thetanu}, $\Theta_{\nu}$ at the peak of correlation is in general complex, and often far from real. Furthermore, this phase of peak correlation is inevitably frequency dependent. This frequency dependence of the phase would lead to destructive interference when we integrate over frequency, unless we correct $\Theta_{\nu}$ by an extra phase $\psi_\nu$. 
 
 
  
@@ -332,7 +333,7 @@ To illustrate the effect of rephasing, we compare in Fig. \ref{fig:freqdiff} rea
 
 
 The physical origin of $\psi_\nu$ lies in the two visibilities having different phase centers. By default the correlators of a drift-scan array phase the two visibilities both to zenith at the same time. When they are cross-multiplied with a time lag, the visibilities must be rephased before delay transform to the account for the movement of the zenith. One can check that introduction of a phase in Eq. \ref{eq:Vis1} does carry through the derivation to Eq \ref{eq:Thetanu}. The effect of the phase thus roughly corresponds in a shift of the delay mode measured, and we should expect $\psi_{\nu}$ to be in first order a linear function of $\nu$. 
-In Fig. \ref{fig:phi_nu} we show the peak phases for for a given baseline pair of PAPER-128 (\{2,0\}:\{2,1\}), comparing the drift-scan phase dependence and the case for the same baseline with hypothetical tracking-elements. In the drift-scan case, we indeed see a linear relation corresponding to a delay of $\Delta\tau\approx17$ns. In the tracking case, because of minimal zenith movement, only second order effects are observed. 
+In Fig. \ref{fig:phi_nu} we show the peak phases for for a given baseline pair of PAPER128 (\{2,0\}:\{2,1\}), comparing the drift-scan phase dependence with that of the same baseline with hypothetical tracking-elements (Eq. \ref{eq:Thetanu} and Eq. \ref{eq:Thetanu_tracking}). In the drift-scan case, we indeed see a linear relation corresponding to a delay of $\Delta\tau\approx17$ns. In the tracking case, because of minimal zenith movement, only second order effects are observed. 
 
 \begin{figure}[H]
 \includegraphics[width=1\linewidth]{phi_nu}
@@ -353,48 +354,35 @@ Once rephased, the overall weight can be constructed by $\Theta=\int \Theta_{\nu
 \section{Analysis}
 \subsection{Numerical Test \label{sec:Techniquet}}
 
-Bringing together the discussion from Section \ref{sec:method}, we present a numerical check of Eq.\ref{eq:final_new}, including rephasing, thus verifying the validity of using $\Theta$ to estimate the degree of redundancy as a function of time lag. To do so, we need to compare the amplitude and phase of the integral weight $\Theta$ 
-for a pair of baselines with products of simulated visibilities of those baselines. We use 10 frequency channels evenly spaced from $145$MHz to $155$MHz for the comparison. We rephase one of the simulated visibilities, as well as computed $\Theta_nu$ to the same delay as computed from the peak phase of the latter. 
+Bringing together the discussion from Section \ref{sec:method}, we present a numerical check of Eq.\ref{eq:final_new}, including rephasing. To do so, we need to compare the amplitude and phase of the integral weight $\Theta$ 
+for a pair of baselines with products of simulated visibilities of those baselines. We use 10 frequency channels evenly spaced from $145$MHz to $155$MHz for the comparison. We rephase one of the simulated visibilities, as well as computed $\Theta_{\nu}$ to the same delay as computed from the peak phase of the latter. 
  
 \begin{figure}[h]
 \includegraphics[width=\linewidth]{numerics}
 
-\caption{Numerical comparisons of the visibility correlation peaks to the $\Omega$ factor in Eq.(\ref{eq:final}). We generated a Gaussian random sky on healpix maps, computed visibilities and cross correlated them to find the correlation.  Top panel shows the equivalent baseline pairs \{2,0\} against \{2,0\}, bottom panel shows \{2,0\} against \{2,1\}.  Evaluations of weight $\Theta$ are shown with solid curves, and the visibility correlations of simulated random sky is given with dashed lines. In both cases only the real parts are shown. We see that in both cases the theory and simulation line up in both amplitude and phase.}
+\caption{Numerical comparisons of the visibility correlation peaks to the $\Omega$ factor in Eq.(\ref{eq:final}). We generated a Gaussian random sky on healpix maps, computed visibilities and cross correlated them to find the correlation.  Top panel shows the equivalent baseline pairs \{2,0\} against \{2,0\}, bottom panel shows \{2,0\} against \{2,1\}.  Evaluations of weight $\Theta$ are shown green, and the visibility correlations of simulated random sky is given in blue. In both cases only the real parts are shown. We see that in both cases the theory and simulation line up in both amplitude and phase.}
 \label{fig:numerics}
 \end{figure}
 
+Fig. \ref{fig:numerics} shows the real parts of the resulting degree of redundancy as a function of time offset, for equivalent baseline pairs (\{2,0\}:\{2,0\}) in the top panel and near-equivalent (\{2,0\}:\{2,1\}) in the bottom. Shown in green for the two cases are the computed values of $\Theta$, both normalized to the peak of the equivalent case. The plot on the bottom is rephased with a delay of $\Delta\tau\approx17$ns as outlined in Section \ref{sec:rephs}. Since both y-axes are normalized to the same scale, we see the equivalent baseline reach maximal redundancy with 0 time-offset, while the near-equivalent pair reaches maximum redundancy of $\Theta\approx0.5$ at $dT\approx0.325$days. 
 
-
-For the simulation, we populate random values of brightness temperature
+Almost completely overlapping with the green curves are the cross-multiplied visibilities from a simple simulation, shown in blue. For the simulation, we populate random values of brightness temperature
 on a healpix map \citep{Heal, HealPrimer} \footnote{We use functionalities in the python package AIPY for healpix mapping
-as well as coordinate transforms. }, and pick two baselines \{2,0\} and \{2,1\}. We then rotate the baseline positions with
+as well as coordinate transforms. }. We rotate the baseline positions with
 the appropriate rotation matrix, multiplying the sky by the primary beam to get the visibilities, for each
 baseline\footnote{There are two obvious ways to achieve the rotation. One
 can either fix the sky and rotate the baselines, or the other way
 around. We found however, that we must not physically rotate the sky
 map, for the numerical round-offs due to finite resolutions of the
 map turns out to be significant. Thus we let the sky, represented
-by the healpix map, be fixed, and rotate the baselines. }. The resulting visibilities for the two baselines are then convolved
+by the healpix map, be fixed, and rotate the baselines. }. For the near-equivalent case, we rephase the delayed visibility (\{2,0\}) by the same delay $\Delta\tau\approx17$ns, followed by delay-transform. The resulting delay-space visibilities for the two baselines are then convolved
 via the Fourier convolution theorem, to obtain values of the cross
-correlation as a function of time-offset. The peak of the curve then
-corresponds to maximum redundancy.  We do this for both the equivalent (\{2,0\}:\{2,0\}) and near-equivalent (\{2,0\}:\{2,1\}) case.
-
-The comparison is show in Fig. \ref{fig:numerics}. 
-Sensitivity contribution is inferred from height of the peak of the cross-multiplied visibilities as a function of time. 
-We first compare the simulation to the analytical weight $\Theta$ for a pair of equivalent baselines (\{2,0\}:\{2,0\}), then normalize the peaks 
-of the near-equivalent baselines (\{2,0\}:\{2,1\}) to that of the equivalent ones. 
-In Fig. \ref{fig:numerics}  we show on the top comparison of
-the convolution of an equivalent baseline of PAPER-128, normalized to 1 at the
-peak, whose location is at zero time offset as expected. On the bottom we show
-comparison of a near-equivalent baseline pair, of classes \{2,0\}:\{2,1\} and \{2,1\}:\{2,1\}. The peaks
-are normalized with the same factor as the peak height on the top,
-i.e. the two plots have thus the same scale on the vertical axis.
-The height of the plot thus quantifies the added sensitivity. We see at a peak of around 0.0325 sidereal days, or 0.78 hours, the two baselines are maximally redundant. 
+correlation as a function of time-offset.   We do this for both the equivalent (\{2,0\}:\{2,0\}) and near-equivalent (\{2,0\}:\{2,1\}) case.
+Since the blue and green curves overlap, we have verified that in this case Eq.\ref{eq:final_new} is valid and the computed $\Theta$ can be used as weight to obtain the power spectrum. 
 
 
 \subsection{Chromaticity \label{sec:chromaticity}}
-
-In Eq. \ref{eq:main} we have assumed a one-to-one relation between the cosmological $k$-mode, and the observation variables $b$ and $\tau$. Previous studies have shown that. 
+Manageable chromaticity of the instrument is crucial in delay-transform technique of foreground isolation. Previous studies have shown that smooth foreground are constrainted in a "wedge" structure in cosmological $k$ space \citep{wedge1, wedge2}. We must show that our method does not destroy the ability of delay-transform to isolate foreground.[ ..... ]
 
 
 
@@ -509,7 +497,7 @@ where $L$ is the baseline length. We only need a single characteristic $L$ even 
 
 \subsection{Array Configuration Comparisons \label{sec:arrconf}}
 We run our algorithm over all possible baseline-pairs of  PAPER128, HERA37, HERA128, HERA243 and HERA350. The HERA antenna configurations are shown in Fig. \ref{fig:HeraAntpos}. The  
-hexagonal design is the densest pattern of antenna-packing. The larger arrays are designed with a ``gap'' dividing the antennas into three different regions. The gaps are designed so as to improve $uv$ coverage and ease calibration without compromising sensitivity, but also produces many more near-equivalent baselines than the versions without the gap. The motivations behind the designs are explained in \cite{HERAconfiguration}.  The lack of short baselines that are visually close to each other, as well as the smaller beam (Fig. \ref{fig:Beam}) means that we expect to see only longer near-equivalent baselines. The lower multiplicities per class of baselines is made up with the larger number of classes of baseline-pairs, especially given the gap in the larger versions. 
+hexagonal design is the densest pattern of antenna-packing. The larger arrays are designed with a ``gap'' dividing the antennas into three different groups. The gaps are designed so as to improve $uv$ coverage and ease calibration without compromising sensitivity, but also produces many more near-equivalent baselines than the versions without the gap. The motivations behind the designs are explained in \cite{HERAconfiguration}.  Compared to PAPER128, the hexagonal pattern of HERA lack short baselines that are oriented close to each other, and the smaller beam (Fig. \ref{fig:Beam}) means that we expect to see only longer near-equivalent baselines. The lower multiplicities per class of baselines is made up with the larger number of classes of baseline-pairs, especially given the gap in the larger versions. 
 
 \begin{figure}[H]
 \includegraphics[width=\linewidth]{pairplot}
@@ -518,18 +506,18 @@ hexagonal design is the densest pattern of antenna-packing. The larger arrays ar
 \label{fig:pairplot}
 \end{figure}
 
-In Fig. \ref{fig:pairplot} we present a paired distribution of 3 different properties for baselines that contribute well to the sensitivity ($\widetilde{\Theta}>0.01$, where again the weight for the top class of equivalent pair is normalized to 1). The properties shown are effective weight $\widetilde{\Theta}$, optimal time offset $dT$, and average baseline length $L$. We only show 3 of the mentioned arrays for visual clarity. The other two results are similar barring intuitive differences. We discuss each cross-distribution plot:
+In Fig. \ref{fig:pairplot} we present pair-distributions of 3 different properties for baselines that contribute well to the sensitivity ($\widetilde{\Theta}>0.01$, where again the weight for the top class of equivalent pair is normalized to 1). The properties shown are effective weight $\widetilde{\Theta}$, optimal time offset $dT$, and average baseline length $L$. We only show 3 of the mentioned arrays for visual clarity. The other two results are similar barring intuitive differences. We discuss each cross-distribution plot:
 \begin{itemize}
 
 \item $dT$ vs. $\widetilde{\Theta}$:
-This relation  is familiar from Fig. \ref{fig:sensplot}. The middle bar at $dT=0$ are the equivalent baselines. Note PAPER128 has more data points with high $dT$. 
+This relation  is familiar from Fig. \ref{fig:sensplot}. The points at $dT=0$ are the equivalent baselines. Note PAPER128 has more data points with high $dT$. 
 
 \item $dT$ vs. $L$:
-PAPER128 shows the trend that longer baselines correspond to lower $dT$. HERA arrays do not exhibit this trend here because of a selection effect. Only baseline pairs with $\widetilde{\Theta}>0.01$ are shown. Shorter HERA baselines require much longer $dT$ to overlap, partly because of the hexagonal structure requires 60\% of rotation to overlap baselines, partly because of the smaller primary beam. Thus most short HERA baseline pairs are not shown in this figure.
+PAPER128 shows the trend that longer baselines correspond to lower $dT$. HERA arrays do not exhibit this trend here because of a selection effect. Only baseline pairs with $\widetilde{\Theta}>0.01$ are shown. Shorter HERA baselines require much longer $dT$ to overlap, partly because of the hexagonal structure requires $60\degree$ of rotation to overlap baselines, partly because of the smaller primary beam. Thus most short HERA baseline pairs are not shown in this figure.
 
 
 \item $\widetilde{\Theta}$ vs. $L$:
-The general trend to be seen here is that longer baselines tend to have lower $\widetilde{\Theta}$. This is due to the lower multiplicity of longer baselines. The trend is particularly obvious in the linear structure for the HERA arrays. These are the equivalent baselines.Since they all have the unity $\Theta$ by definition, the linearly decreasing trend of $\widetilde{\Theta}$ is a direct measure of the baseline multiplicity structures of the HERA array configurations.
+The general trend to be seen here is that longer baselines tend to have lower $\widetilde{\Theta}$. This is due to the lower multiplicity of longer baselines. The trend is particularly obvious in the linear structure for the HERA arrays, which are the equivalent baselines. Since they all have the unity $\Theta$ by definition, the linearly decreasing trend of $\widetilde{\Theta}$ is a direct measure of the baseline multiplicity structures of the HERA array configurations.
 
 \item The top near-equivalent pairs in HERA the same $\Theta$ (not shown) as in PAPER128, but much lower $\widetilde{\Theta}$. This is because they are longer baselines with lower multiplicity. In the end these baseline classes still lead to high contributions to total sensitivity (Fig. \ref{fig:osens}) because there are a lot more such baseline pairs for HERA.  
 
@@ -559,7 +547,7 @@ Having quantified the sensitivity from a given pair of baselines, we study the c
 %To illustrate, we use the second observing season of PAPER-128 data, taken from Jan. 21st to March 7th of 2014. To illustrate the effect of noise and foreground, we use the data before fringe-rate and delay filtering. 
 
 \section{Conclusion}
-Redundant arrays are designed to maximize sensitivity. Current generations of redundant radio arrays, such as those probing the power spectrum of the epoch of reionization could benefit from data analysis techniques that improve the sensitivity. We present an intuitive analysis of cross-multiplying baselines that are close in length and orientation to each other. Given an antenna array configuration, our method quickly identifies the best baseline pairs to cross-multiply and predict the expected sensitivity contribution. With the predicted result one can improve existing power-spectrum pipelines through 3 simple steps. 1). Rephase the visibilities prior to delay transforming by the zenith displacement (or more accurately by the phase predicted by our numerical analysis). 2). Shift the visibilities in time. 3) Cross multiply the visibilities of the two baselines  to form the power spectrum. 4) Finally combine the different baseline pairs by appropriate inverse-variance weighting that takes into account the predicted sensitivity contributions of each case. We showed that such techniques could lead to $20\%$ to $60\%$ increase in sensitivity for PAPER and HERA. 
+Redundant arrays are designed to maximize sensitivity. Current generations of redundant radio arrays, such as those probing the power spectrum of the epoch of reionization could benefit from data analysis techniques that improve the sensitivity. We present a visibility and delay-transform based method of cross-multiplying baselines that are close in length and orientation to each other, thereby extracting the sensitivity contained in such partial redundancy. Our discussion focuses on drift-scan arrays but also provide the analogous expressions for tracking measurements. Our method relies on cross-multiplications of visibilities at a time-offset. For drift-scan arrays, the movement of zenith during this time-offset requires a frequency-dependent rephasing prior to delay transform. We show that such zenith-rephasing lead to manageable chromatic leakage. Given an antenna array configuration, our method identifies the best baseline pairs to cross-multiply and predict the optimal time-offset $\Delta T$, weight $\Theta$ and rephase delay $\Delta\tau$. With the predicted results one can incorporate partial redundancy into existing delay-tranform based power-spectrum pipelines through a few steps. 1). Rephase the visibilities prior to delay transforming by $\Delta\tau$. 2). Shift the visibilities in time by $\Delta T$. 3) Cross multiply the visibilities of the two baselines  to form the power spectrum. 4) combine the different baseline pairs by appropriate inverse-variance weighting that takes into account the predicted sensitivity contributions of each case. We showed that incorporation of partial redundancy accounts for $20\%$ to $60\%$ sensitivity for various configurations of PAPER and HERA. 
 
 
 \pagebreak
