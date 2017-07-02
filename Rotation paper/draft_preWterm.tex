@@ -123,51 +123,30 @@ equivalent of which are
 of baselines are cross multiplied within itself. This paper provides the method for inter-class multiplications. To do so we will use the short hand notation $\{m,n\}:\{m',n'\}$ to denote a pair of baseline classes to be cross-multiplied. 
 
 
-\section{Method \label{sec:method}}
+\section{Method}
 
-\subsection{$uvw$ tracks \label{sec:tracks}}
+\subsection{Rough Idea \label{sec:tracks}}
 
 
 
-Given a point source on the sky, each baseline maps to a point in $uvw$ space. As the Earth rotates with respect to
-the source, the points trace out tracks in the $uvw$ space. 
-We show in Fig. \ref{fig:Tracks} $uvw$ tracks of PAPER-128 over 12 hours, at 0.15GHz, for a source that passes through zenith. 
+Given a point source on the sky, each baseline maps to a point in $uv$ plane. As the Earth rotates with respect to
+the source, the points trace out tracks in the $uv$ plane. 
+We show in Fig. \ref{fig:Tracks} $uv$ tracks of PAPER-128 over 4.8 hours, at 0.15GHz, for a source that passes through zenith. 
 
 
 \begin{figure}[H]
-\includegraphics[width=\linewidth]{tracks3D}
-\caption{Tracks of PAPER-128 (only a randomly selected subset of 32 baselines are shown) for frequency $\nu=0.15\text{GHz}$ and a hypothetical source that passes through zenith.
-These tracks are traced out over 0.5 sidereal days. Color represents different baselines. 
-As the Earth rotates, tracks are traced out counterclockwise. Tracks in $uvw$ space do not cross, even though the $uv$ projections do. }
+\includegraphics[width=\linewidth]{tracks128}
+\caption{Tracks of PAPER-128 (grid only, excluding outriggers) for requency $\nu=0.15\text{GHz}$ and a hypothetical source that passes through zenith.
+These tracks are traced out over 0.2 sidereal days, or roughly 4.8
+hours. Color represents different baselines. 
+As the Earth rotates, tracks are traced out counterclockwise. }
 \label{fig:Tracks}
 \end{figure}
 
-Traditionally, we can identify
+Roughly speaking, we can identify
 redundancy of near-equivalent baselines as crossings
-of the $uv$ tracks, a 2 dimensional projection of Fig. \ref{fig:Tracks}. As we see in Fig. \ref{fig:Tracks}, there would be many such crossings. However, there are several reasons that $uv$ track-crossing do not imply perfect redundancy. In fact, $uv$ track-crossing is
-not accurate enough for time offset determination, nor can it give estimate of the degree of redundancy.  The most obvious reason is that the 3 dimensional $uvw$ tracks do not actually cross. For drift-scan arrays, even a crossing in $uvw$ space does not imply perfect redundancy. This shall become evident in the next section, after we develop a more general formalism that accounts for the point spread function of the finite beams, and estimate the degree of redundancy for general combination of baselines at a general time-offset. 
-
-
-
-\subsection{Formalism}
-In this section we formulate the relation between 
-the product of visibilities from two arbitrary baselines and the power spectrum. 
-
-We begin with the visibility as commonly defined in the literature (e.g.
-\citealt{first-paper}): 
-\begin{equation}
-\begin{aligned}V_{\nu}(\boldsymbol{b}) & =\int d\Omega A(\hat{\boldsymbol{s}},\nu)\phi(\nu)I_{\nu}(\hat{\boldsymbol{s}})\exp\left(-2\pi i\frac{\nu}{c}\boldsymbol{b}\cdot\hat{\boldsymbol{s}}\right),\\
- & \approx\frac{2k_{B}}{\lambda^{2}}\int d\Omega A(\hat{\boldsymbol{s}},\nu)\phi(\nu)T(\hat{\boldsymbol{s}})\exp\left(-2\pi i\frac{\nu}{c}\boldsymbol{b}\cdot\hat{\boldsymbol{s}}\right),
-\end{aligned}
-\label{eq:Vis1}
-\end{equation}
-Here $k_B$ is Boltzmann's constant, $\lambda$ is the mean wavelength, $\boldsymbol{b}$ is the baseline length, $\hat{\boldsymbol{s}}$ and $\Omega$ are a direction in the
-sky and its corresponding solid angle. Inside the integral we have $\phi(\nu)$ the frequency bandpass profile, $A_{\nu}$ the (frequency
-dependent) primary beam, and $I$ the specific intensity, which has been
-related to $T$, the brightness temperature in the Rayleigh-Jeans
-limit. The beam reception pattern $A$ is dimensionless,
-normalized to 1 at its peak (zenith), and we assume it to be the same
-for all baselines. We show sample beams of HERA and PAPER antennas in Fig. \ref{fig:Beam} for reference. 
+of the $uv$ tracks. As we see in Fig. \ref{fig:Tracks}, there are many such crossings. However, crossing tracks do not imply perfect redundancy in the case of drift-scan arrays. In fact, track-crossing is
+not accurate enough for time offset determination, nor can it give estimate of the degree of redundancy.  The reason lies in the finite size of the beams and the nature of a drift-scan measurement. This shall become evident in the next section, after we develop a more general formalism that accounts for the point spread function of the finite beams, and estimate the degree of redundancy for general combination of baselines at a general time-offset. We show sample beams of HERA and PAPER antennas in Fig. \ref{fig:Beam} for reference. 
 
 
 
@@ -178,22 +157,41 @@ for all baselines. We show sample beams of HERA and PAPER antennas in Fig. \ref{
 spaced 10 degrees apart. \label{fig:Beam}}
 \end{figure}
 
-In practice,
-power spectrum measurements are typically taken from a few ten MHz centered around the corresponding redshift of interest (e.g. 150 MHz for z=9.5). 
+
+
+\subsection{Formalism}
+In this section we formulate the relation between 
+the product of visibilities from two arbitrary baselines and the power spectrum. 
+
+We begin with the visibility as commonly defined in the literature (e.g.
+\citealt{first-paper}): 
+\begin{equation}
+\begin{aligned}V_{\nu}(\boldsymbol{b}) & =\int d\Omega A_{\nu}(\hat{\boldsymbol{s}})\phi(\nu)I_{\nu}(\hat{\boldsymbol{s}})\exp\left(-2\pi i\frac{\nu}{c}\boldsymbol{b}\cdot\hat{\boldsymbol{s}}\right),\\
+ & \approx\frac{2k_{B}}{\lambda^{2}}\int d\Omega A_{\nu}(\hat{\boldsymbol{s}})\phi(\nu)T(\hat{\boldsymbol{s}})\exp\left(-2\pi i\frac{\nu}{c}\boldsymbol{b}\cdot\hat{\boldsymbol{s}}\right),
+\end{aligned}
+\label{eq:Vis1}
+\end{equation}
+Here $k_B$ is Boltzmann's constant, $\lambda$ is the mean wavelength, $\boldsymbol{b}$ is the baseline
+length, $\hat{\boldsymbol{s}}$ and $\Omega$ are a direction in the
+sky and its corresponding solid angle. Inside the integral we have $\phi(\nu)$ the frequency bandpass profile, $A_{\nu}$ the (frequency
+dependent) primary beam, and $I$ the specific intensity, which has been
+related to $T$, the brightness temperature in the Rayleigh-Jeans
+limit. The beam reception pattern $A$ is dimensionless,
+normalized to 1 at its peak (zenith), and we assume it to be the same
+for all baselines. In practice,
+power spectrum measurements are typically taken from a few ten MHz centered around the corresponding redshift of interest (e.g. 150 MHz for z=9.5). Note that in Eq. \ref{eq:Vis1}, no flat-sky approximation has yet been made; the angular integral is performed over the dome. 
 
 Delayed-transformed visibility has been widely adopted in recent years since it has been shown that foregrounds are isolated in delay space. We define the delay-transformed visibility by Fourier transforming visibility along the frequency axis\citep{delay-transform} as:
 \small
 \begin{equation}
 \begin{aligned}V(\boldsymbol{b},\tau) & =\int d\nu V_{\nu}(\boldsymbol{b})\phi(\nu)\exp\left(-2\pi i\nu\tau\right),\\
- & =\frac{2k_{B}}{\lambda^{2}}\int d\Omega d\nu A(\hat{\boldsymbol{s}},\nu)T(\hat{\boldsymbol{s}},\nu)\exp\left[-2\pi i\nu\left(\frac{\boldsymbol{b}\cdot\hat{\boldsymbol{s}}}{c}+\tau\right)\right]. 
+ & =\frac{2k_{B}}{\lambda^{2}}\int d\Omega d\nu A(\hat{\boldsymbol{s}},\nu)\phi(\nu)T(\hat{\boldsymbol{s}},\nu)\exp\left[-2\pi i\nu\left(\frac{\boldsymbol{b}\cdot\hat{\boldsymbol{s}}}{c}+\tau\right)\right]. 
 \end{aligned}
 \label{eq:Vb1}
 \end{equation}
 \normalsize
 Here the delay $\tau$ is the Fourier variable. Eq. \eqref{eq:Vb1} expresses the delay-transformed visibility as
-an integral over observational coordinates $\hat{\boldsymbol{s}}$ and $\nu$. For notational simplicity here and in the rest of this paper, we shall absorb the bandpass $\phi$ inside the primary beam $A$.  
-
-Ultimately,
+an integral over observational coordinates $\hat{\boldsymbol{s}}$ and $\nu$. Ultimately,
 we would like to relate the data, collected with coordinates $\hat{\boldsymbol{s}}$
 and $\nu$, to the power spectrum, written with 
 $\boldsymbol{r}$ and $\boldsymbol{k}$, the cosmological position coordinate and wavenumber. To do so, we start by noticing that
@@ -214,17 +212,17 @@ Inverting for $\nu$:
 \nu=\frac{X-r}{Y}+\nu_{21}.\label{eq:nur}
 \end{equation}
 
-In the thin-shell limit, we can write:
+Further we shall invoke the flat-sky limit, with the $z$ direction points to zenith, and $x$ and $y$ point east and north, respectively:
 \begin{equation}
-d^2r=X^2d\Omega. 
-\label{eq:thinshell}
+(r_{x},r_{y})=(X\hat{\boldsymbol{s}}_{x},X\hat{\boldsymbol{s}}_{y}). 
 \end{equation}
-Note that in Eq.\ref{eq:thinshell} no flat-sky approximation has been made; the angular integral is still performed over the dome. 
+In the same limit $(Xk_{x},Xk_{y},Yk_{z})=\frac{2\pi}{c}(b_{x},b_{y},\tau)$ relates
+the cosmological $k$ to the observational coordinates. For a more rigorous treatment without the flat sky limit, see Appendix [ADRIAN]. 
 
 We can rewrite the delayed-transformed visibility as 
 \small
 \[
-\begin{aligned}V(\boldsymbol{b},\tau) & =\frac{2k_{B}}{\lambda^{2}}\int\frac{d^{3}r}{X^{2}Y}A(\boldsymbol{r})T(\boldsymbol{r})\exp\left[-2\pi i\left(\frac{\boldsymbol{b}}{c}\cdot\hat{\boldsymbol{r}}+\tau\right)\nu_{r}\right]\end{aligned},
+\begin{aligned}V(\boldsymbol{b},\tau) & =\frac{2k_{B}}{\lambda^{2}}\int\frac{d^{3}r}{X^{2}Y}A(\boldsymbol{r})\phi(r)T(\boldsymbol{r})\exp\left[-2\pi i\left(\frac{\boldsymbol{b}}{c}\cdot\hat{\boldsymbol{r}}+\tau\right)\nu_{r}\right]\end{aligned},
 \]
 \normalsize
  where $d\nu=-dr/Y$ and $d^{3}r=-X^{2}Yd\Omega d\nu$. 
@@ -236,31 +234,31 @@ The beam pattern of a baseline shifts relative to the sky as the Earth rotates. 
 of the beam pattern with the 3 dimensional rotation operator $\Gamma$:
 \small
 \[
-\begin{aligned}V(\boldsymbol{b'},\tau') & =\frac{2k_{B}}{\lambda^{2}}\int\frac{d^{3}r}{X^{2}Y}A(\Gamma\boldsymbol{r})T(\boldsymbol{r})\exp\left[-2\pi i\left(\frac{\boldsymbol{b}}{c}\cdot\Gamma\hat{\boldsymbol{r}}+\tau'\right)\nu_{r}\right]\end{aligned}.
+\begin{aligned}V(\boldsymbol{b'},\tau') & =\frac{2k_{B}}{\lambda^{2}}\int\frac{d^{3}r}{X^{2}Y}A(\Gamma\boldsymbol{r})\phi(r)T(\boldsymbol{r})\exp\left[-2\pi i\left(\frac{\boldsymbol{b}}{c}\cdot\Gamma\hat{\boldsymbol{r}}+\tau'\right)\nu_{r}\right]\end{aligned}.
 \]
 \normalsize
 With implicit bounds of integrals from $-\infty$ to $\infty$, we have:
 \begin{widetext}
 \begin{equation}
-\begin{aligned} & \langle V^{*}(\boldsymbol{b},\tau)V(\boldsymbol{b'},\tau)\rangle\\
+\begin{aligned} & \langle V^{*}(\boldsymbol{b},\tau)V(\boldsymbol{b'},\tau')\rangle\\
  & =\left(\frac{2k_{B}}{X^{2}Y\lambda^{2}}\right)^{2}\int d^{3}rd^{3}r'\left(\langle T^{*}(\boldsymbol{r})T(\boldsymbol{r'})\rangle\right)A^{*}(\boldsymbol{r})A(\Gamma \boldsymbol{r'})\Phi_{b,\tau}(\boldsymbol{r},\Gamma \boldsymbol{r'}),\\
  & =\left(\frac{2k_{B}}{X^{2}Y\lambda^{2}}\right)^{2}\int d^{3}rd^{3}r'\left(\int\frac{d^{3}\kappa}{(2\pi)^{3}}\frac{d^{3}\kappa'}{(2\pi)^{3}}\langle T^{*}(\boldsymbol{\kappa})T(\boldsymbol{\kappa'})\rangle e^{-i(\boldsymbol{\kappa}\cdot \boldsymbol{r}-\boldsymbol{\kappa'}\cdot\boldsymbol{r'})}\right)A^{*}(\boldsymbol{r})A(\Gamma \boldsymbol{r'})\Phi_{b,\tau}(\boldsymbol{r},\Gamma \boldsymbol{r'}),\\
  & =\left(\frac{2k_{B}}{X^{2}Y\lambda^{2}}\right)^{2}\int d^{3}rd^{3}r'\left(\int\frac{d^{3}\kappa}{(2\pi)^{3}}P(\kappa)e^{-i\boldsymbol{\kappa}\cdot(\boldsymbol{r}-\boldsymbol{r'})}\right)A^{*}(\boldsymbol{r})A(\Gamma \boldsymbol{r'})\Phi_{b,\tau}(\boldsymbol{r},\Gamma \boldsymbol{r'}),\\
  & \approx\left(\frac{2k_{B}}{X^{2}Y\lambda^{2}}\right)^{2}P(k_{b,\tau})\int d^{3}rd^{3}r'\delta_{D}^{(3)}(\boldsymbol{r}-\boldsymbol{r'})A^{*}(\boldsymbol{r})A(\Gamma \boldsymbol{r'})\Phi_{b,\tau}(\boldsymbol{r},\Gamma \boldsymbol{r'}),\\
- & =\left(\frac{2k_{B}}{X^{2}Y\lambda^{2}}\right)^{2}P(k_{b,\tau})\int d^{3}r|A^{*}(\boldsymbol{r})A(\Gamma \boldsymbol{r})|\exp\left[-i2\pi\frac{\nu_{r}}{c}\left(\hat{\boldsymbol{r}}\cdot\boldsymbol{b}-\Gamma \hat{\boldsymbol{r}}\cdot\boldsymbol{b'}\right)\right],\\
- & =\left(\frac{2k_{B}}{\lambda^{2}}\right)^{2}P(k_{b,\tau})\int\frac{d\Omega d\nu}{X^{2}Y}|A^{*}(\hat{\boldsymbol{s}},\nu)A(\Gamma \hat{\boldsymbol{s}},\nu)|\exp\left[-i2\pi\frac{\nu}{c}\left(\hat{\boldsymbol{s}}\cdot\boldsymbol{b}-\Gamma\hat{\boldsymbol{s}}\cdot\boldsymbol{b'}\right)\right],
+ & =\left(\frac{2k_{B}}{X^{2}Y\lambda^{2}}\right)^{2}P(k_{b,\tau})\int d^{3}r|A^{*}(\boldsymbol{r})A(\Gamma \boldsymbol{r})||\phi(\nu_{r})|^{2}\exp\left[-i2\pi\frac{\nu_{r}}{c}\left(\hat{\boldsymbol{r}}\cdot\boldsymbol{b}-\Gamma \hat{\boldsymbol{r}}\cdot\boldsymbol{b'}\right)\right],\\
+ & =\left(\frac{2k_{B}}{\lambda^{2}}\right)^{2}P(k_{b,\tau})\int\frac{d\Omega d\nu}{X^{2}Y}|A^{*}(\hat{\boldsymbol{s}},\nu)A(\Gamma \hat{\boldsymbol{s}},\nu)||\phi(\nu)|^{2}\exp\left[-i2\pi\frac{\nu}{c}\left(\hat{\boldsymbol{s}}\cdot\boldsymbol{b}-\Gamma\hat{\boldsymbol{s}}\cdot\boldsymbol{b'}\right)\right],
 \end{aligned}
 \label{eq:main}
 \end{equation}
 
 where in transition from cosmological coordinates back to observing coordinates we have written $\hat{\boldsymbol{r}}\equiv\hat{\boldsymbol{s}}$, and 
 \begin{equation}
-\Phi_{b,\tau}(\boldsymbol{r},\Gamma \boldsymbol{r'})=\exp\left[-i\frac{2\pi}{c}\left(\boldsymbol{b}\cdot\nu_{r}\hat{\boldsymbol{r}}-\boldsymbol{b'}\cdot\nu_{r'}\Gamma\hat{\boldsymbol{r'}}\right)\right]\exp\left[-i2\pi\tau\left(\nu_{r}-\nu_{r'}\right)\right].
+\Phi_{b,\tau}(\boldsymbol{r},\Gamma \boldsymbol{r'})=|{\phi^{*}}(\ensuremath{\nu_{r}})\phi(\nu_{r'})|\exp\left[-i\frac{2\pi}{c}\left(\boldsymbol{b}\cdot\nu_{r}\hat{\boldsymbol{r}}-\boldsymbol{b'}\cdot\nu_{r'}\Gamma\hat{\boldsymbol{r'}}\right)\right]\exp\left[-i2\pi\tau\left(\nu_{r}-\nu_{r'}\right)\right].
 \end{equation}
 \end{widetext}
 The third equality of Eq.(\ref{eq:main}) follows from assumption of translational invariance of sky statistics, and the first inequality follows from the assumption that
 the 3D power spectrum varies negligibly over the $k$-space of interest
-so that $\hat{P}_{21}(k+k')\approx\hat{P}_{21}(k)$. The careful reader would have noticed that we have also assumed here a definitive relation between $k$ and $b,\tau$. In the flat-sky limit for example, such a relation would take the form $(Xk_{x},Xk_{y},Yk_{z})=\frac{2\pi}{c}(b_{x},b_{y},\tau)$. Instrumental chromaticity and foreground isolation will be examined in \ref{sec:chromaticity}. Since $\Gamma$
+so that $\hat{P}_{21}(k+k')\approx\hat{P}_{21}(k)$. Since $\Gamma$
 is a sky rotation, it does not affect $\nu$, hence we have taken $\nu_{r}$
 outside the parenthesis in the phase term $\exp\left[-i2\pi\frac{\nu_{r}}{c}\left(\hat{\boldsymbol{r}}\cdot\boldsymbol{b}-\Gamma \hat{\boldsymbol{r}}\cdot\boldsymbol{b'}\right)\right]$. Notice that the phase factor $\exp\left[-i2\pi\tau\left(\nu-\nu'\right)\right]$
 drops out in the end. This means that the location and magnitude of the correlation peak does not depend on delay $\tau$, an important point we shall come back to. 
@@ -271,15 +269,15 @@ the general relation between the delay-transformed visibilities and
 the power spectrum:
 
 \begin{equation}
-\begin{aligned} & \langle V^{*}(\boldsymbol{b},\tau)V(\boldsymbol{b'},\tau)\rangle\\
- & =\left(\frac{2k_{B}}{\lambda^{2}}\right)^{2}P(k_{b,\tau})\int\frac{d\Omega d\nu}{X^{2}Y}|A^{*}(\hat{\boldsymbol{s}},\nu)A(\Gamma\hat{\boldsymbol{s}},\nu)|\\
+\begin{aligned} & \langle V^{*}(\boldsymbol{b},\tau)V(\boldsymbol{b'},\tau')\rangle\\
+ & =\left(\frac{2k_{B}}{\lambda^{2}}\right)^{2}P(k_{b,\tau})\int\frac{d\Omega d\nu}{X^{2}Y}|A^{*}(\hat{\boldsymbol{s}},\nu)A(\Gamma\hat{\boldsymbol{s}},\nu)||\phi(\nu)|^{2}\\
  & \qquad \qquad \qquad \qquad \exp\left[-i2\pi\frac{\nu}{c}\left(\hat{\boldsymbol{s}}\cdot\boldsymbol{b}-\Gamma\hat{\boldsymbol{s}}\cdot\boldsymbol{b'}\right)\right].\end{aligned}
 \label{eq:final}
 \end{equation}
 
 In other words the power spectrum estimate from visibilities of a baseline pair is given by 
 \begin{equation}
- P(k_{b,\tau}) = \left(\frac{\lambda^{2}}{2k_{B}}\right)^{2} \frac{\langle V^{*}(\boldsymbol{b},\tau)V(\boldsymbol{b'},\tau)\rangle}{\Theta}, 
+ P(k_{b,\tau}) = \left(\frac{\lambda^{2}}{2k_{B}}\right)^{2} \frac{\langle V^{*}(\boldsymbol{b},\tau)V(\boldsymbol{b'},\tau')\rangle}{\Theta}, 
  \label{eq:opp}
 \end{equation}
 where the weight
@@ -288,18 +286,11 @@ where the weight
 \label{eq:Theta}
 \end{equation}
 and 
-
 \[
-\Theta_{\nu} \equiv \int \frac{d\Omega}{X^{2}Y}|A^{*}(\hat{\boldsymbol{s}},\nu)A(\Gamma\hat{\boldsymbol{s}},\nu)| e^{-i2\pi\frac{\nu}{c}\left(\hat{\boldsymbol{s}}\cdot\boldsymbol{b}-\Gamma\hat{\boldsymbol{s}}\cdot\boldsymbol{b'}\right)}e^{i\psi_{\nu}}.
+\Theta_{\nu}\equiv \int \frac{d\Omega}{X^{2}Y}|A^{*}(\hat{\boldsymbol{s}},\nu)A(\Gamma\hat{\boldsymbol{s}},\nu)||\phi(\nu)|^{2} e^{-i2\pi\frac{\nu}{c}\left(\hat{\boldsymbol{s}}\cdot\boldsymbol{b}-\Gamma\hat{\boldsymbol{s}}\cdot\boldsymbol{b'}\right)}e^{i\psi}.
 \label{eq:Thetanu}
 \]
-
-
-Notice that $\Theta$ has no dependence on $\tau$. In Eq. \ref{eq:Thetanu} we introduced an extra phase $\psi$, the origin of which we shall explain in \ref{sec:rephs}. We point out that although all our derivations focused on drift-scan telescopes, we can get the analogous result for tracking measurements simply by noticing that for a tracking primary beam, $\Gamma$ becomes a rotation around zenith, and so:
-\[
-\Theta_{\nu} \equiv \int \frac{d\Omega}{X^{2}Y}|A^{*}(\hat{\boldsymbol{s}},\nu)A(\hat{\boldsymbol{s}},\nu)| e^{-i2\pi\frac{\nu}{c}\left(\hat{\boldsymbol{s}}\cdot\boldsymbol{b}-\Gamma\hat{\boldsymbol{s}}\cdot\boldsymbol{b'}\right)}e^{i\psi_{\nu}}.
-\label{eq:Thetanu_tracking}
-\]
+Notice that $\Theta$ has no dependence on $\tau$. In Eq. \ref{eq:Thetanu} we introduced an extra phase $\psi$, the origin of which we shall explain in \ref{sec:rephs}. 
 
 Roughly speaking, Eq. \ref{eq:opp} through \ref{eq:Thetanu} tell us that the cross multiplications of visibilities at a time delay
 in $uv$-space is proportional to the power spectrum times the Fourier
@@ -309,65 +300,32 @@ With Eq. \ref{eq:opp} and Eq. \ref{eq:Theta} we can, for any given pair of basel
 candidate baseline pairs with good redundancy, to find the time offset that maximizes redundancy, and to quantify the degree of such redundancy. We can do all the above simply by computing the weight $\Theta$ from
 Eq.(\ref{eq:Theta}) for various time offsets, without having to actually cross-multiply visibilities for all baselines and offsets. This makes the task computationally tractable. 
 
-
-
-\subsection{Rephasing \label{sec:rephs}}
-As we see in Eq. \ref{eq:Thetanu}, $\Theta_{\nu}$ at the peak of correlation is in general complex, and often far from real. Furthermore, this phase of peak correlation is inevitably frequency dependent. This frequency dependence of the phase would lead to destructive interference when we integrate over frequency, unless we correct $\Theta_{\nu}$ by an extra phase $\psi_\nu$ to cancel its frequency dependence. 
-
-
- 
-%Doing so is also crucial to reduction of additional mode mixing, as discussed in \cite{Hazelton2013}. Shapes of overlapping regions of pairs of baselines are fixed with respect to frequency. 
-
-To illustrate the effect of rephasing, we compare in Fig. \ref{fig:freqdiff} real parts of $\Theta_{\nu}$ of both equivalent and near-equivalent baseline pairs for two channels: 0.16 GHz and 0.17 GHz. The top two panels have zero rephasing, and the bottom two are rephased to a time offset of 0.055 sidereal days, the optimal time offset for the given baseline pair. The first and third panels show the equivalent baseline pairs \{1,0\}:\{1,0\}, and second and fourth panels show \{1,0\}:\{1,1\}. We see that in the un-rephased case in the second panel, although the magnitude of correlations match up for the two frequencies, the phases do not. This means summing over frequency leads to destructive interference and signal loss. The wider the frequency profile, the more destructive the interference would be. In the rephased case, the phases of the near-equivalent case match up and can be added without compromising sensitivity. We should thus rephase the data separately for each set of baseline pairs. 
-
-\begin{figure}[H]
-\includegraphics[width=1.1\linewidth]{rephs}
-
-\caption{Comparisons of the peak phases of two different frequencies. Specifically shown are the real parts of $\Theta_{\nu}$. First and third panels shows equivalent baselines, second and fourth show a pair of near-equivalents. The top two panels have zero phase shift ($\psi_{\nu}=0$), and the bottom two are rephased to a time offset of 0.055 sidereal days. The first and last panels thus show a coherently rephased series that would add constructively at the respective peaks. }
-\label{fig:freqdiff}
-\end{figure}
-
-
-
-
-
-The physical origin of $\psi_\nu$ lies in the two visibilities having different phase centers. By default the correlators of a drift-scan array phase the two visibilities both to zenith at the same time. When they are cross-multiplied with a time lag, the visibilities must be rephased before delay transform to the account for the movement of the zenith. One can check that introduction of a phase in Eq. \ref{eq:Vis1} does carry through the derivation to Eq \ref{eq:Thetanu}. The effect of the phase thus roughly corresponds in a shift of the delay mode measured, and we should expect $\psi_{\nu}$ to be in first order a linear function of $\nu$. 
-In Fig. \ref{fig:phi_nu} we show the peak phases for for a given baseline pair of PAPER-128 (\{2,0\}:\{2,1\}), comparing the drift-scan phase dependence and the case for the same baseline with hypothetical tracking-elements. In the drift-scan case, we indeed see a linear relation corresponding to a delay of $\Delta\tau\approx17$ns. In the tracking case, because of minimal zenith movement, only second order effects are observed. 
-
-\begin{figure}[H]
-\includegraphics[width=1\linewidth]{phi_nu}
-
-\caption{Frequency dependent peak phases for PAPER-128 baseline pair \{2,0\}:\{2,1\}. Both the drift-scan case and a hypothetical tracking baseline are shown. We have also fixed the global phase in both cases to 0 at 0.145GHz. The drift-scan case exhibits linear behavior and to first order corresponds to a shift in delay space to account for the movement of zenith. }
-\label{fig:phi_nu}
-\end{figure}
-
-Once rephased, the overall weight can be constructed by $\Theta=\int \Theta_{\nu}d\nu$, and thus
-\begin{equation}
-\begin{aligned} & \langle V^{*}(\boldsymbol{b},\tau)V_{\psi}(\boldsymbol{b'},\tau)\rangle\\
- & =\left(\frac{2k_{B}}{\lambda^{2}}\right)^{2}P(k_{b,\tau})\int\frac{d\Omega d\nu}{X^{2}Y}|A^{*}(\hat{\boldsymbol{s}},\nu)A(\Gamma\hat{\boldsymbol{s}},\nu)|\\
- & \qquad \qquad \qquad \qquad \exp\left[-i2\pi\frac{\nu}{c}\left(\hat{\boldsymbol{s}}\cdot\boldsymbol{b}-\Gamma\hat{\boldsymbol{s}}\cdot\boldsymbol{b'}\right)\right].\end{aligned}
-\label{eq:final_new}
-\end{equation}
-
-
 \section{Analysis}
-\subsection{Numerical Test \label{sec:Techniquet}}
 
-Bringing together the discussion from Section \ref{sec:method}, we present a numerical check of Eq.\ref{eq:final_new}, including rephasing, thus verifying the validity of using $\Theta$ to estimate the degree of redundancy as a function of time lag. To do so, we need to compare the amplitude and phase of the integral weight $\Theta$ 
-for a pair of baselines with products of simulated visibilities of those baselines. We use 10 frequency channels evenly spaced from $145$MHz to $155$MHz for the comparison. We rephase one of the simulated visibilities, as well as computed $\Theta_nu$ to the same delay as computed from the peak phase of the latter. 
- 
+\subsection{Track-crossing, beam, and phase}
+We are now in a position to understand the reason that track-crossing, as mentioned section \ref{sec:tracks}, does not correspond exactly to the peak of correlation. Typical convention of rotation synthesis has rotation operates on $\boldsymbol{b'}$ instead of $\hat{\boldsymbol{s}}$, in which case Eq.\ref{eq:Theta} becomes
+\begin{equation}
+\Theta \equiv\int\frac{d\Omega d\nu}{X^{2}Y}|A^{*}(\hat{\boldsymbol{s}},\nu)A(\Gamma\hat{\boldsymbol{s}},\nu)||\phi(\nu)|^{2} e^{-i2\pi\frac{\nu}{c}\hat{\boldsymbol{s}}\cdot\left(\boldsymbol{b}-\widetilde{\Gamma}\boldsymbol{b'}\right)}, 
+\end{equation}
+where $\widetilde{\Gamma}$ is the inverse of $\Gamma$. Track-crossing corresponds to vanishing of the exponent
+\[
+ \boldsymbol{b}-\widetilde{\Gamma}\boldsymbol{b'} = 0. \label{eq:trackcross}
+ \]
+This condition maximizes $\Theta$ if and only if no other term in the integral depends on $\Gamma$, i.e. if and only if $A(\Gamma\hat{\boldsymbol{s}},\nu)=A(\hat{\boldsymbol{s}},\nu)$. If the measurement is tracking, $\Gamma$ becomes a rotation around zenith, and the condition is satisfied. In a general drift-scan measurement, this is not the case, and track-crossing point of Eq. \ref{eq:trackcross} does not maximize $\Theta$. 
+
 \begin{figure}[h]
-\includegraphics[width=\linewidth]{numerics}
+\includegraphics[width=\linewidth]{opp}
 
-\caption{Numerical comparisons of the visibility correlation peaks to the $\Omega$ factor in Eq.(\ref{eq:final}). We generated a Gaussian random sky on healpix maps, computed visibilities and cross correlated them to find the correlation.  Top panel shows the equivalent baseline pairs \{2,0\} against \{2,0\}, bottom panel shows \{2,0\} against \{2,1\}.  Evaluations of weight $\Theta$ are shown with solid curves, and the visibility correlations of simulated random sky is given with dashed lines. In both cases only the real parts are shown. We see that in both cases the theory and simulation line up in both amplitude and phase.}
+\caption{Numerical comparisons of the visibility correlation peaks to the $\Omega$ factor in Eq.(\ref{eq:final}). We generated 2500 instances of Gaussian random sky on healpix maps, computed visibilities and cross correlated them to find the correlation.  Top panel shows the equivalent baseline pairs \{1,0\} against \{1,0\}, bottom panel shows set1,0 against \{1,1\}.  Evaluations of weight $\Theta$ are shown with solid curves, and the visibility correlations of simulated random sky is given with dashed lines. In both cases blue denotes real part, green the imaginary part, and red the magnitude. We see that in both cases the theory and simulation line up in both amplitude and phase.}
 \label{fig:numerics}
 \end{figure}
 
+We shall illustrate with an example from PAPER128. In the solid curves of Fig. \ref{fig:numerics} we show examples of $\Theta_{\nu}$ as a function of time offset  here with no additional phase. The amplitude and real, as well as imaginary parts are shown for equivalent \{1,0\}:\{1,0\} in the top panel, and near-equivalent \{1,0\}:\{1,1\} in the bottom. The vertical axis is normalized such that the peak of \{1,0\}:\{1,0\} is unity. We see that as expected, \{1,0\}:\{1,0\} peaks at $dT=0$, where $\Theta_{\nu}$ is real. \{1,0\}:\{1,1\} on the other hand, peaks with amplitude of approximately 0.4 at $dT\approx0.055$ days and is not real at its peak. Since track-crossing corresponds to vanishing exponent, correlation at track-cross points are real. This in the bottom plot corresponds to roughly $dT=0.05$ days. 
 
-
-For the simulation, we populate random values of brightness temperature
+Shown in dashed curves, which almost completely overlap with the solid curves, in Fig. \ref{fig:numerics} are cross-multiplications of simulated visibilities. For the simulation, we take N=2500 random realizations of the sky
 on a healpix map \citep{Heal, HealPrimer} \footnote{We use functionalities in the python package AIPY for healpix mapping
-as well as coordinate transforms. }, and pick two baselines \{2,0\} and \{2,1\}. We then rotate the baseline positions with
+as well as coordinate transforms. }, and pick two baselines \{1,0\} and \{1,1\}. For each realization, each pixel is given a Gaussian random value
+of brightness temperature. We then rotate the baseline positions with
 the appropriate rotation matrix, multiplying the sky by the primary beam to get the visibilities, for each
 baseline\footnote{There are two obvious ways to achieve the rotation. One
 can either fix the sky and rotate the baselines, or the other way
@@ -377,31 +335,81 @@ map turns out to be significant. Thus we let the sky, represented
 by the healpix map, be fixed, and rotate the baselines. }. The resulting visibilities for the two baselines are then convolved
 via the Fourier convolution theorem, to obtain values of the cross
 correlation as a function of time-offset. The peak of the curve then
-corresponds to maximum redundancy.  We do this for both the equivalent (\{2,0\}:\{2,0\}) and near-equivalent (\{2,0\}:\{2,1\}) case.
+corresponds to maximum redundancy.  We do this for both the equivalent (\{1,0\}:\{1,0\}) and near-equivalent (\{1,0\}:\{1,1\}) case.
+
+
+
+\subsection{Rephasing \label{sec:rephs}}
+As we see in Fig.\ref{fig:numerics}, $\Theta$ at the peak of correlation is in general complex, and often far from real. Furthermore, this phase of peak correlation is inevitably frequency dependent, as we see in Eq. \ref{eq:Thetanu}. This frequency dependence of the phase would lead to destructive interference when we integrate over frequency, unless we correct one of the visibilities by an extra phase $\psi_\nu$. 
+
+The physical origin of $\psi_\nu$ lies in the two visibilities having different phase centers. By default the correlators of a drift-scan array phase the two visibilities both to zenith at the same time. When they are cross-multiplied with a time lag, they must be rephased to the account for the movement of the zenith. Thus in practice we must rephase the visibilities before delay transform. 
+%Doing so is also crucial to reduction of additional mode mixing, as discussed in \cite{Hazelton2013}. Shapes of overlapping regions of pairs of baselines are fixed with respect to frequency. 
+
+
+In Fig. \ref{fig:freqdiff} we compare the cross-multiplied visibilities of both equivalent and near-equivalent baseline pairs for two channels: 0.16 GHz and 0.17 GHz. The top two panels have zero rephasing, and the bottom two are rephased to a time offset of 0.055 sidereal days, the optimal time offset for the given baseline pair. The first and third panels show the equivalent baseline pairs \{1,0\}:\{1,0\}, and second and fourth panels show \{1,0\}:\{1,1\}. We see that in the un-rephased case in the second panel, although the magnitude of correlations match up for the two frequencies, the phases do not. This means summing over frequency leads to destructive interference and signal loss. The wider the frequency profile, the more destructive the interference would be. In the rephased case, the phases of the near-equivalent case match up and can be added without compromising sensitivity. We should thus rephase the data separately for each set of baseline pairs. 
+
+\begin{figure}[H]
+\includegraphics[width=1.1\linewidth]{rephs}
+
+\caption{Comparisons of the peak phases of two different frequencies. Specifically shown are the real parts of $\Theta_{\nu}$. First and third panels shows equivalent baselines, second and fourth show a pair of near-equivalents. The top two panels have zero phase shift ($\psi_{\nu}=0$), and the bottom two are rephased to a time offset of 0.055 sidereal days. The first and last panels thus show a coherently rephased series that would add constructively at the respective peaks. }
+\label{fig:freqdiff}
+\end{figure}
+
+Once rephased, the overall weight can be constructed by $\Theta=\int \Theta_{\nu}d\nu$. We must numerically check that rephasing the weight as in Eq.\ref{eq:Thetanu} is indeed equivalent to rephasing the input visibilities before delay-transform. In other words, we want to verify that 
+\begin{equation}
+\begin{aligned} & \langle V^{*}(\boldsymbol{b},\tau)V_{\psi}(\boldsymbol{b'},\tau')\rangle\\
+ & =\left(\frac{2k_{B}}{\lambda^{2}}\right)^{2}P(k_{b,\tau})\int\frac{d\Omega d\nu}{X^{2}Y}|A^{*}(\hat{\boldsymbol{s}},\nu)A(\Gamma\hat{\boldsymbol{s}},\nu)||\phi(\nu)|^{2}\\
+ & \qquad \qquad \qquad \qquad \exp\left[-i2\pi\frac{\nu}{c}\left(\hat{\boldsymbol{s}}\cdot\boldsymbol{b}-\Gamma\hat{\boldsymbol{s}}\cdot\boldsymbol{b'}\right)\right].\end{aligned}
+\label{eq:final}
+\end{equation}
+
+
+\subsection{Numerical Test \label{sec:Techniquet}}
+
+First we present some numerical tests of our formalism to verify the validity of using $\Theta$ to estimate the degree of redundancy as a function of time lag. To do so, we need to compare the amplitude and phase of the integral weight $\Theta$ 
+for a pair of baselines with products of simulated visibilities of those baselines. For computational simplicity, we shall use a single frequency channel of $150$MHz for the comparison. We may use this simplification without compromising generality because Eq. (\ref{eq:final}) is valid for a range of frequency channels if and only if it's valid for each single channels, provided that different channels are combined with rephasing as described in Sec. \ref{sec:rephs}. 
+
+ The accuracy of this result is
+limited by (simulated) cosmic variance and finite spacial resolution,
+and hence can be beat down by averaging over a large number of universes.
+A numerical estimate of the error of the peak height with $N=1$ is
+$\lesssim20\%$, and thus with $N=2500,$ we achieve an error of peak
+height $<0.5\%$. 
+
+
+
 
 The comparison is show in Fig. \ref{fig:numerics}. 
 Sensitivity contribution is inferred from height of the peak of the cross-multiplied visibilities as a function of time. 
-We first compare the simulation to the analytical weight $\Theta$ for a pair of equivalent baselines (\{2,0\}:\{2,0\}), then normalize the peaks 
-of the near-equivalent baselines (\{2,0\}:\{2,1\}) to that of the equivalent ones. 
+We first compare the simulation to the analytical weight $\Theta$ for a pair of equivalent baselines (\{1,0\}, \{1,0\}), then normalize the peaks 
+of the near-equivalent baselines (\{1,0\}, \{1,1\}) to that of the equivalent ones. 
 In Fig. \ref{fig:numerics}  we show on the top comparison of
 the convolution of an equivalent baseline of PAPER-128, normalized to 1 at the
 peak, whose location is at zero time offset as expected. On the bottom we show
-comparison of a near-equivalent baseline pair, of classes \{2,0\}:\{2,1\} and \{2,1\}:\{2,1\}. The peaks
+comparison of a near-equivalent baseline pair, of classes \{1,0\}:\{1,1\} and \{1,1\}:\{1,1\}. The peaks
 are normalized with the same factor as the peak height on the top,
 i.e. the two plots have thus the same scale on the vertical axis.
-The height of the plot thus quantifies the added sensitivity. We see at a peak of around 0.0325 sidereal days, or 0.78 hours, the two baselines are maximally redundant. 
-
-
-\subsection{Chromaticity \label{sec:chromaticity}}
-
-In Eq. \ref{eq:main} we have assumed a one-to-one relation between the cosmological $k$-mode, and the observation variables $b$ and $\tau$. Previous studies have shown that. 
+The height of the plot thus quantifies the added sensitivity. We see at a peak of around 0.055 sidereal days, or 1.32 hours, the two baselines are maximally redundant. 
 
 
 
 
+At the optimal time separation, the integral in Eq. \eqref{eq:final}
+is maximized. Thus as another check we expect the two beams to have to same fringe pattern
+(frequency and phase). Due to the time delay, however, the beam center
+would be slightly shifted with respect to each other. This we show
+in Fig. \ref{fig:Beam-fringe-pattern}. The left and middle panels show the beam fringe
+patterns for baselines \{2,0\} and \{2,1\}, delayed by 0.0325 sidereal days,
+and the right panel shows their cross product. The fringe pattern
+indeed cancels out as we expect. 
 
 
-
+\begin{figure*}[h!]
+\includegraphics[width=0.9\textwidth]{fringe_res}
+\caption{Beam fringe pattern of \{2,0\}(left), \{2,1\} at a time delay (middle),
+and their conjugate product (right). Frequency of $\nu=0.15\text{GHz}$ is
+chosen and only the real components are shown. The colorbar values are normalized such that the peak of the original beam is 1. \label{fig:Beam-fringe-pattern}}
+\end{figure*}
 
 
 
@@ -512,24 +520,19 @@ We run our algorithm over all possible baseline-pairs of  PAPER128, HERA37, HERA
 hexagonal design is the densest pattern of antenna-packing. The larger arrays are designed with a ``gap'' dividing the antennas into three different regions. The gaps are designed so as to improve $uv$ coverage and ease calibration without compromising sensitivity, but also produces many more near-equivalent baselines than the versions without the gap. The motivations behind the designs are explained in \cite{HERAconfiguration}.  The lack of short baselines that are visually close to each other, as well as the smaller beam (Fig. \ref{fig:Beam}) means that we expect to see only longer near-equivalent baselines. The lower multiplicities per class of baselines is made up with the larger number of classes of baseline-pairs, especially given the gap in the larger versions. 
 
 \begin{figure}[H]
-\includegraphics[width=\linewidth]{pairplot}
+\includegraphics[width=\linewidth]{pairplot_small}
 
 \caption{Pairplots of the top contributing baseline pairs in three arrays. Plotted properties are optimal time delay $dT$,  effective weight $\widetilde{\Theta}$ and baseline length $L$. Only those points with $\widetilde{\Theta}>0.01$ are shown (the weight for the top class of equivalent pair is normalized to 1). Only one baseline length is shown since all top contributing pairs have very similar lengths as expected. The scatter plots are shown with transparency so that darker regions indicate degeneracies. Scatter points of the 3 arrays overlap, in order indicated by the legend. }
 \label{fig:pairplot}
 \end{figure}
 
-In Fig. \ref{fig:pairplot} we present a paired distribution of 3 different properties for baselines that contribute well to the sensitivity ($\widetilde{\Theta}>0.01$, where again the weight for the top class of equivalent pair is normalized to 1). The properties shown are effective weight $\widetilde{\Theta}$, optimal time offset $dT$, and average baseline length $L$. We only show 3 of the mentioned arrays for visual clarity. The other two results are similar barring intuitive differences. We discuss each cross-distribution plot:
+In Fig. \ref{fig:pairplot} we present a paired distribution of 3 different properties for baselines that contribute well to the sensitivity ($\widetilde{\Theta}>0.01$, where again the weight for the top class of equivalent pair is normalized to 1). The $dT$ vs. $\widetilde{\Theta}$ plot is familiar from Fig. \ref{fig:sensplot}. We only show 3 of the mentioned arrays for visual clarity. The other two results are similar barring intuitive differences. We make a few observations:
 \begin{itemize}
 
-\item $dT$ vs. $\widetilde{\Theta}$:
-This relation  is familiar from Fig. \ref{fig:sensplot}. The middle bar at $dT=0$ are the equivalent baselines. Note PAPER128 has more data points with high $dT$. 
-
-\item $dT$ vs. $L$:
-PAPER128 shows the trend that longer baselines correspond to lower $dT$. HERA arrays do not exhibit this trend here because of a selection effect. Only baseline pairs with $\widetilde{\Theta}>0.01$ are shown. Shorter HERA baselines require much longer $dT$ to overlap, partly because of the hexagonal structure requires 60\% of rotation to overlap baselines, partly because of the smaller primary beam. Thus most short HERA baseline pairs are not shown in this figure.
+\item Mapping of equivalent baseline pairs: the equivalent baselines are located in key points in the plots. They are the vertical bars in the lower left four plots and the highest peak in the first three histograms, the upper "diagonal edge" in the $\widetilde{\Theta}$ vs. $dT$ and the linear trend in the $\widetilde{\Theta}$ vs. $L$ plot for HERA arrays . 
 
 
-\item $\widetilde{\Theta}$ vs. $L$:
-The general trend to be seen here is that longer baselines tend to have lower $\widetilde{\Theta}$. This is due to the lower multiplicity of longer baselines. The trend is particularly obvious in the linear structure for the HERA arrays. These are the equivalent baselines.Since they all have the unity $\Theta$ by definition, the linearly decreasing trend of $\widetilde{\Theta}$ is a direct measure of the baseline multiplicity structures of the HERA array configurations.
+\item Longer baselines roughly peak at lower time-offset, and lower multiplicity. This is intuitive for PAPER since  for the same north-south separation the rotation angle is smaller with longer east-west separation. 
 
 \item The top near-equivalent pairs in HERA the same $\Theta$ (not shown) as in PAPER128, but much lower $\widetilde{\Theta}$. This is because they are longer baselines with lower multiplicity. In the end these baseline classes still lead to high contributions to total sensitivity (Fig. \ref{fig:osens}) because there are a lot more such baseline pairs for HERA.  
 
@@ -567,26 +570,6 @@ Redundant arrays are designed to maximize sensitivity. Current generations of re
 
 
 \appendix
-\section{\label{sec:appA}\\Track-crossing}
-In this section we explain the reason why track-crossing, even in $uvw$ space, do not correspond to peak correlation for drift-scan measurements. 
-Typical convention of rotation synthesis has rotation operates on $\boldsymbol{b'}$ instead of $\hat{\boldsymbol{s}}$, in which case Eq.\ref{eq:Theta} becomes
-\begin{equation}
-\Theta \equiv\int\frac{d\Omega d\nu}{X^{2}Y}|A^{*}(\hat{\boldsymbol{s}},\nu)A(\Gamma\hat{\boldsymbol{s}},\nu)||\phi(\nu)|^{2} e^{-i2\pi\frac{\nu}{c}\hat{\boldsymbol{s}}\cdot\left(\boldsymbol{b}-\widetilde{\Gamma}\boldsymbol{b'}\right)}, 
-\label{eq:drift}
-\end{equation}
-where $\widetilde{\Gamma}$ is the inverse of $\Gamma$. 
-For tracking elements, $\Gamma$ becomes a rotation around zenith:
-\begin{equation}
-\Theta \equiv\int\frac{d\Omega d\nu}{X^{2}Y}|A^{*}(\hat{\boldsymbol{s}},\nu)A(\hat{\boldsymbol{s}},\nu)||\phi(\nu)|^{2} e^{-i2\pi\frac{\nu}{c}\hat{\boldsymbol{s}}\cdot\left(\boldsymbol{b}-\widetilde{\Gamma}\boldsymbol{b'}\right)}, 
-\label{eq:tracking}
-\end{equation}
-We are now in a position to understand the reason that track-crossing, even in $uvw$ space, as mentioned section \ref{sec:tracks}, would not correspond exactly to the peak of correlation. Track-crossing corresponds to vanishing of the exponent
-\[
- \boldsymbol{b}-\widetilde{\Gamma}\boldsymbol{b'} = 0. \label{eq:trackcross}
- \]
-This condition maximizes $\Theta$ if and only if no other term in the integral depends on $\Gamma$. We see from Eq. \ref{tracking} that this condition is satisfied. In a general drift-scan measurement, however, track-crossing point of Eq. \ref{eq:trackcross} does not maximize $\Theta$. 
-
-
 \section{\label{sec:appB}\\Derivation of Noise Covariance \label{sec:appB}}
 \label{sec:appB}
 In this appendix we give a brief derivation of the effective weight quoted in \ref{sec:sensitivity}. We combine the different power spectrum measurements by inverse variance weighting \footnote{In practice techniques such as bootstrapping is often used, see for example \citep{Ali2015}}. We shall separate the visibility and power spectrum into signal and noise contributions:
