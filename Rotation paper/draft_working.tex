@@ -101,7 +101,7 @@ an antenna. The top panel shows the antenna positions drawn to scale;
 the bottom panel show the antenna labels and distances of the 112-element grid, in other words excluding the outrigger antennas.
 The numbering of the antennas in the bottom panel are original labels
 during instrument assembly and does not bear significant
-meaning. In the bottom panel, the two baselines marked with red segments are example of an equivalent pair, each with antennas separated by 1 unit east and 0 unit north. Similarly,
+meaning. In the bottom panel, the two baselines marked with red segments are example of an equivalent pair, each with antennas separated by 2 units east and 0 unit north. Similarly,
 the baselines marked in blue and yellow are examples
 of classes that , due to the small North-South separation within the grid (see top panel), are expected to be nearly equivalent to the red baselines. }
 \label{fig:AntPos}
@@ -110,14 +110,14 @@ of classes that , due to the small North-South separation within the grid (see t
 We shall use the 128-element PAPER array (henceforth as PAPER-128) to motivate our formalism and demonstrate our method, and extend our results to several HERA configurations in Sec \ref{sec:arrconf}. 
 The PAPER array is located in the Karoo desert in South Africa (30:43:17.5
 S, 21:25:41.8 E). The layout pattern with antenna labels is shown
-in Fig. \ref{fig:AntPos}. The array consists of a 112-element core is a rectangular grid, and 16 "outriggers" used primarily to aid calibration.  In the bottom panel, the two baselines marked in red, are an example of equivalent pair. We denote a equivalency-class of baselines in the PAPER grid by their separations, in this case  \{1,0\}, for the
+in Fig. \ref{fig:AntPos}. The array consists of a 112-element core is a rectangular grid, and 16 "outriggers" used primarily to aid calibration.  In the bottom panel, the two baselines marked in red, are an example of equivalent pair. We denote a equivalency-class of baselines in the PAPER grid by their separations, in this case  \{2,0\}, for the
 antennas are separated by 1 unit east and 0 unit north. Similarly,
 the baselines marked in blue and yellow are respectively examples
-of \{1,1\} and \{1, -1\}.
-Note \{1,0\} and \{-1, 0\} for example are the same class and should
+of \{2,1\} and \{2, -1\}.
+Note \{2,0\} and \{-2, 0\} for example are the same class and should
 not be counted twice. Antennas in purely north-south baselines
 are close (4m), and hence these baselines are not suitable
-for cross-multiplication due to cross-coupling. On the other hand, the close North-South separation means that classes such as \{1,0\} and  \{1,1\} are expected to be near-equivalent. The PAPER-64 analysis of \cite{Ali2015} used three classes of baselines, the PAPER-128
+for cross-multiplication due to cross-coupling. On the other hand, the close North-South separation means that classes such as \{2,0\} and  \{2,1\} are expected to be near-equivalent. The PAPER-64 analysis of \cite{Ali2015} used three classes of baselines, the PAPER-128
 equivalent of which are 
 \{2, 0\}, \{2, 1\} and \{2, -1\}. There each of these classes
 of baselines are cross multiplied within itself. This paper provides the method for inter-class multiplications. To do so we will use the short hand notation $\{m,n\}:\{m',n'\}$ to denote a pair of baseline classes to be cross-multiplied. 
@@ -326,7 +326,7 @@ In Fig. \ref{fig:phi_nu} we show the peak phases for for a given baseline pair o
 \end{figure}
 
 
-To illustrate the effect of rephasing, we compare in Fig. \ref{fig:freqdiff} real parts of $\Theta_{\nu}$ of both equivalent and nearly equivalent baseline pairs for two channels: 0.16 GHz and 0.17 GHz. The top two panels have zero rephasing, and the bottom two are linearly rephased to a differential delay of $\Delta\tau\approx15.7$ns, as we determined above. The first and third panels show the equivalent baseline pairs \{2,0\}:\{2,0\}, and second and fourth panels show \{2,0\}:\{2,1\}. We see that in the un-rephased case in the second panel, although the magnitude of correlations match up for the two frequencies, the phases do not. This means summing over frequency leads to destructive interference and signal loss. The wider the frequency profile, the more destructive the interference would be. In the rephased case, the phases of the nearly equivalent case match up at the peak of correlation and can be added without compromising sensitivity. We should thus rephase the data separately for each set of baseline pairs. 
+To illustrate the effect of rephasing, we compare in Fig. \ref{fig:freqdiff} real parts of $\Theta_{\nu}$ of both equivalent and nearly equivalent baseline pairs for two channels: 0.16 GHz and 0.17 GHz. The top two panels have zero rephasing, and the bottom two are linearly rephased to a differential delay of $\Delta\tau\approx15.7$ns, as we determined above. The first and third panels show the equivalent baseline pairs \{2,0\}:\{2,0\}, and second and fourth panels show \{2,0\}:\{2,1\}. We see that although the amplitude of correlations match up for all time offsets, the phase would only locally match. The need for rephasing can thus be understood as a spatial decoherence effect. Summing over frequency without proper rephasing leads to destructive interference and signal loss. The wider the frequency profile, the more destructive the interference would be. Only after rephasing to the correct time-offset for each baseline pairs can we constructively combine the frequency channels. 
 
 \begin{figure}[H]
 \includegraphics[width=1.1\linewidth]{rephs}
