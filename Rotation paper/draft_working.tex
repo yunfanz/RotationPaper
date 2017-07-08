@@ -253,14 +253,14 @@ With implicit bounds of integrals from $-\infty$ to $\infty$, we have:
  & =\left(\frac{2k_{B}}{X^{2}Y\lambda^{2}}\right)^{2}\int d^{3}rd^{3}r'\left(\int\frac{d^{3}\kappa}{(2\pi)^{3}}\frac{d^{3}\kappa'}{(2\pi)^{3}}\langle T^{*}(\boldsymbol{\kappa})T(\boldsymbol{\kappa'})\rangle e^{-i(\boldsymbol{\kappa}\cdot \boldsymbol{r}-\boldsymbol{\kappa'}\cdot\boldsymbol{r'})}\right)A^{*}(\boldsymbol{r})A(\Gamma \boldsymbol{r'})\Phi_{b,\tau}(\boldsymbol{r},\Gamma \boldsymbol{r'}),\\
  & =\left(\frac{2k_{B}}{X^{2}Y\lambda^{2}}\right)^{2}\int d^{3}rd^{3}r'\left(\int\frac{d^{3}\kappa}{(2\pi)^{3}}P(\kappa)e^{-i\boldsymbol{\kappa}\cdot(\boldsymbol{r}-\boldsymbol{r'})}\right)A^{*}(\boldsymbol{r})A(\Gamma \boldsymbol{r'})\Phi_{b,\tau}(\boldsymbol{r},\Gamma \boldsymbol{r'}),\\
  & \approx\left(\frac{2k_{B}}{X^{2}Y\lambda^{2}}\right)^{2}P(k_{b,\tau})\int d^{3}rd^{3}r'\delta_{D}^{(3)}(\boldsymbol{r}-\boldsymbol{r'})A^{*}(\boldsymbol{r})A(\Gamma \boldsymbol{r'})\Phi_{b,\tau}(\boldsymbol{r},\Gamma \boldsymbol{r'}),\\
- & =\left(\frac{2k_{B}}{X^{2}Y\lambda^{2}}\right)^{2}P(k_{b,\tau})\int d^{3}rA^{*}(\boldsymbol{r})A(\Gamma \boldsymbol{r})\exp\left[-i2\pi\frac{\nu_{r}}{c}\left(\hat{\boldsymbol{r}}\cdot\boldsymbol{b}-\Gamma \hat{\boldsymbol{r}}\cdot\boldsymbol{b'}\right)+i\psi_{\nu}\right],\\
- & =\left(\frac{2k_{B}}{\lambda^{2}}\right)^{2}P(k_{b,\tau})\int\frac{d\Omega d\nu}{X^{2}Y}A^{*}(\hat{\boldsymbol{s}},\nu)A(\Gamma \hat{\boldsymbol{s}},\nu)\exp\left[-i2\pi\frac{\nu}{c}\left(\hat{\boldsymbol{s}}\cdot\boldsymbol{b}-\Gamma\hat{\boldsymbol{s}}\cdot\boldsymbol{b'}\right)+i\psi_{\nu}\right],
+ & =\left(\frac{2k_{B}}{X^{2}Y\lambda^{2}}\right)^{2}P(k_{b,\tau})\int d^{3}rA^{*}(\boldsymbol{r})A(\Gamma \boldsymbol{r})\exp\left[-i2\pi\frac{\nu_{r}}{c}\left(\hat{\boldsymbol{r}}\cdot\boldsymbol{b}-\Gamma \hat{\boldsymbol{r}}\cdot\boldsymbol{b'}\right)-i\psi_{\nu}\right],\\
+ & =\left(\frac{2k_{B}}{\lambda^{2}}\right)^{2}P(k_{b,\tau})\int\frac{d\Omega d\nu}{X^{2}Y}A^{*}(\hat{\boldsymbol{s}},\nu)A(\Gamma \hat{\boldsymbol{s}},\nu)\exp\left[-i2\pi\frac{\nu}{c}\left(\hat{\boldsymbol{s}}\cdot\boldsymbol{b}-\Gamma\hat{\boldsymbol{s}}\cdot\boldsymbol{b'}\right)-i\psi_{\nu}\right],
 \end{aligned}
 \label{eq:main}
 \end{equation}
 In transition from cosmological coordinates back to observing coordinates we have written $\hat{\boldsymbol{r}}\equiv\hat{\boldsymbol{s}}$, and 
 \begin{equation}
-\Phi_{b,\tau}(\boldsymbol{r},\Gamma \boldsymbol{r'})\equiv\exp\left[i\frac{2\pi}{c}\left(\boldsymbol{b}\cdot\nu_{r}\hat{\boldsymbol{r}}-\boldsymbol{b'}\cdot\nu_{r'}\Gamma\hat{\boldsymbol{r'}}\right)\right]\exp\left[-i2\pi\tau\left(\nu_{r}-\nu_{r'}\right)+i\psi_{\nu}\right].
+\Phi_{b,\tau}(\boldsymbol{r},\Gamma \boldsymbol{r'})\equiv\exp\left[i\frac{2\pi}{c}\left(\boldsymbol{b}\cdot\nu_{r}\hat{\boldsymbol{r}}-\boldsymbol{b'}\cdot\nu_{r'}\Gamma\hat{\boldsymbol{r'}}\right)\right]\exp\left[-i2\pi\tau\left(\nu_{r}-\nu_{r'}\right)-i\psi_{\nu}\right].
 \end{equation}
 \end{widetext}
 The third equality of Eq.(\ref{eq:main}) follows from assumption of translational invariance of statistics of the 21\,cm field, and the first inequality follows from the assumption that
@@ -443,23 +443,20 @@ time-offset corresponds to smaller differences in orientation and length of the 
 
 
 To determine that actual relative contribution to sensitivity of these
-baseline pairs, we have to take into account of the multiplicities of
+baseline pairs, we have to account for the multiplicities of
 these baseline classes, in other words the number of antenna pairs with the
-same length and orientation. From Fig. \ref{fig:sensplot}
+same length and orientation. We would like to estimate an effective weight $\widetilde{\Theta}$ that accounts for both the peak height $\Theta$ and the multiplicities of the baseline classes. From Fig. \ref{fig:sensplot}
 we see for example \{1,0\} has higher multiplicity than \{2,0\},
-or \{1,1\}. The latest release of PAPER64 data uses the 128-equivalent baselines \{2,1\},
-\{2,0\} and \{2,-1\} \citep{Ali2015}, and achieved a $2\sigma$ upper
-limit of $(22.4\text{mK})^{2}$. There, the three sets of equivalent baselines
-are only cross multiplied by itself. Assuming that each baseline delivers
-the same quality of data (meaning they have the same height of correlation
-peaks, which is in our normalization equal to unity), the relative
-contribution to sensitivity can be estimated. 
+or \{1,1\}. The latest release of PAPER64 data uses the PAPER128-equivalent baselines \{2,1\},
+\{2,0\} and \{2,-1\} \citep{Ali2015}. There, the three sets of equivalent baseline classes
+are only cross multiplied with itself. Assuming that each equivalent baseline delivers
+the same $\Theta$, the relative contribution to sensitivity can be estimated. 
 
-First we can average of the visibilities of the equivalent baselines. Since the core of PAPER-128 has 16 by 7 antenna configuration, there
+First we can average the visibilities of the equivalent baselines. Since the core of PAPER-128 has 16 by 7 antenna configuration, there
 are $M\equiv(16-|m|)\times(7-|n|)$ copies of the baseline class $\{m,n\}$. This means
-that if we add visibility measurements of all these equivalent baselines,
+that if we add visibility measurements of all the equivalent baselines,
 we get a factor of $\sqrt{M}$ reduction in noise
-level $\sigma_N$ of the visibility. The sensitivity contribution of $\{m,n\}$, cross multiplied with $\{m',n'\}$  thus roughly speaking scales as $\sqrt{\left((16-|m|)(7-|n|)(16-|m'|)(7-|n'|)\right)}=\sqrt{MM'}$.
+level $\sigma_N$ of the visibility. The sensitivity contribution of $\{m,n\}$, cross multiplied with $\{m',n'\}$  thus roughly scales as $\sqrt{\left((16-|m|)(7-|n|)(16-|m'|)(7-|n'|)\right)}=\sqrt{MM'}$.
 For cross-multiplications of nearly equivalent baselines of
 types $\{m,n\}$ and $\{m',n'\}$, we get an effective weight: 
 
@@ -467,13 +464,10 @@ types $\{m,n\}$ and $\{m',n'\}$, we get an effective weight:
 \widetilde{\Theta}_{bb'} \propto \Theta_{bb'}\times\sqrt{MM'}.\label{eq:sensul}
 \end{equation}
 
-Shown in the bottom panel of Fig. \ref{fig:sensplot} is the peak heights weighted
+Shown in the bottom panel of Fig. \ref{fig:sensplot} are the peak heights weighted
 by the multiplicity factor. Points that have zero time delay are the equivalent baseline pairs and their weighted correlation values simply reflect the multiplicity factor. For clarity of presentation we have ``folded over'' the negative time delays and combined baseline pairs that are identical modulus parity. We point out that the data points shown here are not all the cases of highest correlation.  
 
-
-
-
-Having defined the modified weight $\widetilde{\Theta}$, we can estimate the power spectrum by inverse covariance weighting:
+With $\widetilde{\Theta}$, we can estimate the power spectrum by inverse covariance weighting:
 \begin{equation}
 \begin{aligned}
  P(k_{\tau}) &= \frac{\sum_{bb'}P(k_{b,\tau})/\sigma_P^2(bb')}{\sum_{bb'}\sigma_P^2(bb')}, \\
@@ -495,16 +489,16 @@ The scaling in Eq. \eqref{eq:sensul} was rough for simplicity of motivation. As 
 \widetilde{\Theta}_{bb'}=\frac{\Theta_{bb'}\sqrt{M_bM_{b'}}}{\sqrt{1 + \rho_0 \left(M_b+M_{b'} \right)}}.
 \end{equation}
 
-For a given $\rho_0$ Eq. \eqref{eq:tildereal} thus quantifies the relative sensitivity contribution of a baseline pair $bb'$. Assuming a reionization signal of $\Delta_{21cm}^2\sim 30mK^2$, observation at 150MHz ($z=8.5$), 120 days of observation with PAPER antennas, we have roughly
+For a given $\rho_0$ Eq. \eqref{eq:tildereal} quantifies the relative sensitivity contribution of a baseline pair $bb'$. Assuming a reionization signal of $\Delta_{21cm}^2\sim 30mK^2$, observation centered at 150MHz ($z=8.5$), and 120 days of integration with PAPER antennas, we have roughly
 (See Eq.(20) in \cite{first-paper})
 \begin{equation}
 \rho_0 \sim 0.001\left[\frac{L}{40m}\right] \left[\frac{0.1hMpc^{-1}}{k}\right]^3, 
 \end{equation}
-where $L$ is the baseline length. We only need a single characteristic $L$ even in the nearly equivalent case because only baselines of nearly equal length would have high redundancy.As expected, baseline-pairs that have smaller $\widetilde{\Theta}$ contribute less to the sensitivity. 
+where $L$ is the average baseline length between the pair. As expected, baseline-pairs that have smaller $\widetilde{\Theta}$ contribute less to the sensitivity. 
 
 \subsection{Array Configuration Comparisons \label{sec:arrconf}}
 We run our algorithm over all possible baseline-pairs of  PAPER128, HERA37, HERA128, HERA243 and HERA350. The HERA antenna configurations are shown in Fig. \ref{fig:HeraAntpos}. The  
-hexagonal design is the densest pattern of antenna-packing. The larger arrays are designed with a ``gap'' dividing the antennas into three different groups. The gaps are designed so as to improve $uv$ coverage and ease calibration without compromising sensitivity, but also produces many more nearly equivalent baselines than the versions without the gap. The motivations behind the designs are explained in \cite{HERAconfiguration}.  Compared to PAPER128, the hexagonal pattern of HERA lack short baselines that are oriented close to each other, and the smaller beam (Fig. \ref{fig:Beam}) means that we expect to see only longer nearly equivalent baselines. The lower multiplicities per class of baselines is made up with the larger number of classes of baseline-pairs, especially given the gap in the larger versions. 
+hexagonal design is the densest pattern of antenna-packing. The larger arrays are designed with a ``gap'' dividing the antennas into three different groups. The gaps are designed so as to improve $uv$ coverage and ease calibration without compromising sensitivity, but also produces many more nearly equivalent baselines than a pure hexagonal layout. The motivations behind the designs are explained in \cite{HERAconfiguration}.  Compared to PAPER128, the hexagonal pattern of HERA lack short baselines oriented close to each other, and the smaller beam (Fig. \ref{fig:Beam}) means that we expect to see only longer nearly equivalent baselines. The lower multiplicities per class of baselines is compensated by the larger number of classes of baseline-pairs, especially given the gap in the larger versions. 
 
 \begin{figure}[H]
 \includegraphics[width=\linewidth]{pairplot}
@@ -530,7 +524,7 @@ The general trend to be seen here is that longer baselines tend to have lower $\
 
 \end{itemize}
 
-Having quantified the sensitivity from a given pair of baselines, we study the cumulative sensitivity of the array depending on which baseline pairs we include. Evidently we should prefer the pairs with larger $\widetilde{\Theta}$. In Fig. \ref{fig:osens} we plot $\rho$ against the minimum $\widetilde{\Theta}$. $\rho(\widetilde{\Theta}_{min})$ is the sensitivity of the array when baseline-pairs that have $\widetilde{\Theta}>\widetilde{\Theta}_{min}$ are included. The dashed lines represent the values when only the equivalent baseline-pairs are used.  We see as expected that in all cases using the nearly equivalent baselines lead to more and more significant improvements with lower $\widetilde{\Theta}_{min}$, or in other words when worse baseline pairs are used. The small HERA37, with no gap (like in HERA350) or short nearly equivalent baselines (like in PAPER 128), will not benefit much from the nearly equivalent baselines. The maximum benefits for other cases are expected to be around $20\%$ to $60\%$. PAPER128 is designed with highly redundant nearly equivalent baselines, and thus  these baselines start contributing at higher $\widetilde{\Theta}_{min}$, but the gapped HERA configurations will benefit even more from nearly equivalent baselines at low $\widetilde{\Theta}_{min}$ due to there being more classes of such pairs. Note that here we normalized $\rho$ such that the contribution of the top equivalent baseline pair, such as (sep0,1:0,1 in the PAPER128 case) are 1. This plot therefore does not compare the absolute sensitivity across the different arrays. The stepwise pattern is characteristic of a regular grid; as we step to lower $\widetilde{\Theta}$ large groups of baseline pair classes get included in ``batch''. 
+Having quantified the sensitivity from a given pair of baselines, we study the cumulative sensitivity of the array depending on which baseline pairs we include. Evidently we should prefer the pairs with larger $\widetilde{\Theta}$. In Fig. \ref{fig:osens} we plot $\rho$ against the minimum $\widetilde{\Theta}$. $\rho(\widetilde{\Theta}_{min})$ is the sensitivity of the array when baseline-pairs that have $\widetilde{\Theta}>\widetilde{\Theta}_{min}$ are included. The dashed lines represent the values when only the equivalent baseline-pairs are used.  We see as expected that in all cases using the nearly equivalent baselines lead to more and more significant improvements with lower $\widetilde{\Theta}_{min}$, or in other words when more baseline pairs are used. The small HERA37, with no gap (like in HERA350) or short nearly equivalent baselines (like in PAPER 128), will not benefit much from the nearly equivalent baselines. The maximum benefits for other cases are expected to be around $20\%$ to $60\%$. PAPER128 is designed with highly redundant nearly equivalent baselines, and thus  these baselines start contributing at higher $\widetilde{\Theta}_{min}$, but the gapped HERA configurations will benefit even more from nearly equivalent baselines at low $\widetilde{\Theta}_{min}$ due to the presence of more classes of such pairs. Note that here we normalized $\rho$ such that the contribution of the top equivalent baseline pair, such as are 1. This plot therefore does not compare the absolute sensitivity across the different arrays. The stepwise pattern is characteristic of a regular grid; as we step to lower $\widetilde{\Theta}$ large groups of baseline pair classes get included in ``batch''. 
 %\begin{centered}
 \begin{figure}[H]
 \includegraphics[width=\linewidth]{osens}
@@ -588,24 +582,24 @@ Furthermore, in the case of drift-scan arrays, even a crossing in $uvw$ space do
 
 \section{\label{sec:appB}\\Derivation of Noise Covariance \label{sec:appB}}
 \label{sec:appB}
-In this appendix we give a brief derivation of the effective weight quoted in \ref{sec:sensitivity}. We combine the different power spectrum measurements by inverse variance weighting \footnote{In practice techniques such as bootstrapping is often used, see for example \citep{Ali2015}}. We shall separate the visibility and power spectrum into signal and noise contributions:
+In this appendix we give a brief derivation of the effective weight quoted in \ref{sec:sensitivity}. We combine the power spectrum measurements from distinct baseline classese by inverse variance weighting. We separate the visibility and power spectrum into signal and noise contributions:
 \begin{equation}
 \begin{aligned}
 V &= V_S+V_N,\\
 P &= P_S+P_N.
 \end{aligned}
 \end{equation}
-We shall denote the noise variance of power spectrum and visibility
+We write the noise variance of power spectrum and visibility as:
 \begin{equation}
 \begin{aligned}
 \sigma_V^2 &= \langle |V_N|^2 \rangle,\\
 \sigma_P^2 &= \langle P_N^2 \rangle.
 \end{aligned}
 \end{equation}
-One may notice that we have used a single covariance for the complex quantity visibility. It's simple to show that the same result holds if we use a separate real and imaginary components, as long as they are independent of each other. In fact, for simplicity and without loss of generality we shall treat the visibility as a real quantity in the rest of this derivation. 
+One may notice that we have used a single covariance for the complex visibility. It is straightforward to show that the same result holds if a separate real and imaginary components are used, as long as they are independent of each other. In fact, for simplicity and without loss of generality we shall treat the visibility as a real quantity in the rest of this derivation. 
 Note that though we can assume $\langle V_N^{odd-power}\rangle=0$, the same is not true for $P_N$. 
 
-Then the variance of $P$ constructed with visibilities $V_1$ and $V_2$ from two baseline classes can be estimated\footnote{We assume all noise terms to be independent for simplicity, in practice the correlation of different measurements ifrom equivalent baselines are alleviated by grouping the baselines in the class and the days of observation, as in \cite{Ali2015}}:
+The variance of $P$ constructed with visibilities $V_1$ and $V_2$ from two baseline classes can be estimated\footnote{We assume all noise terms to be independent for simplicity, in practice the correlation of different measurements ifrom equivalent baselines are alleviated by grouping the baselines in the class and the days of observation, as in \cite{Ali2015}}:
 \begin{equation}
 \begin{aligned}
 \sigma_P^2 &= \langle P^2\rangle -\langle P \rangle^2,\\
@@ -614,22 +608,21 @@ Then the variance of $P$ constructed with visibilities $V_1$ and $V_2$ from two 
 &= \frac{1}{\Theta^2} \left[ V_{S}^2(\sigma_{V2}^2+\sigma_{V1}^2) + \sigma_{V1}^2 \sigma_{V2}^2\right], 
 \end{aligned}
 \end{equation}
-
-where in the second last line we have substituted visibility noise variance. In the final line we used Wick's theorem and the fact that the signal from two visibilities are equal. 
+where in the second last line we have substituted in the visibility noise variance. In the final line we used Wick's theorem and the fact that the signal from the two visibilities are equal. 
 
 Recall from the discussion on multiplicities we can write
 \begin{equation}
 \sigma_V^2=\frac{\sigma_0^2}{M},
 \end{equation}
-where $\sigma_0$ is some single-baseline noise level. Letting $\rho_0=V_S^2/\sigma_0^2$ be the signal to noise ratio for a single baseline, we can write
+where $\sigma_0$ is the single-baseline noise level. Letting $\rho_0=V_S^2/\sigma_0^2$ be the signal to noise ratio for a single baseline, we can write
 
 \begin{equation}
 \begin{aligned}
 \sigma_P^2 & \propto  \frac{\sigma_0^4}{\Theta^2} \left[ \rho_0 \left(\frac{1}{M_1}+\frac{1}{M_2} \right) + \frac{1}{M_1 M_2}\right], \\
-&\propto \frac{1}{\widetilde{\Theta}_{12}^2},
+&\propto \frac{1}{\widetilde{\Theta}_{12}^2}.
 \end{aligned}
 \end{equation}
-where we have defined a slightly modified version of the effective weight (compare with Eq. \eqref{eq:sensul}):
+Thus we have defined a slightly modified version of the effective weight in Eq.  \eqref{eq:tildereal}:
 \begin{equation}
 \widetilde{\Theta}_{12}=\frac{\Theta_{12}\sqrt{M_1M_{2}}}{\sqrt{1 + \rho_0 \left(M_1+M_{2} \right)}}.
 \end{equation}
