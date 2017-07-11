@@ -136,21 +136,19 @@ Radio interferometric observations are often described in the coordinates $uvw$ 
 \]
 where $\boldsymbol{b}$ is the baseline vector in Cartesian coordinates, with first and second coordinates pointing East and North, respectively.  $\nu$ is the frequency of observation, and $c$ is the speed of light. 
 Relative to a phase center on the sky, each baseline maps to a point in $uvw$ space. As the Earth rotates, the points trace out tracks in the $uvw$ space. 
-We show in Fig. \ref{fig:Tracks} $uvw$ tracks of PAPER-128 over 12 sidereal hours, at 0.15GHz, relative to a phase center that passes through zenith. 
+We show in Fig. \ref{fig:Tracks} $uvw$ tracks of the 3 PAPER-128 baselines colored in Fig. \ref{fig:AntPos}, projected onto $uv$ and $vw$ planes. The tracks are traced over 12 sidereal hours, at 0.15GHz, relative to a phase center that passes through zenith. 
 
 
-\begin{figure}[H]
-\includegraphics[width=\linewidth]{rotation}
-\caption{Tracks of PAPER-128 for a selection of 16 baselines and frequency $\nu=0.15\text{GHz}$ and a phase center that passes through zenith.
-Tracks are traced out over half a sidereal day. Color represents different baselines. 
-As the Earth rotates, tracks are traced out counterclockwise. Tracks in $uvw$ space do not cross, even though the $uv$ projections do. }
+\begin{figure}[h]
+\includegraphics[width=\linewidth]{rotation_new}
+\caption{Tracks of 3 PAPER-128 baseline classes shown in Fig. \ref{fig:AntPos}, here with the same respective colors. Tracks are traced out over half a sidereal day for frequency $\nu=0.15\text{GHz}$ and a phase center that passes through zenith. The top panel shows $uv$ tracks with crossings among each pair of baseline classes. Projection to the $vw$ plane in the bottom panel shows that tracks in $uvw$ space do not cross. }
 \label{fig:Tracks}
 \end{figure}
 
 Equivalent baselines follow identical $uvw$ tracks. Traditionally, we can identify
 redundancy of nearly equivalent baselines as crossings
-of the $uv$ tracks, a 2 dimensional projection of Fig. \ref{fig:Tracks}. As we see in Fig. \ref{fig:Tracks}, there would be many such crossings. However, there are several reasons that $uv$ track-crossing do not imply perfect redundancy. In fact, in our case $uv$ track-crossings are
-not accurate enough for time offset determination, nor can it give estimate of the degree of redundancy.  The most obvious reason is that the 3 dimensional $uvw$ tracks do not actually cross. For drift-scan arrays, even a hypothetical crossing in $uvw$ space would not imply perfect redundancy. This shall become evident in the next section, after we develop a more general formalism that accounts for the point spread function of the finite beams, and estimate the degree of redundancy for general combination of baselines at a general time-offset. Then, relation of track-crossing and redundancy for both drift-scan and tracking measurements will be explored in Appendix \ref{sec:appA}. 
+of the $uv$ tracks, a 2 dimensional projection of Fig. \ref{fig:Tracks}. As we see in the top panel of Fig. \ref{fig:Tracks}, there would be many such crossings. However, there are several reasons that $uv$ track-crossing do not imply perfect redundancy. In fact, in our case $uv$ track-crossings are
+not accurate enough for time offset determination, nor can it give estimate of the degree of redundancy.  The most obvious reason is that the 3 dimensional $uvw$ tracks do not actually cross, as is evident from the $vw$ projection in the bottom panel of Fig. \ref{fig:Tracks}. For drift-scan arrays, even a hypothetical crossing in $uvw$ space would not imply perfect redundancy. This shall become evident in the next section, after we develop a more general formalism that accounts for the point spread function of the finite beams, and estimate the degree of redundancy for general combination of baselines at a general time-offset. Then, relation of track-crossing and redundancy for both drift-scan and tracking measurements will be explored in Appendix \ref{sec:appA}. 
 
 
 
@@ -171,16 +169,16 @@ sky and its corresponding solid angle. Inside the integral we have $\phi(\nu)$ t
 related to $T$, the brightness temperature in the Rayleigh-Jeans
 limit. The beam power pattern $A$ is dimensionless,
 normalized to 1 at its peak (zenith), and we assume it to be the same
-for all baselines. We show sample beams of HERA and PAPER antennas in Fig. \ref{fig:Beam} for reference. 
+for all baselines. %We show sample beams of HERA and PAPER antennas in Fig. \ref{fig:Beam} for reference. 
 
 
 
-\begin{figure}[H]
-\includegraphics[width=1.2\linewidth]{Beams}
+%\begin{figure}[H]
+%\includegraphics[width=1.2\linewidth]{Beams}
 
-\caption{Example beam response of HERA (left) and PAPER (right) antennas. Both beams are Stokes $I$ polarization antenna voltage beams, at frequency of $\nu=150\text{MHz}$ and normalized to $1$ at zenith. The circles centered around zenith (center of beam) here are
-spaced 10 degrees apart. \label{fig:Beam}}
-\end{figure}
+%\caption{Example beam response of HERA (left) and PAPER (right) antennas. Both beams are Stokes $I$ polarization antenna voltage beams, at frequency of $\nu=150\text{MHz}$ and normalized to $1$ at zenith. The circles centered around zenith (center of beam) here are
+%spaced 10 degrees apart. \label{fig:Beam}}
+%\end{figure}
 
 Power-spectrum measurements are typically taken from $\sim10$MHz centered around the corresponding redshift of interest (e.g. 150 MHz for z=9.5). 
 
@@ -243,7 +241,7 @@ in the topocentric frame with the 3 dimensional rotation operator $\Gamma$:
 \begin{aligned}V_{\psi}(\boldsymbol{b'},\tau) & =\frac{2k_{B}}{\lambda^{2}}\int\frac{d^{3}r}{X^{2}Y}A(\Gamma\boldsymbol{r})T(\boldsymbol{r})\\
 & \qquad \qquad  \exp\left[-2\pi i\left(\frac{\boldsymbol{b}}{c}\cdot\Gamma\hat{\boldsymbol{r}}-\tau\right)\nu_{r}-i\psi_\nu\right],\end{aligned}
 \]
-where we introduced a frequency-dependent phase $\psi_{\nu}$, which to first order corresponds to phasing the two visibilities to the same phase center. \footnote{Turns out for drift-scan measurements, the first-order interpretation is largely sufficient, but we keep the term for now to reserve the option to determine its exact form numerically.} 
+where we introduced a frequency-dependent phase $\psi_{\nu}$, which to first order corresponds to phasing the two visibilities to the same phase center. \footnote{Turns out for many cases, the first-order interpretation is largely sufficient, but we still keep the term to reserve the option to determine its exact form numerically. } 
 
 With implicit bounds of integrals from $-\infty$ to $\infty$, we have:
 \begin{widetext}
@@ -358,8 +356,8 @@ The product of the beam fringe patterns in top right shows that the fringes
 \begin{figure*}[h!]
 \includegraphics[width=\textwidth]{BeamFringe}
 
-\caption{PAPER128 beam-fringe patterns and their point-spread functions on the $uv$-plane for a frequency of $150$MHz. Selected baselines have 30 meter East-West separation, and 0 and 4 meter North-South separation, respectively.The top panels show the real parts of the beam-fringe patterns of the baselines (left and middle), and their conjugate product (right). The beam-fringe values are normalized such that the peak of the original beam is unity. 
-The bottom left and middle panels show the $uv$ beam spread of the two beam-fringe patterns. The product of the beam spreads displayed in the bottom right panel shows that power concentrated at $u\approx15$ is recovered. }
+\caption{PAPER128 beam-fringe patterns and their point-spread functions on the $uv$-plane for a frequency of $150$MHz. Selected baselines have 30 meter East-West separation, and 0 and 4 meter North-South separation, respectively. The top panels show the real parts of the beam-fringe patterns of the baselines (left and middle), and their conjugate product (right). The beam-fringe values are normalized such that the peak of the original beam is unity. 
+The bottom left and middle panels show the peak-normalized $uv$ beam power of the two beam-fringe patterns. The product of the beam spreads displayed in the bottom right panel shows that power concentrated at $u\approx15$ is recovered. }
 \label{fig:beamfringe}
 \end{figure*}
 
@@ -498,7 +496,7 @@ where $L$ is the average baseline length between the pair. As expected, baseline
 
 \subsection{Array Configuration Comparisons \label{sec:arrconf}}
 We run our algorithm over all possible baseline-pairs of  PAPER128, HERA37, HERA128, HERA243 and HERA350. The HERA antenna configurations are shown in Fig. \ref{fig:HeraAntpos}. The  
-hexagonal design is the densest pattern of antenna-packing. The larger arrays are designed with a ``gap'' dividing the antennas into three different groups. The gaps are designed so as to improve $uv$ coverage and ease calibration without compromising sensitivity, but also produces many more nearly equivalent baselines than a pure hexagonal layout. The motivations behind the designs are explained in \cite{HERAconfiguration}.  Compared to PAPER128, the hexagonal pattern of HERA lack short baselines oriented close to each other, and the smaller beam (Fig. \ref{fig:Beam}) means that we expect to see only longer nearly equivalent baselines. The lower multiplicities per class of baselines is compensated by the larger number of classes of baseline-pairs, especially given the gap in the larger versions. 
+hexagonal design is the densest pattern of antenna-packing. The larger arrays are designed with a ``gap'' dividing the antennas into three different groups. The gaps are designed so as to improve $uv$ coverage and ease calibration without compromising sensitivity, but also produces many more nearly equivalent baselines than a pure hexagonal layout. The motivations behind the designs are explained in \cite{HERAconfiguration}.  Compared to PAPER128, the hexagonal pattern of HERA lack short baselines oriented close to each other, and the smaller beam means that we expect to see only longer nearly equivalent baselines. The lower multiplicities per class of baselines is compensated by the larger number of classes of baseline-pairs, especially given the gap in the larger versions. 
 
 \begin{figure}[H]
 \includegraphics[width=\linewidth]{pairplot}
