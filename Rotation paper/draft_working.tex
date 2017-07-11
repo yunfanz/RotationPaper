@@ -1,7 +1,7 @@
 %\documentclass[preprint2,numberedappendix,tighten,twocolappendix]{aastex6}  % USE THIS TO MAKE BIB, THEN FORMAT USING EMULATEAPJ
 \documentclass[twocolumn,apj,numberedappendix]{emulateapj}
 \shorttitle{Adding Sensitivity to 21\,cm Inteferometric Probes of Reionization}
-\shortauthors{Zhang, Liu \&Parsons}
+\shortauthors{Zhang, Liu \& Parsons}
 \usepackage{float}
 \usepackage{amsmath}
 \usepackage{graphicx}
@@ -155,6 +155,7 @@ not accurate enough for time offset determination, nor can it give estimate of t
 
 
 \subsection{Formalism}
+\label{sec:formalism}
 In this section we formulate the relation between 
 the product of delay-transformed visibilities from two arbitrary baselines and the power spectrum. 
 
@@ -394,16 +395,71 @@ Since the blue and green curves overlap, we have verified that in this case Eq. 
 
 
 \subsection{Chromaticity \label{sec:chromaticity}}
-Manageable chromaticity of the instrument is crucial in delay-transform technique of foreground isolation. Previous studies have shown that smooth foreground are constrainted in a "wedge" structure in cosmological $k$ space \citep{wedge1, wedge2}. We must show that our method does not destroy the ability of delay-transform to isolate foreground.[ ..... ]
+%Manageable chromaticity of the instrument is crucial in delay-transform technique of foreground isolation. Previous studies have shown that smooth foreground are constrainted in a "wedge" structure in cosmological $k$ space \citep{wedge1, wedge2}. We must show that our method does not destroy the ability of delay-transform to isolate foreground.[ ..... ]
 
 
 
 
 
+A crucial concern when measuring the $21\,\textrm{cm}$ power spectrum is the possibility of astrophysical foreground contamination. Being orders of magnitude larger than the cosmological signal, even small residuals from an imperfect isolation of these foregrounds can masquerade as a false detection. Recent literature treatments of this problem have shown that if one combines the mathematical properties of interferometric measurement with the empirical fact that foregrounds are spectral smooth, a clean separation of foregrounds and cosmological signal can in principle be achieved in harmonic space. These studies suggest that foregrounds preferentially appear in harmonic modes of the sky corresponding to fluctuations that are angularly fine but spectrally smooth, a region in harmonic space that is colloquially known as ``the wedge". One's foreground mitigation strategy can then consist mainly of avoiding those modes by working in the complementary region known as ``the EoR window". However, for this strategy to be viable, it is necessary to show that one's data analysis pipeline does not corrupt the separation between the wedge and the EoR window. We will now do so for our proposed multi-baseline power spectrum estimator.
+
+%To evaluate a power spectrum estimator's propensity to cause leakage of foregrounds into the EoR window, one may compute the window function $W(\mathbf{k},\mathbf{k}^\prime)$, which relates the expectation value of the power spectrum estimate $\hat{P}$ to the true power spectrum $P$ via
+%\begin{equation}
+%\langle \hat{P}(\mathbf{k}) \rangle = \int dk^\prime P(\mathbf{k}^\prime) W(\mathbf{k},\mathbf{k}^\prime).
+%\end{equation}
+%The window function thus captures the linear combination of modes that source the power spectrum estimate at a particular $\mathbf{k}$. If the window function for a $\mathbf{k}$ mode within the EoR window is significant at $\mathbf{k}^\prime$ modes where foregrounds are strong, the EoR window will not be clean of foreground contamination.
+
+As discussed in previous sections, the combination of multi-baseline information for wide-field telescopes is inherently a three-dimensional problem. Thus, to fully capture possible curved sky effects, we employ a set of basis functions where angular fluctuations are encoded by spherical harmonics, and radial fluctuations by spherical Bessel functions. Modes in the sky are indexed by the magnitude $k$ of the wavevector $\mathbf{k}$ and spherical harmonic indices $(\ell, m)$. In other words, one defines
+\begin{equation}
+\overline{T}_{\ell m} (k) \equiv \sqrt{\frac{2}{\pi}} \int d\Omega dr r^2 j_\ell (kr) Y_{\ell m}^* (\hat{\mathbf{r}}) T (\hat{\mathbf{r}}),
+\end{equation}
+where $Y_{\ell m}$ is a spherical harmonic function and $j_\ell$ is the $\ell$th-order spherical Bessel function of the first kind. The power spectrum is then related to these spherical harmonic Bessel modes via the relation
+\begin{equation}
+\label{eq:SHB}
+\langle \overline{T}_{\ell m} (k) \overline{T}_{\ell^\prime m^\prime}^* (k^\prime) \rangle = \frac{\delta^D (k - k^\prime)}{k^2} \delta_{\ell \ell^\prime} \delta_{m m^\prime} P(k).
+\end{equation}
 
 
 
+A delay-transformed visibility $V(\mathbf{b}, \tau) $ is related to the spherical Fourier-Bessel modes by
+\begin{equation}
+V(\mathbf{b}, \tau) = \frac{2 k_B}{\lambda^2} \sqrt{\frac{2}{\pi}} \sum_{\ell m} \int \! dk\, k^2 g_{\ell m} (k; \mathbf{b}, \tau) \overline{T}_{\ell m} (k),
+\end{equation}
+where
+\begin{equation}
+g_{\ell m} (k ; \mathbf{b}, \tau) = \int \! d\Omega d\nu A(\hat{\mathbf{r}},\nu) Y_{\ell m} (\hat{\mathbf{r}}) j_\ell (k r) e^{i 2 \pi \nu (\tau - \mathbf{b}\cdot \hat{\mathbf{r}} / c)}
+\end{equation}
+and the analogous quantity for $V_\psi$ is given by
+\begin{eqnarray}
+\label{eq:glmpsi}
+g_{\ell m}^\psi (k ; \mathbf{b}, \tau) = \int && d\Omega d\nu A(\boldsymbol \Gamma \hat{\mathbf{r}},\nu) Y_{\ell m} (\hat{\mathbf{r}}) j_\ell (k r) \nonumber \\
+&& \times  e^{i 2 \pi \nu (\tau - \mathbf{b}\cdot \boldsymbol \Gamma \hat{\mathbf{r}} / c) + i \psi_\nu}.
+\end{eqnarray}
+Note that unlike the primary beam and the fringe pattern, the spherical harmonic function does \emph{not} rotate, since it originated from a spherical harmonic expansion of the sky temperature, which is fixed. With these expressions and a little algebra combining Eqs. \eqref{eq:SHB} through \eqref{eq:glmpsi}, the expectation value of our two-baseline estimator from Section \ref{sec:formalism} is then given by
+\begin{eqnarray}
+\hat{P}(k) &=& \left(\frac{\lambda^{2}}{2k_{B}}\right)^{2} \frac{ \langle V^{*}(\boldsymbol{b},\tau)V_{\psi}(\boldsymbol{b'},\tau) \rangle}{\Theta} \nonumber \\
+&=& \sum_\ell \int \!dk\, W_{\ell}(k; \mathbf{b}, \mathbf{b}^\prime , \tau) P(k),
+\end{eqnarray}
+where we have defined the \emph{window function}
+\begin{equation}
+W_{\ell}(k; \mathbf{b}, \mathbf{b}^\prime , \tau) = \frac{2 k^2}{\pi \Theta} \sum_m g_{\ell m} (k ; \mathbf{b}, \tau) g_{\ell m}^{\psi*} (k ; \mathbf{b}^\prime, \tau).
+\end{equation}
+By construction, the window function sums to unity when integrated over all $k$ and summed over all $\ell$. We may therefore interpret our estimator $\hat{P}$ of the power spectrum to be a weighted average over all possible $\ell$ and $k$ modes, with the window function providing the weights of this average. This means that window functions can serve as indicators of foreground leakage into the EoR window. One writes down the estimator for a hypothetical measurement of a power spectrum mode within the EoR window, and additionally computes the window function for that estimator. Ideally, the window function for $\hat{P}(k)$ will be sharply peaked around $k$. In general, however, window functions will have wings that encroach upon other modes. If the window function is substantially non-zero at low-$k$ modes---which is where foreground emission typically resides, given its spectral smoothness---then the EoR window will be contaminated by foregrounds.
 
+Figure \ref{fig:multiblwindows} shows four example window functions. The two window functions in the top plot are for single-baseline power spectrum estimators, i.e., where one squares the delay spectrum from a single baseline and normalizes the result. The window function localized at low $\ell$ is for a $30\,\textrm{m}$ baseline, while the window function localized at high $\ell$ is for a $180\,\textrm{m}$ baseline. The delay spectra from these baselines can alternatively be multiplied by those from different---but partially redundant---baselines of similar length to form power spectrum estimates using Eq. \eqref{eq:opp}. The window functions for these estimates are shown in the bottom plot. In all cases, the window functions that we show are for $\tau = 703\,\textrm{ns}$, and were generated using primary beam models for PAPER. For numerical convenience we assumed that the bandpass (which, recall from the conventions established in Section \ref{sec:formalism} was absorbed into the definition of the primary beam) takes the form of a half-period sine curve that peaks at $150\,\textrm{MHz}$ and goes to zero $5\,\textrm{MHz}$ on either side of the peak.
+
+One sees that all four window functions are fairly localized around specific values of $k$, which suggests that both the single- and multi-baseline delay-spectrum estimators are good estimators of the power spectrum. At higher $\ell$, the window functions for both estimators become elongated in $k$, with stronger tails towards the low $k$ modes where foregrounds reside. This is the phenomenology of the wedge, where at fine angular scales the foreground leakage to higher $k$ modes are more pronounced. Importantly, however, we note that the window functions for the multi-baseline estimator are no more elongated than for the single-baseline estimator. One may thus conclude that the our proposed multi-baseline estimator does not result in extra foreground contamination of the EoR window.
+
+%This suggests that the 
+%Note that the right hand side has no explicit dependence on $\ell$ or $m$, aside from the Kronecker Delta functions to enforce that the different spherical harmonic modes are statistically independent. This is a consequence of the statistically translation-invariant nature of the cosmological signal. For foregrounds, this invariance is broken because the signal in question is a broadband signal at $z \sim 0$, rather than a signal from a spectral line over a range of redshifts. The nature of its angular fluctuations are therefore inherently different from its radial 
+
+
+
+\begin{figure*}[h!]
+\includegraphics[width=1.0\textwidth]{multiblwindows.png}
+\caption{Sample window functions for delay-spectrum estimates of the power spectrum explored in this paper. The top plot shows window functions for a traditional delay-spectrum estimate, where a single baseline's delay spectrum is squared. The bottom plot shows the window functions resulting from cross-multiplying baselines of similar length in the estimator given by Equation \eqref{eq:opp}, with the time offset between the time series of these baselines determined by the methods described in Section \ref{sec:method}. In each plot, the window function on the right corresponds to the window function for a baseline of length $b \sim 180\,\textrm{m}$, while the window function on the left is for $b\sim 30\,\textrm{m}$. The general extent of the window functions for the multi-baseline estimator are seen to be roughly the same as for the single-baseline estimator, suggesting that the former is just as good as the latter in keeping the EoR window free of foregrounds.}
+\label{fig:multiblwindows}
+\end{figure*}
 
 \begin{figure*}[h!]
 \includegraphics[width=0.95\textwidth]{sensitivity_1}
