@@ -1,7 +1,7 @@
 %\documentclass[preprint2,numberedappendix,tighten,twocolappendix]{aastex6}  % USE THIS TO MAKE BIB, THEN FORMAT USING EMULATEAPJ
 \documentclass[twocolumn,apj,numberedappendix]{emulateapj}
-\shorttitle{Adding Sensitivity to 21\,cm Inteferometric Probes of Reionization}
-\shortauthors{Zhang, Liu \&Parsons}
+\shorttitle{A Two-Baseline 21\,cm Power Spectrum Estimator}
+\shortauthors{Zhang, Liu \& Parsons}
 \usepackage{float}
 \usepackage{amsmath}
 \usepackage{graphicx}
@@ -19,7 +19,7 @@
 
 \begin{document}
 
-\title{A Generalized Visbility to Power-Spectrum Framework for 21\,cm Inteferometric Probes of Reionizations}
+\title{Unlocking Sensitivity with A Two-baseline Power Spectrum Estimator for 21\,cm Inteferometric Probes of Reionization }
 
 %\maketitle
 \author{
@@ -63,10 +63,10 @@ The highly redshifted 21\,cm signal is faint and diffuse, in contrast to the loc
 Analysis pipelines for the 21\,cm power spectrum typically fall into two categories. In the first, images are formed in Fourier domain through rotation synthesis, followed by a foreground mitigation step to construct a power spectrum. An alternative technique works directly with visibilities from baselines, delay-transforming and cross-multiplying them to form the power spectrum. This technique avoids many systematics associated with combining data from different baselines and tracks the native sampling of the interferometer. An example of the visibility-based pipeline was presented in \cite{Ali2015}, which provides the newest upper limit to the power spectrum
 measurements with the 64-element version of PAPER (henceforth as PAPER-64). However, one disadvantage of existing visibility-based pipelines is their lack of use of partial redundancy. Baselines of different lengths and orientations contain partially redundant information. While imaging based power-spectrum pipelines naturally includes all redundancy information, visibility-based pipelines so far only cross multiply fully redundant baselines, i.e. baselines of the same length and orientation.
 
-Visibility-based pipelines are not fundamentally limited from using partially redundant baselines. In fact, most sensitivity forecasts to date do include partial redundancy \citep{Pobersens, HERA, JoshAntPos}. Recently, \cite{wterm} proposed a visibility-based approach to extract power spectrum from partially redundant baselines in sky-tracking measurements. Arrays capable of such tracking include MWA and LOFAR. Our work parallels this effort by focusing on drift-scan arrays that do not have tracking capabilities, such as PAPER, HERA and potentially SKA-low.
+Visibility-based pipelines are not fundamentally limited from using partially redundant baselines. In fact, most sensitivity forecasts to date do include partial redundancy \citep{Pobersens, HERA, JoshAntPos}. Recently, \cite{wterm} proposed a visibility-based approach to extract power spectrum from partially redundant baselines in sky-tracking measurements. Arrays capable of such tracking include MWA and LOFAR. Our work introduces a two-baseline power spectrum estimator that can be applied to both tracking capable arrays and drift-scan only telescopes, such as PAPER, HERA and potentially SKA-low.
 
 The Earth's rotation causes the baselines in a drift-scan array to pick up different modes of the sky with time. Rotation-synthesis makes use of the rotation-induced $uv$ coverage map to form image. In a visibility based pipeline, we can extract the same rotation-induced redundancy. In this point of view, baselines that are slightly different in length and orientation
-``rotate into'' each other at a time delay. We can thus cross-multiply time-shifted visibilities, with the proper weighting, to form power spectra.  Due to the large number of elements of modern arrays (upward of 100), the task of cross-multiplying every baseline against every other, scaling as number of array elements to the fourth power, can be computationally formidable, and many pairs of baselines provide only negligible redundancy information. Our contribution is thus twofold. First we introduce a formalism to include pairs of partially-redundant baselines in a visibility based power spectrum pipeline. Secondly we show how to use the formalism to automatically pre-select baseline pairs and time offsets, making the problem computationally efficient. More precisely, our formalism allows one to simultaneously identify the baselines that give good
+``rotate into'' each other at a time delay. We can thus cross-multiply time-shifted visibilities, with the proper weighting, to form power spectra.  Due to the large number of elements of modern arrays, the task of cross-multiplying every baseline against every other, scaling as number of array elements to the fourth power, can be computationally formidable, and many pairs of baselines provide only negligible redundancy information. Our contribution is thus twofold. First we introduce a formalism to estimate the power spectrum from pairs of partially-redundant baselines in a visibility pipeline. Secondly we show how to use the two-baseline estimator to automatically pre-select baseline pairs and time offsets, making the problem computationally efficient. More precisely, our formalism allows one to simultaneously identify the baselines that give good
 redundancy, find the time offset that corresponds to maximal redundancy for a given pair of baselines, and quantify the sensitivity associated with cross multiplying
 such a pair of partially redundant baselines, which in turns is used as weight to combine measurements in a power spectrum pipeline. 
 
@@ -152,9 +152,10 @@ not accurate enough for time offset determination, nor can it give estimate of t
 
 
 
-\subsection{Formalism}
-In this section we formulate the relation between 
-the product of delay-transformed visibilities from two arbitrary baselines and the power spectrum. 
+\subsection{Formalism \label{sec:formalism}}
+\label{sec:formalism}
+In this section we formulate a power spectrum estimator from
+the product of delay-transformed visibilities from two arbitrary baselines. 
 
 We begin with the visibility as commonly defined in the literature (e.g.
 \citealt{TMS, first-paper}): 
@@ -186,13 +187,17 @@ Delayed-transformed visibility has gained popularity in recent years since it ha
 \small
 \begin{equation}
 \begin{aligned}V(\boldsymbol{b},\tau) & =\int d\nu V_{\nu}(\boldsymbol{b})\phi(\nu)\exp\left(2\pi i\nu\tau\right),\\
- & =\frac{2k_{B}}{\lambda^{2}}\int d\Omega d\nu A(\hat{\boldsymbol{s}},\nu)T(\hat{\boldsymbol{s}},\nu)\exp\left[-2\pi i\nu\left(\frac{\boldsymbol{b}\cdot\hat{\boldsymbol{s}}}{c}-\tau\right)\right]. 
+ & =\int d\Omega d\nu B(\hat{\boldsymbol{s}},\nu)T(\hat{\boldsymbol{s}},\nu)\exp\left[-2\pi i\nu\left(\frac{\boldsymbol{b}\cdot\hat{\boldsymbol{s}}}{c}-\tau\right)\right]. 
 \end{aligned}
 \label{eq:Vb1}
 \end{equation}
 \normalsize
 Here the delay $\tau$ is the Fourier dual of $\nu$. Eq. \eqref{eq:Vb1} expresses the delay-transformed visibility as
-an integral over observational coordinates $\hat{\boldsymbol{s}}$ and $\nu$. For notational simplicity here and in the rest of this paper, we shall absorb the bandpass $\phi$ inside the primary beam $A$.  
+an integral over observational coordinates $\hat{\boldsymbol{s}}$ and $\nu$. For notational simplicity here and in the rest of this paper, we have defined the quantity
+\[
+B(\hat{\boldsymbol{s}},\nu) \equiv \frac{2k_B}{\lambda^2}\phi(\nu)A(\hat{\boldsymbol{s}},\nu). 
+\label{eq:B}
+\]
 
 Ultimately,
 we would like to relate the data, collected with coordinates $\hat{\boldsymbol{s}}$
@@ -225,7 +230,7 @@ Note Eq. \eqref{eq:thinshell} does not require the flat-sky approximation; the a
 We can rewrite the delayed-transformed visibility as 
 \small
 \[
-\begin{aligned}V(\boldsymbol{b},\tau) & =\frac{2k_{B}}{\lambda^{2}}\int\frac{d^{3}r}{X^{2}Y}A(\boldsymbol{r})T(\boldsymbol{r})\exp\left[-2\pi i\left(\frac{\boldsymbol{b}}{c}\cdot\hat{\boldsymbol{r}}-\tau\right)\nu_{r}\right],
+\begin{aligned}V(\boldsymbol{b},\tau) & =\int\frac{d^{3}r}{X^{2}Y}B(\boldsymbol{r})T(\boldsymbol{r})\exp\left[-2\pi i\left(\frac{\boldsymbol{b}}{c}\cdot\hat{\boldsymbol{r}}-\tau\right)\nu_{r}\right],
 \end{aligned}
 \]
 \normalsize
@@ -235,54 +240,63 @@ by Eq. \eqref{eq:nur}.
 
 Existing visibility based power-spectrum pipelines for redundant drift-scan  arrays relate the power-spectrum to the conjugate square of the visibilities \citep{delay-transform, paper32, Ali2015}. We would like to generalize such relations by relating the power-spectrum to the product of two visibilities from two arbitrary baselines and time-offsets. 
 The beam pattern of a baseline shifts relative to the sky as the Earth rotates. Here we choose to fix the sky, and denote the rotated coordinates
-in the topocentric frame with the 3 dimensional rotation operator $\Gamma$:
+in the topocentric frame with the 3 dimensional rotation operator $\boldsymbol{\Gamma}$:
 
 \[
-\begin{aligned}V_{\psi}(\boldsymbol{b'},\tau) & =\frac{2k_{B}}{\lambda^{2}}\int\frac{d^{3}r}{X^{2}Y}A(\Gamma\boldsymbol{r})T(\boldsymbol{r})\\
-& \qquad \qquad  \exp\left[-2\pi i\left(\frac{\boldsymbol{b}}{c}\cdot\Gamma\hat{\boldsymbol{r}}-\tau\right)\nu_{r}-i\psi_\nu\right],\end{aligned}
+\begin{aligned}V_{\psi}(\boldsymbol{b'},\tau) & = \int\frac{d^{3}r}{X^{2}Y}B(\boldsymbol{\Gamma}\boldsymbol{r})T(\boldsymbol{r})\\
+& \qquad \qquad  \exp\left[-2\pi i\left(\frac{\boldsymbol{b}}{c}\cdot\boldsymbol{\Gamma}\hat{\boldsymbol{r}}-\tau\right)\nu_{r}-i\psi_\nu\right],\end{aligned}
 \]
 where we introduced a frequency-dependent phase $\psi_{\nu}$, which to first order corresponds to phasing the two visibilities to the same phase center. \footnote{Turns out for many cases, the first-order interpretation is largely sufficient, but we still keep the term to reserve the option to determine its exact form numerically. } 
 
 With implicit bounds of integrals from $-\infty$ to $\infty$, we have:
 \begin{widetext}
 \begin{equation}
-\begin{aligned} & \langle V^{*}(\boldsymbol{b},\tau)V_{\psi}(\boldsymbol{b'},\tau)\rangle\\
- & =\left(\frac{2k_{B}}{X^{2}Y\lambda^{2}}\right)^{2}\int d^{3}rd^{3}r'\left(\langle T^{*}(\boldsymbol{r})T(\boldsymbol{r'})\rangle\right)A^{*}(\boldsymbol{r})A(\Gamma \boldsymbol{r'})\Phi_{b,\tau}(\boldsymbol{r},\Gamma \boldsymbol{r'}),\\
- & =\left(\frac{2k_{B}}{X^{2}Y\lambda^{2}}\right)^{2}\int d^{3}rd^{3}r'\left(\int\frac{d^{3}\kappa}{(2\pi)^{3}}\frac{d^{3}\kappa'}{(2\pi)^{3}}\langle T^{*}(\boldsymbol{\kappa})T(\boldsymbol{\kappa'})\rangle e^{-i(\boldsymbol{\kappa}\cdot \boldsymbol{r}-\boldsymbol{\kappa'}\cdot\boldsymbol{r'})}\right)A^{*}(\boldsymbol{r})A(\Gamma \boldsymbol{r'})\Phi_{b,\tau}(\boldsymbol{r},\Gamma \boldsymbol{r'}),\\
- & =\left(\frac{2k_{B}}{X^{2}Y\lambda^{2}}\right)^{2}\int d^{3}rd^{3}r'\left(\int\frac{d^{3}\kappa}{(2\pi)^{3}}P(\kappa)e^{-i\boldsymbol{\kappa}\cdot(\boldsymbol{r}-\boldsymbol{r'})}\right)A^{*}(\boldsymbol{r})A(\Gamma \boldsymbol{r'})\Phi_{b,\tau}(\boldsymbol{r},\Gamma \boldsymbol{r'}),\\
- & \approx\left(\frac{2k_{B}}{X^{2}Y\lambda^{2}}\right)^{2}P(k_{b,\tau})\int d^{3}rd^{3}r'\delta_{D}^{(3)}(\boldsymbol{r}-\boldsymbol{r'})A^{*}(\boldsymbol{r})A(\Gamma \boldsymbol{r'})\Phi_{b,\tau}(\boldsymbol{r},\Gamma \boldsymbol{r'}),\\
- & =\left(\frac{2k_{B}}{X^{2}Y\lambda^{2}}\right)^{2}P(k_{b,\tau})\int d^{3}rA^{*}(\boldsymbol{r})A(\Gamma \boldsymbol{r})\exp\left[-i2\pi\frac{\nu_{r}}{c}\left(\hat{\boldsymbol{r}}\cdot\boldsymbol{b}-\Gamma \hat{\boldsymbol{r}}\cdot\boldsymbol{b'}\right)-i\psi_{\nu}\right],\\
- & =\left(\frac{2k_{B}}{\lambda^{2}}\right)^{2}P(k_{b,\tau})\int\frac{d\Omega d\nu}{X^{2}Y}A^{*}(\hat{\boldsymbol{s}},\nu)A(\Gamma \hat{\boldsymbol{s}},\nu)\exp\left[-i2\pi\frac{\nu}{c}\left(\hat{\boldsymbol{s}}\cdot\boldsymbol{b}-\Gamma\hat{\boldsymbol{s}}\cdot\boldsymbol{b'}\right)-i\psi_{\nu}\right],
+\begin{aligned} \langle V^{*}(\boldsymbol{b},\tau)V_{\psi}(\boldsymbol{b'},\tau)\rangle
+ & =\int \frac{d^{3}rd^{3}r'}{(X^2Y)^2}\left(\langle T^{*}(\boldsymbol{r})T(\boldsymbol{r'})\rangle\right)B^{*}(\boldsymbol{r})B(\boldsymbol{\Gamma} \boldsymbol{r'})\Phi(\boldsymbol{r},\boldsymbol{\Gamma} \boldsymbol{r'}),\\
+ & =\int \frac{d^{3}rd^{3}r'}{(X^2Y)^2}\left(\int\frac{d^{3}\kappa}{(2\pi)^{3}}\frac{d^{3}\kappa'}{(2\pi)^{3}}\langle T^{*}(\boldsymbol{\kappa})T(\boldsymbol{\kappa'})\rangle e^{-i(\boldsymbol{\kappa}\cdot \boldsymbol{r}-\boldsymbol{\kappa'}\cdot\boldsymbol{r'})}\right)B^{*}(\boldsymbol{r})B(\boldsymbol{\Gamma} \boldsymbol{r'})\Phi(\boldsymbol{r},\boldsymbol{\Gamma} \boldsymbol{r'}),\\
+ & =\int \frac{d^{3}rd^{3}r'}{(X^2Y)^2}\left(\int\frac{d^{3}\kappa}{(2\pi)^{3}}P(\kappa)e^{-i\boldsymbol{\kappa}\cdot(\boldsymbol{r}-\boldsymbol{r'})}\right)B^{*}(\boldsymbol{r})B(\boldsymbol{\Gamma} \boldsymbol{r'})\Phi(\boldsymbol{r},\boldsymbol{\Gamma} \boldsymbol{r'}),\\
+ & \approx P(k_{b,\tau})\int \frac{d^{3}rd^{3}r'}{(X^2Y)^2} \delta_{D}^{(3)}(\boldsymbol{r}-\boldsymbol{r'})B^{*}(\boldsymbol{r})B(\boldsymbol{\Gamma} \boldsymbol{r'})(\boldsymbol{r},\boldsymbol{\Gamma} \boldsymbol{r'}),\\
+ & = P(k_{b,\tau})\int \frac{d^{3}r}{(X^2Y)^2}B^{*}(\boldsymbol{r})B(\boldsymbol{\Gamma} \boldsymbol{r})\exp\left[-i2\pi\frac{\nu_{r}}{c}\left(\hat{\boldsymbol{r}}\cdot\boldsymbol{b}-\boldsymbol{\Gamma} \hat{\boldsymbol{r}}\cdot\boldsymbol{b'}\right)-i\psi_{\nu}\right],\\
+ & = P(k_{b,\tau})\int\frac{d\Omega d\nu}{X^{2}Y}B^{*}(\hat{\boldsymbol{s}},\nu)B(\boldsymbol{\Gamma} \hat{\boldsymbol{s}},\nu)\exp\left[-i2\pi\frac{\nu}{c}\left(\hat{\boldsymbol{s}}\cdot\boldsymbol{b}-\boldsymbol{\Gamma}\hat{\boldsymbol{s}}\cdot\boldsymbol{b'}\right)-i\psi_{\nu}\right],
 \end{aligned}
 \label{eq:main}
 \end{equation}
-In transition from cosmological coordinates back to observing coordinates we have written $\hat{\boldsymbol{r}}\equiv\hat{\boldsymbol{s}}$, and 
+
+with
 \begin{equation}
-\Phi_{b,\tau}(\boldsymbol{r},\Gamma \boldsymbol{r'})\equiv\exp\left[i\frac{2\pi}{c}\left(\boldsymbol{b}\cdot\nu_{r}\hat{\boldsymbol{r}}-\boldsymbol{b'}\cdot\nu_{r'}\Gamma\hat{\boldsymbol{r'}}\right)\right]\exp\left[-i2\pi\tau\left(\nu_{r}-\nu_{r'}\right)-i\psi_{\nu}\right].
+\Phi(\boldsymbol{r},\boldsymbol{\Gamma} \boldsymbol{r'})\equiv\exp\left[i\frac{2\pi}{c}\left(\boldsymbol{b}\cdot\nu_{r}\hat{\boldsymbol{r}}-\boldsymbol{b'}\cdot\nu_{r'}\boldsymbol{\Gamma}\hat{\boldsymbol{r'}}\right)\right]\exp\left[-i2\pi\tau\left(\nu_{r}-\nu_{r'}\right)-i\psi_{\nu}\right].
 \end{equation}
+
 \end{widetext}
-The third equality of Eq.(\ref{eq:main}) follows from assumption of translational invariance of statistics of the 21\,cm field, and the first inequality follows from the assumption that
-the 3D power spectrum varies negligibly over the $k$-space of interest. The careful reader may have noticed that we have also assumed here a definitive relation between $k$ and $b,\tau$. In the flat-sky limit for example, such a relation would take the form $(Xk_{x},Xk_{y},Yk_{z})=\frac{2\pi}{c}(b_{x},b_{y},\tau)$. Instrumental chromaticity and foreground isolation will be examined in \ref{sec:chromaticity}. Since $\Gamma$
+
+Above $\delta_D$ is the Dirac delta-function and in transition from cosmological coordinates back to observing coordinates we have written $\hat{\boldsymbol{r}}\equiv\hat{\boldsymbol{s}}$. The third equality of Eq.(\ref{eq:main}) follows from assumption of translational invariance of statistics of the 21\,cm field. 
+For the inequality in the fourth line we have assumed that the  3D power spectrum varies negligibly over the $k$-space of interest and thus pulled out the integral a power spectrum centered at 
+\[
+k_{\boldsymbol{b}, \tau} \equiv 2\pi \sqrt{\left(\frac{\tau}{Y}\right)^2 + \left(\frac{b}{\lambda X}\right)^2}. 
+\label{eq:kbtau}
+\]
+In Section \ref{sec:chromaticity} we will examine the exact form of the window function probed as well as its effect on foreground isolation.  Since $\boldsymbol{\Gamma}$
 is a sky rotation, it does not affect $\nu$, hence we have taken $\nu_{r}$
-outside the parenthesis in the phase term $\exp\left[-i2\pi\frac{\nu_{r}}{c}\left(\hat{\boldsymbol{r}}\cdot\boldsymbol{b}-\Gamma \hat{\boldsymbol{r}}\cdot\boldsymbol{b'}\right)\right]$. Notice that the phase factor $\exp\left[-i2\pi\tau\left(\nu-\nu'\right)\right]$
+outside the parenthesis in the phase term $\exp\left[-i2\pi\frac{\nu_{r}}{c}\left(\hat{\boldsymbol{r}}\cdot\boldsymbol{b}-\boldsymbol{\Gamma} \hat{\boldsymbol{r}}\cdot\boldsymbol{b'}\right)\right]$. Notice that the phase factor $\exp\left[-i2\pi\tau\left(\nu-\nu'\right)\right]$
 drops out in the end. This means that the location and magnitude of the correlation peak does not depend on delay $\tau$. 
 
-Since the beam pattern and bandwidth are given in $\hat{\boldsymbol{s}}$
+Since the beam pattern and bandpass are given in $\hat{\boldsymbol{s}}$
 and $\nu$, we convert the integral back to these coordinates to get
 the general relation between the delay-transformed visibilities and
 the power spectrum:
 
 \begin{equation}
 \begin{aligned} & \langle V^{*}(\boldsymbol{b},\tau)V_{\psi}(\boldsymbol{b'},\tau)\rangle\\
- & =\left(\frac{2k_{B}}{\lambda^{2}}\right)^{2}P(k_{b,\tau})\int\frac{d\Omega d\nu}{X^{2}Y}A^{*}(\hat{\boldsymbol{s}},\nu)A(\Gamma\hat{\boldsymbol{s}},\nu)\\
- & \qquad \qquad \qquad \qquad \exp\left[i2\pi\frac{\nu}{c}\left(\hat{\boldsymbol{s}}\cdot\boldsymbol{b}-\Gamma\hat{\boldsymbol{s}}\cdot\boldsymbol{b'}\right)-i\psi_{\nu}\right].
+ & \qquad \approx P(k_{b,\tau})\int\frac{d\Omega d\nu}{X^{2}Y}B^{*}(\hat{\boldsymbol{s}},\nu)B(\boldsymbol{\Gamma}\hat{\boldsymbol{s}},\nu)\\
+ & \qquad \qquad \qquad \qquad \exp\left[i2\pi\frac{\nu}{c}\left(\hat{\boldsymbol{s}}\cdot\boldsymbol{b}-\boldsymbol{\Gamma}\hat{\boldsymbol{s}}\cdot\boldsymbol{b'}\right)-i\psi_{\nu}\right].
  \end{aligned}
 \label{eq:final}
 \end{equation}
 
-In other words the power spectrum estimate from visibilities of a baseline pair is given by 
+We can therefore form the power spectrum estimator for the baseline pair $\{\boldsymbol b, \boldsymbol  b'\}$:
+ 
 \begin{equation}
- \hat{P}(k_{b,\tau}) \equiv \left(\frac{\lambda^{2}}{2k_{B}}\right)^{2} \frac{V^{*}(\boldsymbol{b},\tau)V_{\psi}(\boldsymbol{b'},\tau)}{\Theta}, 
+ \hat{P}(k_{b,\tau}) \equiv \frac{V^{*}(\boldsymbol{b},\tau)V_{\psi}(\boldsymbol{b'},\tau)}{\Theta}, 
  \label{eq:opp}
 \end{equation}
 where the weight is defined as 
@@ -293,20 +307,20 @@ where the weight is defined as
 with  
 
 \[
-\Theta_{\nu} \equiv \int \frac{d\Omega}{X^{2}Y}A^{*}(\hat{\boldsymbol{s}},\nu)A(\Gamma\hat{\boldsymbol{s}},\nu) e^{i2\pi\frac{\nu}{c}\left(\hat{\boldsymbol{s}}\cdot\boldsymbol{b}-\Gamma\hat{\boldsymbol{s}}\cdot\boldsymbol{b'}\right)}e^{-i\psi_{\nu}}.
+\Theta_{\nu} \equiv e^{-i\psi_{\nu}} \int \frac{d\Omega}{X^{2}Y}B^{*}(\hat{\boldsymbol{s}},\nu)B(\boldsymbol{\Gamma}\hat{\boldsymbol{s}},\nu) e^{i2\pi\frac{\nu}{c}\left(\hat{\boldsymbol{s}}\cdot\boldsymbol{b}-\boldsymbol{\Gamma}\hat{\boldsymbol{s}}\cdot\boldsymbol{b'}\right)}.
 \label{eq:Thetanu}
 \]
 
 
-Notice that $\Theta$ has no dependence on $\tau$. In Eq. \eqref{eq:Thetanu} we introduced an extra phase $\psi$, the origin of which we shall explain in \ref{sec:rephs}. We point out that although all our derivations focused on drift-scan telescopes, we can get the analogous result for tracking measurements simply by noticing that for a tracking primary beam, $\Gamma$ becomes a rotation around zenith, and so:
+Notice that $\Theta$ has no dependence on $\tau$. In Eq. \eqref{eq:Thetanu} we introduced an extra phase $\psi$, the origin of which we shall explain in \ref{sec:rephs}. We point out that although all our derivations focused on drift-scan telescopes, we can get the analogous result for tracking measurements simply by noticing that for a tracking primary beam, $\boldsymbol{\Gamma}$ becomes a rotation around zenith, and so:
 \[
-\Theta_{\nu} \equiv \int \frac{d\Omega}{X^{2}Y}A^{*}(\hat{\boldsymbol{s}},\nu)A(\hat{\boldsymbol{s}},\nu) e^{i2\pi\frac{\nu}{c}\left(\hat{\boldsymbol{s}}\cdot\boldsymbol{b}-\Gamma\hat{\boldsymbol{s}}\cdot\boldsymbol{b'}\right)}e^{-i\psi_{\nu}}.
+\Theta_{\nu} \equiv e^{-i\psi_{\nu}} \int \frac{d\Omega}{X^{2}Y}B^{*}(\hat{\boldsymbol{s}},\nu)B(\hat{\boldsymbol{s}},\nu) e^{i2\pi\frac{\nu}{c}\left(\hat{\boldsymbol{s}}\cdot\boldsymbol{b}-\boldsymbol{\Gamma}\hat{\boldsymbol{s}}\cdot\boldsymbol{b'}\right)}.
 \label{eq:Thetanu_tracking}
 \]
 
 Roughly speaking, Eqs. \eqref{eq:opp} through \eqref{eq:Thetanu} tell us that the cross multiplications of visibilities at a time delay is proportional to the power spectrum times the Fourier
 transform of the cross multiplied beam patterns. As a check, when applied to equivalent baselines,
-$\boldsymbol{b}=\boldsymbol{b'}$, $\hat{\boldsymbol{s}}=\Gamma\hat{\boldsymbol{s}}$, and Eq.(\ref{eq:final}) reduces to Eq.(B9) of \cite{paper32}. 
+$\boldsymbol{b}=\boldsymbol{b'}$, $\hat{\boldsymbol{s}}=\boldsymbol{\Gamma}\hat{\boldsymbol{s}}$, and Eq.(\ref{eq:final}) reduces to Eq.(B9) of \cite{paper32}. 
 With Eq. \eqref{eq:opp} and Eq. \eqref{eq:Theta} we can, for any given pair of baseline classes and time delay, estimate the degree of redundancy, here represented by $\Theta$. This allows us to achieve our goals stated in the introduction: to identify 
 candidate baseline pairs with significant redundancy, to find the time offset that maximizes redundancy, and to quantify the degree of such redundancy. We can do all the above simply by computing the weight $\Theta$ from
 Eq.(\ref{eq:Theta}) for various time offsets. 
@@ -392,12 +406,71 @@ Since the blue and green curves overlap, we have verified that in this case Eq. 
 
 
 \subsection{Chromaticity \label{sec:chromaticity}}
-Manageable chromaticity of the instrument is crucial in delay-transform technique of foreground isolation. Previous studies have shown that smooth foreground are constrainted in a "wedge" structure in cosmological $k$ space \citep{wedge1, wedge2}. We must show that our method does not destroy the ability of delay-transform to isolate foreground.[ ..... ]
+%Manageable chromaticity of the instrument is crucial in delay-transform technique of foreground isolation. Previous studies have shown that smooth foreground are constrainted in a "wedge" structure in cosmological $k$ space \citep{wedge1, wedge2}. We must show that our method does not destroy the ability of delay-transform to isolate foreground.[ ..... ]
+
+
+A crucial concern when measuring the $21\,\textrm{cm}$ power spectrum is the possibility of astrophysical foreground contamination. Being orders of magnitude larger than the cosmological signal, even small residuals from an imperfect isolation of these foregrounds can masquerade as a false detection. Recent literature treatments of this problem have shown that if one combines the mathematical properties of interferometric measurement with the empirical fact that foregrounds are spectrally smooth, a clean separation of foregrounds and cosmological signal can in principle be achieved in harmonic space \citep{wedge1, wedge2}. These studies suggest that foregrounds preferentially appear in harmonic modes of the sky corresponding to fluctuations that are angularly fine but spectrally smooth, a region in harmonic space colloquially known as ``the wedge". One's foreground mitigation strategy can then consist mainly of avoiding those modes by working in the complementary region known as ``the EoR window". However, for this strategy to be viable, it is necessary to show that one's data analysis pipeline does not corrupt the separation between the wedge and the EoR window. We will now do so for our proposed two-baseline power spectrum estimator.
+
+%To evaluate a power spectrum estimator's propensity to cause leakage of foregrounds into the EoR window, one may compute the window function $W(\mathbf{k},\mathbf{k}^\prime)$, which relates the expectation value of the power spectrum estimate $\hat{P}$ to the true power spectrum $P$ via
+%\begin{equation}
+%\langle \hat{P}(\mathbf{k}) \rangle = \int dk^\prime P(\mathbf{k}^\prime) W(\mathbf{k},\mathbf{k}^\prime).
+%\end{equation}
+%The window function thus captures the linear combination of modes that source the power spectrum estimate at a particular $\mathbf{k}$. If the window function for a $\mathbf{k}$ mode within the EoR window is significant at $\mathbf{k}^\prime$ modes where foregrounds are strong, the EoR window will not be clean of foreground contamination.
+
+Traditionally, spectral and angular dimensions are cylindrically binned with the coordinates $k_\bot$ and  $k_\parallel$, where the angular direction $k_\bot$ is probed by the beam and line-of-sight direction $k_\parallel$ is probed by the frequency spectrum. Despite their usefulness, however, $(k_\bot, k_\parallel)$ are local coordinates that are well defined only in the narrow field-of-view limit. 
+As discussed in previous sections, the combination of information from nearly equivalent baselines for wide-field telescopes is inherently a three-dimensional problem. Although the estimator of Section \ref{sec:method} does not have such limitations, to discuss foreground signature with possible curved sky effects, we must employ a set of basis functions where angular fluctuations are encoded by spherical harmonics, and radial fluctuations by spherical Bessel functions. 
+
+\cite{sphere} discusses in detail power spectrum analyses using spherical harmonics. In such as basis, modes in the sky are indexed by the magnitude $k$ of the wavevector $\mathbf{k}$ and spherical harmonic indices $(\ell, m)$. In other words, one defines
+\begin{equation}
+\overline{T}_{\ell m} (k) \equiv \sqrt{\frac{2}{\pi}} \int d\Omega dr r^2 j_\ell (kr) Y_{\ell m}^* (\hat{\mathbf{r}}) T (\hat{\mathbf{r}}),
+\end{equation}
+where $Y_{\ell m}$ is a spherical harmonic function and $j_\ell$ is the $\ell$th-order spherical Bessel function of the first kind. The power spectrum is then related to these spherical harmonic Bessel modes via the relation
+\begin{equation}
+\label{eq:SHB}
+\langle \overline{T}_{\ell m} (k) \overline{T}_{\ell^\prime m^\prime}^* (k^\prime) \rangle = \frac{\delta^D (k - k^\prime)}{k^2} \delta_{\ell \ell^\prime} \delta_{m m^\prime} P(k).
+\end{equation}
 
 
 
+A delay-transformed visibility $V(\mathbf{b}, \tau) $ is related to the spherical Fourier-Bessel modes by
+\begin{equation}
+V(\mathbf{b}, \tau) = \sqrt{\frac{2}{\pi}} \sum_{\ell m} \int \! dk\, k^2 g_{\ell m} (k; \mathbf{b}, \tau) \overline{T}_{\ell m} (k),
+\end{equation}
+where
+\begin{equation}
+g_{\ell m} (k ; \mathbf{b}, \tau) = \int \! d\Omega d\nu B(\hat{\mathbf{r}},\nu) Y_{\ell m} (\hat{\mathbf{r}}) j_\ell (k r) e^{i 2 \pi \nu (\tau - \mathbf{b}\cdot \hat{\mathbf{r}} / c)}
+\end{equation}
+and the analogous quantity for $V_\psi$ is given by
+\begin{eqnarray}
+\label{eq:glmpsi}
+g_{\ell m}^\psi (k ; \mathbf{b}, \tau) = \int && d\Omega d\nu B(\boldsymbol \Gamma \hat{\mathbf{r}},\nu) Y_{\ell m} (\hat{\mathbf{r}}) j_\ell (k r) \nonumber \\
+&& \times  e^{i 2 \pi \nu (\tau - \mathbf{b}\cdot \boldsymbol \Gamma \hat{\mathbf{r}} / c) + i \psi_\nu}.
+\end{eqnarray}
+Note that unlike the primary beam and the fringe pattern, the spherical harmonic function does \emph{not} rotate, since it originated from a spherical harmonic expansion of the sky temperature, which is fixed. With these expressions and a little algebra combining Eqs. \eqref{eq:SHB} through \eqref{eq:glmpsi}, we arrive at a form of the two-baseline estimator (compare with Eq. \eqref{eq:final}):
+\begin{eqnarray}
+\hat{P}(k) &=& \frac{ \langle V^{*}(\boldsymbol{b},\tau)V_{\psi}(\boldsymbol{b'},\tau) \rangle}{\Theta} \nonumber \\
+&=& \sum_\ell \int \!dk\, W_{\ell}(k; \mathbf{b}, \mathbf{b}^\prime , \tau) P(k),
+\end{eqnarray}
+where we have defined the \emph{window function}
+\begin{equation}
+W_{\ell}(k; \mathbf{b}, \mathbf{b}^\prime , \tau) = \frac{2 k^2}{\pi \Theta} \sum_m g_{\ell m} (k ; \mathbf{b}, \tau) g_{\ell m}^{\psi*} (k ; \mathbf{b}^\prime, \tau).
+\end{equation}
+By construction, the window function sums to unity when integrated over all $k$ and summed over all $\ell$. We may therefore interpret our estimator $\hat{P}$ of the power spectrum to be a weighted average over all possible $\ell$ and $k$ modes, with the window function providing the weights of this average. This means that window functions can serve as indicators of foreground leakage into the EoR window. One writes down the estimator for a hypothetical measurement of a power spectrum mode within the EoR window, and additionally computes the window function for that estimator. Ideally, the window function for $\hat{P}(k)$ will be sharply peaked around $k$. In general, however, window functions will have wings that encroach upon other modes. If the window function is substantially non-zero at low-$k$ modes---which is where foreground emission typically resides, given its spectral smoothness---then the EoR window will be contaminated by foregrounds.
+
+Figure \ref{fig:multiblwindows} shows four example window functions. The two window functions in the top plot are for equivalent baseline power spectrum estimators, i.e., where one squares the delay spectrum from a single baseline and normalizes the result. The window function localized at low $\ell$ is for the baseline \{2,0\} of around $30\,\textrm{m}$ in length, while the window function localized at high $\ell$ is for \{12,0\}, roughly $180\,\textrm{m}$ in length. The window functions for near-equivalent baseline estimates are shown in the bottom plot, for \{2,0\}:\{2,1\} and \{12,0\}:\{12,1\} at low- and high-$l$, respectively. In all cases, the window functions that we show are for $\tau = 703\,\textrm{ns}$, and were generated using primary beam models for PAPER. For numerical convenience we assumed that the bandpass $\phi_\nu$ (see Eq. \eqref{eq:B}) takes the form of a half-period sine curve that peaks at $150\,\textrm{MHz}$ and goes to zero $5\,\textrm{MHz}$ on either side of the peak.
+
+One sees that all four window functions are fairly localized around specific values of $k$, which to a good approximation are described by Eq. \eqref{eq:kbtau}. This suggests that both equivalent- and near-equivalent-baseline delay-spectrum estimators are good estimators of the power spectrum. At higher $\ell$, the window functions for both estimators become elongated in $k$, with stronger tails towards the low $k$ modes where foregrounds reside. This is the phenomenology of the wedge, where at fine angular scales the foreground leakage to higher $k$ modes are more pronounced. Importantly, however, we note that the window functions for the near-equivalent-baseline estimator are no more elongated than for the equivalent-baseline estimator. One may thus conclude that the our proposed near-equivalent-baseline estimator does not result in extra foreground contamination of the EoR window.
+
+%This suggests that the 
+%Note that the right hand side has no explicit dependence on $\ell$ or $m$, aside from the Kronecker Delta functions to enforce that the different spherical harmonic modes are statistically independent. This is a consequence of the statistically translation-invariant nature of the cosmological signal. For foregrounds, this invariance is broken because the signal in question is a broadband signal at $z \sim 0$, rather than a signal from a spectral line over a range of redshifts. The nature of its angular fluctuations are therefore inherently different from its radial 
 
 
+
+\begin{figure}[h]
+\includegraphics[width=1.1\linewidth]{multiblwindows}
+\caption{Sample window functions for delay-spectrum estimates of the power spectrum explored in this paper. The top plot shows window functions for a traditional equivalent-baseline delay-spectrum estimate, where a single baseline's delay spectrum is squared. The bottom plot shows the window functions resulting from nearly equivalent baselines. In each plot, the window function on the right corresponds to the window function for baselines of length $b \sim 180\,\textrm{m}$ in the East West direction, while the window function on the left is for $b\sim 30\,\textrm{m}$. The general extent of the window functions for the two-baseline estimator are seen to be roughly the same as for the single-baseline estimator, suggesting that the former is just as good as the latter in keeping the EoR window free of foregrounds.}
+\label{fig:multiblwindows}
+\end{figure}
 
 
 
@@ -559,23 +632,23 @@ Redundant arrays are designed to maximize sensitivity. Current generations of re
 In this section we link our results from Section \ref{sec:method} to the traditional views of rotation synthesis and in particular $uv$ tracks. 
 Typical convention of rotation synthesis has rotation operates on $\boldsymbol{b'}$ instead of $\hat{\boldsymbol{s}}$, in which case Eq. \eqref{eq:Theta} becomes
 \begin{equation}
-\Theta \equiv\int\frac{d\Omega d\nu}{X^{2}Y}|A^{*}(\hat{\boldsymbol{s}},\nu)A(\Gamma\hat{\boldsymbol{s}},\nu)||\phi(\nu)|^{2} e^{-i2\pi\frac{\nu}{c}\hat{\boldsymbol{s}}\cdot\left(\boldsymbol{b}-\widetilde{\Gamma}\boldsymbol{b'}\right)}, 
+\Theta \equiv\int\frac{d\Omega d\nu}{X^{2}Y}B^{*}(\hat{\boldsymbol{s}},\nu)B(\boldsymbol{\Gamma}\hat{\boldsymbol{s}},\nu) e^{-i2\pi\frac{\nu}{c}\hat{\boldsymbol{s}}\cdot\left(\boldsymbol{b}-\widetilde{\boldsymbol{\Gamma}}\boldsymbol{b'}\right)}, 
 \label{eq:drift}
 \end{equation}
-where $\widetilde{\Gamma}$ is the inverse of $\Gamma$. 
-For tracking elements, $\Gamma$ becomes a rotation around zenith:
+where $\widetilde{\boldsymbol{\Gamma}}$ is the inverse of $\boldsymbol{\Gamma}$. 
+For tracking elements, $\boldsymbol{\Gamma}$ becomes a rotation around zenith:
 \begin{equation}
-\Theta \equiv\int\frac{d\Omega d\nu}{X^{2}Y}|A^{*}(\hat{\boldsymbol{s}},\nu)A(\hat{\boldsymbol{s}},\nu)||\phi(\nu)|^{2} e^{-i2\pi\frac{\nu}{c}\hat{\boldsymbol{s}}\cdot\left(\boldsymbol{b}-\widetilde{\Gamma}\boldsymbol{b'}\right)}, 
+\Theta \equiv\int\frac{d\Omega d\nu}{X^{2}Y}B^{*}(\hat{\boldsymbol{s}},\nu)B(\hat{\boldsymbol{s}},\nu) e^{-i2\pi\frac{\nu}{c}\hat{\boldsymbol{s}}\cdot\left(\boldsymbol{b}-\widetilde{\boldsymbol{\Gamma}}\boldsymbol{b'}\right)}, 
 \label{eq:tracking}
 \end{equation}
 
 Track-crossing corresponds to vanishing of the exponent
 \[
- \boldsymbol{b}-\widetilde{\Gamma}\boldsymbol{b'} = 0. \label{eq:trackcross}
+ \boldsymbol{b}-\widetilde{\boldsymbol{\Gamma}}\boldsymbol{b'} = 0. \label{eq:trackcross}
  \]
 If exponent vanishes, $\Theta_{\nu}$ is real, and one would not observe any non-zero phase at the peak. However, with inclusion of the $w$-term, we see that track crossings in $uv$-plane do not actually imply crossing in the $uvw$ space, therefore the exponent Eq. \eqref{eq:trackcross} does not vanish and we observe non-zero, frequency dependent peak phases even in the case of tracking arrays, as shown in Fig. \ref{fig:phi_nu}. 
 
-Furthermore, in the case of drift-scan arrays, even a crossing in $uvw$ space does not necessarily correspond to the maximum of correlation. From Eq. \eqref{eq:drift}, we see the track-crossing condition Eq. \eqref{eq:trackcross} maximizes $\Theta$ if and only if no other term in the integral depends on $\Gamma$. We see that this is true for the tracking case (Eq. \eqref{eq:tracking}), but not the drift-scan case (Eq. \eqref{eq:drift}). Only in the special case of a tracking measurement, where the $w$-term happens to be negligible, do $uv$-track crossings correspond exactly to maxima of correlations. Incidentally, at the crossing points the exponent in Eq. \eqref{eq:trackcross} vanishes and $\psi_\nu$ is zero for all $\nu$. In general, second order effects due to the presence of $w$ is observed for the tracking measurements as in Fig. \ref{fig:phi_nu}. 
+Furthermore, in the case of drift-scan arrays, even a crossing in $uvw$ space does not necessarily correspond to the maximum of correlation. From Eq. \eqref{eq:drift}, we see the track-crossing condition Eq. \eqref{eq:trackcross} maximizes $\Theta$ if and only if no other term in the integral depends on $\boldsymbol{\Gamma}$. We see that this is true for the tracking case (Eq. \eqref{eq:tracking}), but not the drift-scan case (Eq. \eqref{eq:drift}). Only in the special case of a tracking measurement, where the $w$-term happens to be negligible, do $uv$-track crossings correspond exactly to maxima of correlations. Incidentally, at the crossing points the exponent in Eq. \eqref{eq:trackcross} vanishes and $\psi_\nu$ is zero for all $\nu$. In general, second order effects due to the presence of $w$ is observed for the tracking measurements as in Fig. \ref{fig:phi_nu}. 
 
 
 \section{\label{sec:appB}\\Derivation of Noise Covariance \label{sec:appB}}
@@ -624,8 +697,6 @@ Thus we have defined a slightly modified version of the effective weight in Eq. 
 \begin{equation}
 \widetilde{\Theta}_{12}=\frac{\Theta_{12}\sqrt{M_1M_{2}}}{\sqrt{1 + \rho_0 \left(M_1+M_{2} \right)}}.
 \end{equation}
-
-
 
 
 
