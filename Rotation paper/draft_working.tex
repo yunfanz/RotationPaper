@@ -115,7 +115,7 @@ the baselines marked in blue and yellow are respectively examples
 of \{2,1\} and \{2, -1\}.
 Note that \{2,0\} and \{-2, 0\} for example are the same class of baselines and should not be counted twice. Antennas in purely north-south baselines
 are close (4m), and hence these baselines are not suitable
-for use due to cross-coupling. On the other hand, the small North-South separation means that classes such as \{2,0\} and  \{2,1\} are expected to be near-equivalent. The PAPER-64 analysis of \cite{Ali2015} used three classes of baselines, the PAPER-128
+for use due to cross-coupling. On the other hand, the small North-South separation means that classes such as \{2,0\} and  \{2,1\} are expected to be near-equivalent. The PAPER-64 analysis of \cite{Ali2015} uses three classes of baselines, the PAPER-128
 equivalent of which are 
 \{2, 0\}, \{2, 1\} and \{2, -1\}. There, each of these classes
 of baselines are cross multiplied within itself. This paper provides the method for inter-class multiplications. We will use the short hand notation $\{m,n:m',n'\}$ to denote a pair of baseline classes to be cross-multiplied. 
@@ -180,27 +180,15 @@ for all baselines. Power-spectrum measurements are typically taken from $\sim10$
 %\end{figure}
 
 
-
-We work with delayed-transformed visibilities since it has been shown that foregrounds are isolated in delay space. We define the delay-transformed visibility by Fourier transforming visibility along the frequency axis \citep{delay-transform}, giving:
-\small
-\begin{equation}
-\begin{aligned}V(\boldsymbol{b},\tau) & =\int d\nu V_{\nu}(\boldsymbol{b})\phi(\nu)\exp\left(2\pi i\nu\tau\right),\\
- & =\int d\Omega d\nu B(\hat{\boldsymbol{s}},\nu)T(\hat{\boldsymbol{s}},\nu)\exp\left[-2\pi i\nu\left(\frac{\boldsymbol{b}\cdot\hat{\boldsymbol{s}}}{c}-\tau\right)\right]. 
-\end{aligned}
-\label{eq:Vb1}
-\end{equation}
-\normalsize
-Here the delay $\tau$ is the Fourier dual of $\nu$. Eq. \eqref{eq:Vb1} expresses the delay-transformed visibility as
-an integral over observational coordinates $\hat{\boldsymbol{s}}$ and $\nu$. For notational simplicity here and in the rest of this paper, we have defined the quantity
+Ultimately we would like to relate observed visibility to the power spectrum $P$, defined such that
 \[
-B(\hat{\boldsymbol{s}},\nu) \equiv \frac{2k_B}{\lambda^2}\phi(\nu)A(\hat{\boldsymbol{s}},\nu). 
-\label{eq:B}
+\langle \widetilde{T}^{*}(\boldsymbol{k})\widetilde{T}(\boldsymbol{k'})\rangle = \left(2\pi\right)^3\delta_D^3(\bold{k}-\bold{k'})P(k),
+\label{eq:Pofk}
 \]
-
-Ultimately,
-we would like to relate the data, collected with coordinates $\hat{\boldsymbol{s}}$
-and $\nu$, to the power spectrum, written with 
-$\boldsymbol{r}$ and $\boldsymbol{k}$, the cosmological position coordinate and wavenumber. To do so, we start by noticing that
+where $\bold{k}$ is the cosmological wavenumber, $\delta_D^3$ is the three-dimensional Dirac delta function, and $\widetilde{T}(\boldsymbol{k})$ is the three-dimensional Fourier transform of the brightness temperature field $T(\bold{r})$, with $\bold r$ as the cosmological position coordinate. 
+We begin by relating the observational coordinates $\hat{\boldsymbol{s}}$
+and $\nu$, to
+$\boldsymbol{r}$ and $\boldsymbol{k}$: 
 \[
 \begin{aligned}r & =\frac{c}{H_{0}}\int_{0}^{z}\frac{dz'}{E(z')},\\
  & \approx\frac{c}{H_{0}}\int_{0}^{z_{0}}\frac{dz'}{E(z')}-\frac{c(1+z_0)^{2}}{\nu_{21}H_{0}E(z_0)}\left(\nu-\nu_{0}\right),\\
@@ -225,14 +213,33 @@ d^2r=X^2d\Omega.
 \end{equation}
 Note Eq. \eqref{eq:thinshell} does not require the flat-sky approximation; the angular integral is still performed over the curved sky. 
 
-We can rewrite the delayed-transformed visibility as 
+ 
+Eqs. \eqref{eq:nur} and \eqref{eq:thinshell} show that observational angular and spectral dimensions together correspond to the three dimensional volume of cosmological interest. Moreover, recall that the power spectrum in Eq. \eqref{eq:Pofk} is proportional to the product of Fourier transforms of the temperature field. Since Eq. \eqref{eq:Vis1} resembles a Fourier transform along the angular directions, it is natural to perform a further Fourier transform along the radial, or equivalently, frequency axis. The transform, called delay-transform \citep{delay-transform}, has gained popularity recently since it has been shown that foregrounds are isolated in delay space \footnote{We discuss foreground isolation in detail in Section \ref{sec:chromaticity}.}. We define the delay-transformed visibility as:
+\small
+\begin{equation}
+\begin{aligned}V(\boldsymbol{b},\tau) & =\int d\nu V_{\nu}(\boldsymbol{b})\phi(\nu)\exp\left(2\pi i\nu\tau\right),\\
+ & =\int d\Omega d\nu B(\hat{\boldsymbol{s}},\nu)T(\hat{\boldsymbol{s}},\nu)\exp\left[-2\pi i\nu\left(\frac{\boldsymbol{b}\cdot\hat{\boldsymbol{s}}}{c}-\tau\right)\right]. 
+\end{aligned}
+\label{eq:Vb1}
+\end{equation}
+\normalsize
+Here the delay $\tau$ is the Fourier dual of $\nu$. Eq. \eqref{eq:Vb1} expresses the delay-transformed visibility as
+an integral over observational coordinates $\hat{\boldsymbol{s}}$ and $\nu$. For notational simplicity here and in the rest of this paper, we have defined the quantity
+\[
+B(\hat{\boldsymbol{s}},\nu) \equiv \frac{2k_B}{\lambda^2}\phi(\nu)A(\hat{\boldsymbol{s}},\nu). 
+\label{eq:B}
+\]
+
+
+
+With Eqs. \eqref{eq:nur} and \eqref{eq:thinshell}, we can rewrite the delayed-transformed visibility in cosmological coordinates as 
 \small
 \[
 \begin{aligned}V(\boldsymbol{b},\tau) & =\int\frac{d^{3}r}{X^{2}Y}B(\boldsymbol{r})T(\boldsymbol{r})\exp\left[-2\pi i\left(\frac{\boldsymbol{b}}{c}\cdot\hat{\boldsymbol{r}}-\tau\right)\nu_{r}\right],
 \end{aligned}
 \]
 \normalsize
- where $d\nu=-dr/Y$ and $d^{3}r=-X^{2}Yd\Omega d\nu$. 
+where $d\nu=-dr/Y$ and $d^{3}r=-X^{2}Yd\Omega d\nu$. 
 We have written $\nu_{r}$ as a reminder that $\nu$ and $r$ are related
 by Eq. \eqref{eq:nur}. 
 
@@ -375,34 +382,6 @@ The bottom left and middle panels show the peak-normalized $uv$ beam power of th
 \label{fig:beamfringe}
 \end{figure*}
 
-
-\subsection{Numerical Test \label{sec:Techniquet}}
-
-Bringing together the discussion from Section \ref{sec:method}, we present a numerical check of Eq. \eqref{eq:final}, including rephasing. To do so, we need to compare the amplitude and phase of the integral weight $\Theta$ 
-for a pair of baselines with products of simulated visibilities of those baselines. We use 10 frequency channels evenly spaced from $145$\,MHz to $155$\,MHz for the comparison. We rephase one of the simulated visibilities, as well as computed $\Theta_{\nu}$ to the same delay as computed from the peak phase of the latter. 
- 
-\begin{figure}[h]
-\includegraphics[width=\linewidth]{numerics}
-
-\caption{Numerical comparisons of the visibility correlation peaks to the $\Omega$ factor in Eq.(\ref{eq:final}). We generated a Gaussian random sky on healpix maps, computed visibilities and cross correlated them to find the correlation.  Top panel shows the equivalent baseline pairs \{2,0\} against \{2,0\}, bottom panel shows \{2,0\} against \{2,1\}.  Evaluations of weight $\Theta$ are shown green, and the visibility correlations of simulated random sky is given in blue. In both cases only the real parts are shown. We see that in both cases the theory and simulation line up in both amplitude and phase.}
-\label{fig:numerics}
-\end{figure}
-
-Fig. \ref{fig:numerics} shows the real parts of the resulting degree of redundancy as a function of time offset, for equivalent baseline pairs (\{2,0:2,0\}) in the top panel and nearly equivalent (\{2,0:2,1\}) in the bottom. Shown in green for the two cases are the computed values of $\Theta$, both normalized to the peak of the equivalent case. The plot on the bottom is rephased with a delay of $\Delta\tau\approx15.7$ns as outlined in Section \ref{sec:rephs}. Since both y-axes are normalized to the same scale, we see the equivalent baseline reach maximal redundancy with 0 time offset, while the nearly equivalent pair reaches maximum redundancy of $\Theta\approx0.5$ at $dT\approx0.325$days. 
-
-Almost completely overlapping with the green curves are the cross-multiplied visibilities from a simple simulation, shown in blue. For the simulation, we populate random values of brightness temperature
-on a healpix map \citep{Heal, HealPrimer} \footnote{We use functionalities in the python package AIPY for healpix mapping
-as well as coordinate transforms. }. We rotate the baseline positions with
-the appropriate rotation matrix, multiplying the sky by the primary beam to get the visibilities, for each
-baseline\footnote{There are two obvious ways to achieve the rotation. One
-can either fix the sky and rotate the baselines, or the other way
-around. We found however, that we must not physically rotate the sky
-map, for the numerical round-offs due to finite resolutions of the
-map turns out to be significant. Thus we let the sky, represented
-by the healpix map, be fixed, and rotate the baselines. }. For the nearly equivalent case, we rephase the delayed visibility (\{2,0\}) by the same delay $\Delta\tau\approx17$ns, followed by delay-transform. The resulting delay-space visibilities for the two baselines are then convolved
-via the Fourier convolution theorem, to obtain values of the cross
-correlation as a function of time offset.   We do this for both the equivalent (\{2,0:2,0\}) and nearly equivalent (\{2,0:2,1\}) case.
-Since the blue and green curves overlap, we have verified that in this case Eq. \eqref{eq:final} is valid and the computed $\Theta$ can be used as weight to obtain the power spectrum. 
 
 
 \subsection{Chromaticity \label{sec:chromaticity}}
@@ -671,7 +650,7 @@ We write the noise variance of power spectrum and visibility as:
 \sigma_P^2 &= \langle P_N^2 \rangle.
 \end{aligned}
 \end{equation}
-One may notice that we have used a single covariance for the complex visibility. It is straightforward to show that the same result holds if a separate real and imaginary components are used, as long as they are independent of each other. In fact, for simplicity and without loss of generality we shall treat the visibility as a real quantity in the rest of this derivation. 
+One may notice that we use a single covariance for the complex visibility. It is straightforward to show that the same result holds if a separate real and imaginary components are used, as long as they are independent of each other. In fact, for simplicity and without loss of generality we shall treat the visibility as a real quantity in the rest of this derivation. 
 Note that though we can assume $\langle V_N^{m}\rangle=0$, where $m$ is odd. The same is not true for $P_N$. 
 
 The variance of $P$ constructed with visibilities $V_1$ and $V_2$ from two baseline classes can be estimated\footnote{We assume all noise terms to be independent for simplicity, in practice the correlation of different measurements ifrom equivalent baselines are alleviated by grouping the baselines in the class and the days of observation, as in \cite{Ali2015}}:
