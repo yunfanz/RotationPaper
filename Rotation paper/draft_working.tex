@@ -473,33 +473,33 @@ In both the middle and bottom panels, we have chosen to fix the value  of \{1,0:
 
 \subsection{ Sensitivity \label{sec:sensitivity}}
 In this section we discuss the sensitivity contributions of a variety of baseline pairs from PAPER-128.
-Recall the sensitivity contribution of a particular baseline pair is given by $\Theta$ (Eq. \eqref{eq:Theta}). From now one we use $\Theta_{\boldsymbol{bb'}}$ and $\Delta t_{\boldsymbol{bb'}}$ to denote the peak value and location of $\Theta$, or in other words the maximum of the redundancy weight $|\Theta(\Delta t)|$ and the corresponding offset for a given baseline pair $\{\boldsymbol{b}:\boldsymbol{b'}\}$. 
+Recall the sensitivity contribution of a particular baseline pair is given by $\Theta$ (Eq. \eqref{eq:Theta}). From now on we use $\Theta_{\boldsymbol{bb'}}$ and $\Delta t_{\boldsymbol{bb'}}$ to denote the peak value and location of $\Theta$, i.e. the maximum of the redundancy weight $|\Theta(\Delta t)|$ and the corresponding offset for a given baseline pair $\{\boldsymbol{b}:\boldsymbol{b'}\}$. 
 %Intuitively we expect the sensitivity to depend on both the $uv$ coverage of the baseline and the patch of sky inside the beam. A larger beam like that of PAPER would tolerate larger time offsets because more sky area can coincide in the two beams \footnote{Larger beams also imply smaller spread in $uv$ space. This could lead to either larger or smaller redundancy, which depends on the overlap of two such point spread functions.}
 
 
 In the middle panel of Fig. \ref{fig:sensplot}
 we show $\Theta_{\boldsymbol{bb'}}$ and $\Delta t_{\boldsymbol{bb'}}$ for a variety of baseline combinations. Baseline pairs that are mirror images of each other 
-give the same amount of redundancies ($\Theta_{\boldsymbol{bb'}}$), with the opposite time offset, as expected from symmetry. 
+give the same amount of redundancy ($\Theta_{\boldsymbol{bb'}}$), with the opposite time offset, as expected from symmetry. 
 For example, \{1,0:1,1\} is mirror image of \{1,0:1,-1\} and these two pairs of baselines
 give the same sensibility contribution. Thus we only show a subset of representative baseline pairs to illustrate the contributions. For a more complete result, see Fig. \ref{fig:pairplot}.  
 
 As is immediately clear from the figure, baseline pairs that have smaller optimal time offsets
 tend to have higher correlations. In other words, correlation peaks
 that are closer to zero time offset are higher. This is expected for two reasons;
-one is that the longer the time delay that produces redundancy, the more the sky has moved with respect
-to the beams and hence the smaller the overlapping patch of sky surveyed. The other reason is that smaller optimal
-time offset corresponds to smaller differences in orientation and length of the pair of baselines and hence better redundancy. 
+one is that the longer the time offset of maximum redundancy, the more the sky has moved with respect
+to the primary beams and hence the smaller the overlapping patch of sky surveyed. The other reason is that smaller optimal
+time offset corresponds to smaller $w$-term-induced decoherence and hence better redundancy. 
 
 
 To determine that actual relative contribution to sensitivity of these
-baseline pairs, we have to account for the multiplicities of
-these baseline classes or, in other words, the number of antenna pairs with the
+baseline pairs, we also have to account for the multiplicities of
+these baseline classes, i.e. the number of antenna pairs with the
 same length and orientation. We would like to estimate an effective weight $\widetilde{\Theta}_{\boldsymbol{bb'}}$ that accounts for both the peak height $\Theta_{\boldsymbol{bb'}}$ and the multiplicities of the baseline classes. From Fig. \ref{fig:sensplot}
 we see for example \{1,0\} has higher multiplicity than \{2,0\},
 or \{1,1\}. Assuming that each equivalent baseline delivers
-the same $\Theta_{\boldsymbol{bb}}$, the relative contribution to sensitivity can be estimated. 
+the same $\Theta_{\boldsymbol{bb}}$, the relative contribution to sensitivity can be estimated as follows. 
 
-First we can average the visibilities of the equivalent baselines. Since the core of PAPER-128 has 16 by 7 antenna configuration, there
+First we can average the visibilities of the equivalent baselines. Since the core of PAPER-128 is a 16 by 7 antenna configuration, there
 are $M\equiv(16-|m|)\times(7-|n|)$ copies of the baseline class $\{m,n\}$. This means
 that if we add visibility measurements of all the equivalent baselines,
 we get a factor of $\sqrt{M}$ reduction in noise
@@ -508,7 +508,7 @@ For cross-multiplications of nearly equivalent baselines of
 types $\{m,n\}$ and $\{m',n'\}$, we get an effective weight: 
 
 \begin{equation}
-\widetilde{\Theta_{\boldsymbol{bb'}}} \propto \Theta_{\boldsymbol{bb'}}\sqrt{MM'}.\label{eq:sensul}
+\widetilde{\Theta}_{\boldsymbol{bb'}} \propto \Theta_{\boldsymbol{bb'}}\sqrt{MM'}.\label{eq:sensul}
 \end{equation}
 
 Shown in the bottom panel of Fig. \ref{fig:sensplot} are the peak heights weighted
@@ -517,11 +517,11 @@ by the multiplicity factor. Points that have zero time delay are the equivalent 
 With $\widetilde{\Theta}_{\boldsymbol{bb'}}$, we can estimate the power spectrum by inverse covariance weighting. We again assume that the power spectrum $P$ varies negligibly over the $k$-space of interest, so that measurements at different $k_{\bar{b}, \tau}$ can be combined to obtain an estimator at some $k_\tau$:
 \begin{equation}
 \begin{aligned}
- \hat{P}(k_{\tau}) &= \frac{\sum_{\boldsymbol{bb'}}\hat{P}(k_{\bar{b}, \tau})/\sigma_P^2(\boldsymbol{bb'})}{\sum_{\boldsymbol{bb'}}1/\sigma_P^2(\boldsymbol{bb'})}, \\
+ \hat{P}(k_{\tau}) &= \frac{\sum_{\boldsymbol{bb'}}\hat{P}(k_{\bar{b}, \tau})/\sigma_P^2(\boldsymbol{bb'})}{\sum_{\boldsymbol{bb'}}1/\sigma_P^2(\boldsymbol{bb'})}\\
  &= \frac{\sum_{\boldsymbol{bb'}}\hat{P}(k_{\bar{b}, \tau})\widetilde{\Theta}_{\boldsymbol{bb'}}^2}{\sum_{\boldsymbol{bb'}}\widetilde{\Theta}_{\boldsymbol{bb'}}^2},
  \end{aligned}
 \end{equation}
-where the sum is over classes of baseline pairs, and the power spectrum noise covariance $\sigma_P^2$ is proportional to the effective weight $\widetilde{\Theta}$. 
+where the sum is over classes of baseline pairs, and the power spectrum noise covariance, $\sigma_P^2$, is proportional to the effective weight, $\widetilde{\Theta}$. 
 
 
 We define the estimator sensitivity to be the square root of the inverse of the total power spectrum noise variance $\Sigma_P^2$:
@@ -531,28 +531,28 @@ We define the estimator sensitivity to be the square root of the inverse of the 
 where, if $\sigma_S^2$ and $\sigma_N^2$ are the characteristic signal and noise levels of a single-baseline visibility, $\rho_0\equiv\sigma_S^2/\sigma_N^2$ is the signal to noise ratio. 
 
 
-The scaling in Eq. \eqref{eq:sensul} is rough for simplicity of motivation. As we derive in Appendix \ref{sec:appB}, this weight should be corrected by a factor proportional $\rho_0$:
+The scaling in Eq. \eqref{eq:sensul} is rough for simplicity of motivation. As we derive in Appendix \ref{sec:appB}, this weight should be corrected by a factor proportional to $\rho_0$:
 
 \begin{equation}
 \label{eq:tildereal}
 \widetilde{\Theta}_{\boldsymbol{bb'}} =\frac{\Theta_{\boldsymbol{bb'}}\sqrt{MM'}}{\sqrt{1 + \rho_0 \left(M+M' \right)}}.
 \end{equation}
 
-For a given $\rho_0$ Eq. \eqref{eq:tildereal} quantifies the relative sensitivity contribution of a baseline pair $\{\boldsymbol{b}:\boldsymbol{b'}\}$. Assuming a reionization signal of $\sim 30\,\text{mK}$, observation centered at 150\,MHz ($z=8.5$), and 120 days of integration with PAPER antennas, we have roughly
-(See Eq.(20) in \cite{first-paper})
+For a given $\rho_0$, Eq. \eqref{eq:tildereal} quantifies the relative sensitivity contribution of a baseline pair $\{\boldsymbol{b}:\boldsymbol{b'}\}$. Assuming a reionization signal of $\sim 30\,\text{mK}$, observation centered at 0.15\,GHz ($z=8.5$), and 120 days of integration with PAPER antennas, we have roughly
+(see Eq.(20) in \cite{first-paper})
 \begin{equation}
-\rho_0 \sim 0.001\left[\frac{L}{40\,\text{m}}\right] \left[\frac{0.1h\,\text{Mpc}^{-1}}{k}\right]^3, 
+\rho_0 \sim 0.001\left[\frac{\bar{b}}{40\,\text{m}}\right] \left[\frac{0.1h\,\text{Mpc}^{-1}}{k}\right]^3, 
 \end{equation}
 where $\bar{b}$ is the average baseline length between the pair.  
 
 \subsection{Array Configuration Comparisons \label{sec:arrconf}}
-We run our algorithm over all possible baseline-pairs of  PAPER-128, HERA37, HERA128, HERA243 and HERA350. The HERA antenna configurations are shown in Fig. \ref{fig:HeraAntpos}. The  
-hexagonal design is the densest pattern of antenna-packing. The larger arrays are designed with a ``gap'' dividing the antennas into three different groups. The gaps are designed so as to improve $uv$ coverage and ease calibration without compromising sensitivity, but also produces many more nearly equivalent baselines than a pure hexagonal layout. The motivations behind the designs are explained in \cite{HERAconfiguration}.  Compared to PAPER-128, the hexagonal pattern of HERA lack short baselines oriented close to each other, and thus we expect to see only longer nearly equivalent baselines with high correlations. The lower multiplicities per class of baselines is compensated by the larger number of classes of baseline-pairs, especially given the gap in the larger versions. 
+We run our algorithm over all possible baseline-pairs of  PAPER-128, HERA-37, HERA-128, HERA-243 and HERA-350. The HERA antenna configurations are shown in Fig. \ref{fig:HeraAntpos}. The  
+hexagonal design is the densest pattern of antenna-packing. The larger arrays are fractured with a ``gap'' dividing the antennas into three different groups. The gaps are designed so as to improve $uv$ coverage and ease calibration without compromising sensitivity, but also produces many more nearly equivalent baselines than a pure hexagonal layout. The motivations behind the designs are explained in \cite{HERAconfiguration}.  Compared to PAPER-128, the hexagonal pattern of HERA lack short baselines oriented close to each other, and thus we expect to see only longer nearly equivalent baselines with high correlations. The lower multiplicities per class of baselines is compensated by the larger number of classes of baseline-pairs, especially given the gap in the larger versions. 
 
 \begin{figure}[H]
 \includegraphics[width=\linewidth]{pairplot}
 
-\caption{Pairplots of the top contributing baseline pairs in three arrays. Plotted properties are optimal time delay $\Delta t_{\boldsymbol{bb'}}$,  effective weight $\widetilde{\Theta}_{\boldsymbol{bb'}}$ and baseline length $\bar{b}$. Only those points with $\widetilde{\Theta}_{\boldsymbol{bb'}}>0.01$ are shown (the weight for the top class of equivalent pair is normalized to 1). Only one baseline length is shown since all top contributing pairs have very similar lengths as expected. The scatter plots are shown with transparency so that darker regions indicate degeneracies. Scatter points of the 3 arrays overlap, in order indicated by the legend. }
+\caption{Pairplots of the top contributing baseline pairs in three arrays. Plotted properties are optimal time delay $\Delta t_{\boldsymbol{bb'}}$,  effective weight $\widetilde{\Theta}_{\boldsymbol{bb'}}$, and baseline length $\bar{b}$. Only those points with $\widetilde{\Theta}_{\boldsymbol{bb'}}>0.01$ are shown (the weight for the top class of equivalent pair is normalized to 1). Scatter points of the three arrays overlap, in the order indicated by the legend. }
 \label{fig:pairplot}
 \end{figure}
 
@@ -560,21 +560,25 @@ In Fig. \ref{fig:pairplot} we present pair-distributions of three different prop
 \begin{itemize}
 
 \item $\Delta t_{\boldsymbol{bb'}}$ vs. $\widetilde{\Theta}_{\boldsymbol{bb'}}$:
-This relation  is familiar from Fig. \ref{fig:sensplot}. The points at $\Delta t=0$ are the equivalent baselines. Note HERA arrays have fewer data points with high $\Delta t_{\boldsymbol{bb'}}$, due to their comparatively narrow beam. Also note that all near-equivalent pairs for HERA arrays appear at $\widetilde{\Theta}_{\boldsymbol{bb'}}\lesssim 0.4$.
+This relation  is familiar from Fig. \ref{fig:sensplot}. The points at $\Delta t=0$ are the equivalent baselines. HERA arrays have fewer data points with high $\Delta t_{\boldsymbol{bb'}}$, due to their comparatively narrow beam. All near-equivalent pairs for HERA arrays appear at $\widetilde{\Theta}_{\boldsymbol{bb'}}\lesssim 0.4$.
 
 \item $\Delta t_{\boldsymbol{bb'}}$ vs. $\bar{b}$:
-PAPER-128 shows the trend that longer baselines correspond to lower $\Delta t_{\boldsymbol{bb'}}$. HERA arrays do not exhibit this trend here because of a selection effect. Only baseline pairs with $\widetilde{\Theta}_{\boldsymbol{bb'}}>0.01$ are shown. Shorter HERA baselines require much longer $\Delta t$ to overlap, partly because of the hexagonal structure requires $60\degree$ of rotation to overlap baselines, partly because of the smaller primary beam. Thus most short HERA baseline pairs are not shown in this figure.
+PAPER-128 shows the trend that longer baselines correspond to lower $\Delta t_{\boldsymbol{bb'}}$. HERA arrays do not exhibit this trend here because of a selection effect. Shorter HERA baselines require much longer $\Delta t$ to overlap, partly because of the hexagonal structure requires $60\degree$ of rotation to overlap baselines, partly because of the smaller primary beam. Thus most short HERA baseline pairs are not shown in this figure. Only baseline pairs with $\widetilde{\Theta}_{\boldsymbol{bb'}}>0.01$ are shown.
 
 
 \item $\widetilde{\Theta}_{\boldsymbol{bb'}}$ vs. $\bar{b}$:
-In this plot the HERA arrays each show two superimposed structures.  The equivalent baselines, all having the same individual weight $\Theta_{\boldsymbol{bb'}}$, appear as elongated structures towards high $\widetilde{\Theta}_{\boldsymbol{bb'}}$. The narrowness of these structures is an indication of the approximately linear and one-to-one correspondence between baseline length and multiplicity. The wide structures spanning the whole range of $\bar{b}$ are the near-equivalent baseline pairs. We see again for HERA arrays all near-equivalent pairs appear at $\widetilde{\Theta}_{\boldsymbol{bb'}}\lesssim 0.4$. For PAPER-128, the existence of short near-equivalent pairs with high multiplicity partially fills the high $\widetilde{\Theta}_{\boldsymbol{bb'}}$ region. 
-Note the general trend that longer baselines tend to have lower $\widetilde{\Theta}_{\boldsymbol{bb'}}$. This is due to the lower multiplicity of longer baselines. The trend is particularly obvious in the linear structure for the HERA arrays, which are the equivalent baselines. Since they all have the unity $\Theta_{\boldsymbol{bb'}}$ by definition, the linearly decreasing trend of $\widetilde{\Theta}_{\boldsymbol{bb'}}$ is a direct measure of the baseline multiplicity structures of the HERA array configurations.
+In this plot the HERA arrays each show two superimposed structures.  The equivalent baselines, all having the same individual weight $\Theta_{\boldsymbol{bb'}}$, appear as elongated structures towards high $\widetilde{\Theta}_{\boldsymbol{bb'}}$. The narrowness of these structures is an indication of the approximately linear and one-to-one correspondence between baseline length and multiplicity. The wide structures spanning the whole range of $\bar{b}$ are the near-equivalent baseline pairs. We see that for HERA arrays, all near-equivalent pairs appear at $\widetilde{\Theta}_{\boldsymbol{bb'}}\lesssim 0.4$. For PAPER-128, the existence of short near-equivalent pairs with high multiplicity partially fills the high $\widetilde{\Theta}_{\boldsymbol{bb'}}$ region. 
+Note the general trend that longer baselines tend to have lower $\widetilde{\Theta}_{\boldsymbol{bb'}}$. This is due to the lower multiplicity of longer baselines. The trend is particularly obvious in the linear structure for the HERA arrays, which are the equivalent baselines. All having unity $\Theta_{\boldsymbol{bb'}}$ by definition, the linearly decreasing trend of $\widetilde{\Theta}_{\boldsymbol{bb'}}$ is a direct measure of the baseline multiplicity structures of the HERA array configurations.
 
-\item The top sensitivity-contributing near-equivalent pair in each array is normalized to the same $\Theta_{\boldsymbol{bb'}}$ (not shown), but those of HERA arrays have much lower $\widetilde{\Theta}_{\boldsymbol{bb'}}$ than the top pair of PAPER-128. This is because they are longer baselines with lower multiplicity. In the end these baseline classes still lead to high contributions to total sensitivity (Fig. \ref{fig:osens}) because there are a lot more such baseline pairs for HERA.  
+\item The top sensitivity-contributing near-equivalent pair in each array is normalized to the same $\Theta_{\boldsymbol{bb'}}$ (not shown), but those of HERA arrays have much lower $\widetilde{\Theta}_{\boldsymbol{bb'}}$ than the top pair of PAPER-128. This is because they are longer baselines with lower multiplicity. In the end, these baseline classes still lead to high contributions to total sensitivity (Fig. \ref{fig:osens}) because there are many more such baseline pairs for HERA.  
 
 \end{itemize}
 
-Clearly not all baseline pairs give significant contribution to sensitivity. Due to the large number of baseline pairs, it may not be computationally feasible to include all pairs. Having quantified the sensitivity from a given pair of baselines, we study the cumulative sensitivity of the array depending on which baseline pairs we include. Evidently we should prefer the pairs with larger $\widetilde{\Theta}_{\boldsymbol{bb'}}$. In Fig. \ref{fig:osens} we plot $\rho$ against the minimum $\widetilde{\Theta}_{\boldsymbol{bb'}}$. $\rho(\widetilde{\Theta}_{min})$ is the sensitivity of the array when baseline-pairs that have $\widetilde{\Theta}_{\boldsymbol{bb'}}>\widetilde{\Theta}_{min}$ are included. The dashed lines represent the values when only the equivalent baseline-pairs are used.  We see as expected that in all cases using the nearly equivalent baselines lead to more and more significant improvements with lower $\widetilde{\Theta}_{min}$, or in other words when more baseline pairs are used. The small HERA37, with no gap (like in HERA350) or short nearly equivalent baselines (like in PAPER 128), will not benefit much from the nearly equivalent baselines. Near-equivalent baselines make an increasingly significant contribution to the total sensitivity as the number of array elements are increased. PAPER-128 is designed with highly redundant nearly equivalent baselines, and thus  these baselines start contributing at higher $\widetilde{\Theta}_{min}$, but the gapped HERA configurations will benefit even more from nearly equivalent baselines at low $\widetilde{\Theta}_{min}$ due to the presence of more classes of such pairs. Note that here we normalized sensitivity for each array as the fraction of the total sensitivity when all baseline pairs are used. The plot therefore does not compare absolute sensitivity across different arrays. The stepwise pattern seen in almost all cases are characteristic of a regular grid; as we step to lower $\widetilde{\Theta}_{\boldsymbol{bb'}}$ large groups of baseline pair classes get included in ``batch''. Thus the ``gapless'' HERA37, with more regularity in its antenna configurations than the larger counterparts, exhibit more step patterns in fractional sensitivity. 
+As Fig. \ref{fig:pairplot} suggests, not all baseline pairs contribute significantly to sensitivity. Due to the large number of baseline pairs, it may not be computationally feasible to include all pairs. Having quantified the sensitivity from a given pair of baselines, we study the cumulative sensitivity of the array depending on which baseline pairs we include. By construction, we prefer the pairs with larger $\widetilde{\Theta}_{\boldsymbol{bb'}}$. In Fig. \ref{fig:osens}, we plot fractional sensitivity $\rho$ as a function of $\widetilde{\Theta}_{min}$, the minimum cutoff for $\widetilde{\Theta}_{\boldsymbol{bb'}}$. In other words $\rho(\widetilde{\Theta}_{min})$ is the sensitivity when all baseline pairs with $\widetilde{\Theta}_{\boldsymbol{bb'}}>\widetilde{\Theta}_{min}$ are included. 
+
+Note that here we normalized sensitivity for each array as the fraction of the total sensitivity of an array, i.e. when all baseline pairs are used. The plot therefore does not compare absolute sensitivity across different arrays. We see as expected that in all cases using the nearly equivalent baselines lead to more and more significant improvements with lower $\widetilde{\Theta}_{min}$, or in other words when more baseline pairs are used. We point out that PAPER results until now \citep{Ali2015, paper32} only used the top contributing baseline pairs. In other words these results only explored sensitivity $\rho(\widetilde{\Theta}_{min}\sim 1)$. 
+
+The dashed lines represent the values when only the equivalent baseline-pairs are used. The small and unfractured HERA-37, with no gap (like in HERA-350) or short nearly equivalent baselines (like in PAPER 128), will not benefit much from the nearly equivalent baselines. Near-equivalent baselines make an increasingly significant contribution to the total sensitivity as the number of array elements are increased. PAPER-128 is designed with highly redundant nearly equivalent baselines, and thus  these baselines start contributing at higher $\widetilde{\Theta}_{min}$. The fractured HERA configurations will benefit even more from nearly equivalent baselines at low $\widetilde{\Theta}_{min}$ due to the presence of more classes of such pairs. The stepwise pattern seen in almost all cases are characteristic of a regular grid; as we step to lower $\widetilde{\Theta}_{\boldsymbol{bb'}}$ large groups of baseline pair classes get included in ``batch''. Thus the ``unfractured'' HERA-37, with more regularity in its antenna configurations than the larger counterparts, exhibit more step patterns in fractional sensitivity. 
 %\begin{centered}
 \begin{figure}[H]
 \includegraphics[width=\linewidth]{osens}
@@ -602,7 +606,7 @@ The 21\,cm brightness temperature is a direct tracer of reionization. Recently a
  
 Current visibility-based power spectrum pipelines have the advantage of easy-to-manage systematics, but have yet to unlock the full sensitivity of the arrays as they do not incorporate partially redundant baselines.  We present a visibility and delay-transform based method to overcome this limitation by extracting the sensitivity contained in such partial redundancy. Applicable to both tracking and drift scan measurements, our method relies on cross-multiplications of visibilities that are offset in time. Given an antenna array configuration, our method identifies the best baseline pairs to cross-multiply and predicts the optimal time offset $\Delta t_{\boldsymbol{bb'}}$, weight $\Theta_{\boldsymbol{bb'}}$, and the necessary rephasing factor $\psi_\nu$. With the predicted results one can incorporate partial redundancy into existing delay-transform based power-spectrum pipelines. 
 
-One benefit of delay-transform based power spectrum estimation is the ability to isolation foreground in Fourier space. We show that our proposed estimator does not lead to extra foreground leakage into the EoR window. We then apply our estimator to a variety array configurations. We show that for different configurations of PAPER and HERA, the incorporation of partial redundancy accounts for $20\%$ to $60\%$ of the array's sensitivity. The proposed power spectrum estimator retains benefits of delay-transform techniques for isolating foregrounds and avoiding systematics and enables one to unlock the full sensitivity of a redundant radio interferometer while simultaneously enjoying the benefits of delay-transform techniques for isolating foregrounds and avoiding systematics. 
+One benefit of delay-transform based power-spectrum estimation is the ability to isolate foregrounds in Fourier space. We show that our proposed estimator does not lead to extra foreground leakage into the EoR window. We then apply our estimator to a variety array configurations. We show that for different configurations of PAPER and HERA, the incorporation of partial redundancy accounts for $20\%$ to $60\%$ of the array's total sensitivity. The proposed power-spectrum estimator retains benefits of delay-transform techniques for isolating foregrounds and avoiding systematics and enables one to unlock the full sensitivity of a redundant radio interferometer while simultaneously enjoying the benefits of delay-transform techniques for isolating foregrounds and avoiding systematics. 
 
 
 \acknowledgments
