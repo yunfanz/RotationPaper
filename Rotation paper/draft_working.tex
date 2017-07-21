@@ -19,30 +19,31 @@
 
 \begin{document}
 
-\title{Unlocking Sensitivity for Visibility-based Power Spectrum Estimators of the 21\,cm Reionization Signal}
+\title{Unlocking Sensitivity for Visibility-based Estimators of the 21\,cm Reionization Power Spectrum}
 
 %\maketitle
 \author{
-Yunfan Gerry Zhang \altaffilmark{1},
-Adrian Liu \altaffilmark{1, 2},
-Aaron R. Parsons\altaffilmark{1, 2}
+Yunfan Gerry Zhang\altaffilmark{1},
+Adrian Liu\altaffilmark{1,2,3},
+Aaron R. Parsons\altaffilmark{1,2}
 }
-
+\email{yunfanz@berkeley.edu}
 \altaffiltext{1}{Astronomy Dept., U. California, Berkeley, CA}
 \altaffiltext{2}{Radio Astronomy Lab., U. California, Berkeley, CA}
+\altaffiltext{3}{Hubble Fellow}
 
 \begin{abstract}
-Radio interferometers seeking to measure the cosmological 21\,cm power spectrum require high sensitivity. Several modern low-frequency interferometers feature antennas placed on regular grid to maximize redundancy. Current visibility-based power spectrum pipelines, though shown to ease control of systematics, lack the ability to make use of partial redundancy. We introduce a method to leverage partial redundancy in such power spectrum pipelines for drift-scan arrays. Our method cross-multiplies baseline pairs at a time lag, and quantifies the sensitivity contributions of each pair of baselines. 
+Radio interferometers designed to measure the cosmological 21\,cm power spectrum require high sensitivity. Several modern low-frequency interferometers feature drift-scan antennas placed on regular grid to maximize the number of instantaneously coherent (redundant) measurements. However, even for such maximum-redundancy arrays, significant sensitivity comes through partial coherence between baselines. Current visibility-based power spectrum pipelines, though shown to ease control of systematics, lack the ability to make use of partial redundancy. We introduce a method to leverage partial redundancy in such power spectrum pipelines for drift-scan arrays. Our method cross-multiplies baseline pairs at a time lag, and quantifies the sensitivity contributions of each pair of baselines. 
 Using the configurations and beams of the 128-element Donald C. Backer Precision Array for Probing the Epoch of Reionization (PAPER-128), and four staged deployments of the Hydrogen Epoch of Reionization Array (HERA), we illustrate how our method applies to different arrays and predict the sensitivity improvements associated with each baseline pairs. We show that for upcoming arrays with increasing number of antennas, partial redundancy will be of increasing importance in unlocking full sensitivities of the arrays. 
 \end{abstract}
 
 \section{Introduction}
 
 The epoch of reionization represents the last key
-stage of our Universe's early evolution. Study of this event stands at
+stage of our Universe's early evolution. The study of this event stands at
 the intersection of cosmology and astrophysics. Understanding this
 event not only serves as a scientific goal
-of its own, but also as a gateway to crucial information
+of its own, but also as a gateway to information
 regarding fundamental physics of inflation, neutrino mass, and the phenomenology
 of the first stars and galaxies (e.g. \citealt{LiuOpticalDepth, Liu2016b, Mao2008, DEw21cm, Bull2015, Oyama20131186}). 
 
@@ -95,7 +96,7 @@ respected time series are shifted with respect to one another by some time offse
 \begin{figure}[H]
 \includegraphics[width=\linewidth]{antconfig}
 
-\caption{The PAPER128 layout. Each dot corresponds to the location of
+\caption{The PAPER-128 layout. Each dot corresponds to the location of
 an antenna. The top panel shows the antenna positions drawn to scale;
 the bottom panel show the antenna labels and distances of the 112-element grid, in other words excluding the outrigger antennas.
 The numbering of the antennas in the bottom panel are original labels
@@ -134,7 +135,7 @@ Radio interferometric observations are often described in the coordinates $uvw$,
 \]
 where $\boldsymbol{b}$ is the baseline vector in Cartesian coordinates, with first and second coordinates pointing East and North, respectively, and  $\nu$ is the frequency of observation, and $c$ is the speed of light. 
 Relative to a phase center on the sky, each baseline maps to a point in $uvw$ space. As the Earth rotates, the points trace out tracks in the $uvw$ space. 
-We show in Fig. \ref{fig:Tracks} $uvw$ tracks of the three PAPER128 baselines colored in Fig. \ref{fig:AntPos}, projected onto the $uv$ and $vw$ planes. The tracks are traced over 12 sidereal hours, at 0.15\,GHz, relative to a phase center that pdrifts from zenith. 
+We show in Fig. \ref{fig:Tracks} $uvw$ tracks of the three PAPER-128 baselines colored in Fig. \ref{fig:AntPos}, projected onto the $uv$ and $vw$ planes. The tracks are traced over 12 sidereal hours, at 0.15\,GHz, relative to a phase center that pdrifts from zenith. 
 
 
 \begin{figure}[h]
@@ -340,7 +341,7 @@ To linear order in $\nu$, $\psi_\nu$ cancels the decoherence due to the two visi
 \]
 where $\Delta\tau$ is a shift in delay corresponding to the phase center movement. 
 
-In Fig. \ref{fig:phi_nu} we show the phases of $\Theta_\nu$ at the optimal time offset or, in other words, when $|\Theta_\nu|$ is maximized. The phases are shown for the baseline pair \{2,0:2,1\} of PAPER128. The drift-scan phase dependence is compared with that of the same baseline with hypothetical tracking-elements (Eq. \eqref{eq:Thetanu} and Eq. \eqref{eq:Thetanu_tracking}). In the drift-scan case, we indeed see a linear relation corresponding to a delay of $\Delta\tau\approx15.7$\,ns. In the tracking case, since the phase center is fixed to the sky, only second order effects are observed. The origin of the second order effects can be seen as due to the $w$-term, or more precisely the fact that $uvw$ tracks do not cross when their two-dimensional projections do. We refer the reader to Appendix \ref{sec:appA} for further explanation. In both cases, the full effects are encapsulated in the phase of $\Theta_\nu$ and can be thus determined empirically without any additional computation. 
+In Fig. \ref{fig:phi_nu} we show the phases of $\Theta_\nu$ at the optimal time offset or, in other words, when $|\Theta_\nu|$ is maximized. The phases are shown for the baseline pair \{2,0:2,1\} of PAPER-128. The drift-scan phase dependence is compared with that of the same baseline with hypothetical tracking-elements (Eq. \eqref{eq:Thetanu} and Eq. \eqref{eq:Thetanu_tracking}). In the drift-scan case, we indeed see a linear relation corresponding to a delay of $\Delta\tau\approx15.7$\,ns. In the tracking case, since the phase center is fixed to the sky, only second order effects are observed. The origin of the second order effects can be seen as due to the $w$-term, or more precisely the fact that $uvw$ tracks do not cross when their two-dimensional projections do. We refer the reader to Appendix \ref{sec:appA} for further explanation. In both cases, the full effects are encapsulated in the phase of $\Theta_\nu$ and can be thus determined empirically without any additional computation. 
 
 \begin{figure}[H]
 \includegraphics[width=1\linewidth]{phi_nu}
@@ -355,9 +356,9 @@ To illustrate the effect of rephasing, we compare in Fig. \ref{fig:freqdiff} rea
 We see from Fig. \ref{fig:freqdiff} that although the amplitude of correlations match up for all time offsets, the phase would only locally match. The need for rephasing can thus be understood as a symptom of the underlying spatial decoherence; coherence at the phase center would not extend to the entire beam pattern (see Section \ref{sec:visual}). Thus while integrating over frequencies and sky-direction in Eq. \eqref{eq:Theta} there are necessarily sky-directions that do not add coherently. This decoherence across the beam pattern cannot be removed and plays a fundamental role in determining how much sensitivity one can recover from nearly equivalent baselines. 
 
 \begin{figure}[H]
-\includegraphics[width=1.1\linewidth]{rephs_cm}
+\includegraphics[width=1.1\linewidth]{rephs_rb}
 
-\caption{Comparisons of the peak phases of two different frequencies. Specifically shown are the real parts of $\Theta_{\nu}$. First and third panels shows equivalent baselines, second and fourth show a pair of nearly equivalents. The top two panels have zero phase shift ($\psi_{\nu}=0$), and the bottom two are rephased to a time offset of 0.0325 sidereal days. The first and last panels thus show a coherently rephased series that would add constructively at the respective peaks. }
+\caption{Comparisons of the peak phases of two different frequencies. Specifically shown are the real parts of $\Theta_{\nu}$. First and third panels shows equivalent baselines, second and fourth show a pair of nearly equivalents. The top two panels have zero phase shift ($\psi_{\nu}=0$), and the bottom two are rephased to a time offset of 0.78 hours. The first and last panels thus show a coherently rephased series that would add constructively at the respective peaks. }
 \label{fig:freqdiff}
 \end{figure}
 
@@ -369,7 +370,7 @@ In this section we delve into visualizing and testing our method, and explore se
 So far for clarity and generality we have avoided the traditional formulation of radio astronomy in terms of the $uv$-plane. To gain some visual intuition of the formalism in Section \ref{sec:method}, we show explicit beam fringe patterns of the two baselines and their interactions. For this section, we relax into the flat sky approximation so that $(l,m,\sqrt{1-l^2-m^2})\equiv\hat{s}$ and examine a single frequency of $150$\,MHz. 
 
 At the time offset of maximum redundancy, we expect two baselines to have to same fringe pattern in both frequency and phase. Due to the time delay, however, the beam centers would be slightly shifted with respect to each other. In the top panels of Fig. \ref{fig:beamfringe}, we show the real parts of peak-normalized beam-fringe patterns. The top left and middle panels show the beam-fringe
-patterns for the baseline classes \{2,0\} and \{2,1\}, offset by 0.0325 sidereal days. More specifically, displayed are the real parts of $g_b\equiv B(\hat{\boldsymbol{s}},\nu)\exp\left[-i2\pi\frac{\nu}{c}\hat{\boldsymbol{s}}\cdot\boldsymbol{b}\right]$ and $g_{b'}\equiv B(\boldsymbol{\Gamma}\hat{\boldsymbol{s}},\nu)\exp\left[-i2\pi\frac{\nu}{c}\boldsymbol{\Gamma}\hat{\boldsymbol{s}}\cdot\boldsymbol{b'}\right]$, respectively. The top right panel show their conjugate product $g_{b}^{*}g_{b'} = B^{*}(\hat{\boldsymbol{s}},\nu)B(\boldsymbol{\Gamma}\hat{\boldsymbol{s}},\nu)\exp\left[i2\pi\frac{\nu}{c}\left(\hat{\boldsymbol{s}}\cdot\boldsymbol{b}-\boldsymbol{\Gamma}\hat{\boldsymbol{s}}\cdot\boldsymbol{b'}\right)-i\psi_{\nu}\right]$, where we have chosen global phase $\psi_{\nu}$ such that the peak of the conjugate product is real. The product of the beam fringe patterns in top right shows that the fringes
+patterns for the baseline classes \{2,0\} and \{2,1\}, offset by 0.78 hours. More specifically, displayed are the real parts of $g_b\equiv B(\hat{\boldsymbol{s}},\nu)\exp\left[-i2\pi\frac{\nu}{c}\hat{\boldsymbol{s}}\cdot\boldsymbol{b}\right]$ and $g_{b'}\equiv B(\boldsymbol{\Gamma}\hat{\boldsymbol{s}},\nu)\exp\left[-i2\pi\frac{\nu}{c}\boldsymbol{\Gamma}\hat{\boldsymbol{s}}\cdot\boldsymbol{b'}\right]$, respectively. The top right panel show their conjugate product $g_{b}^{*}g_{b'}e^{-i\psi_\nu} = B^{*}(\hat{\boldsymbol{s}},\nu)B(\boldsymbol{\Gamma}\hat{\boldsymbol{s}},\nu)\exp\left[i2\pi\frac{\nu}{c}\left(\hat{\boldsymbol{s}}\cdot\boldsymbol{b}-\boldsymbol{\Gamma}\hat{\boldsymbol{s}}\cdot\boldsymbol{b'}\right)-i\psi_{\nu}\right]$, where we have chosen global phase $\psi_{\nu}$ such that the peak of the conjugate product is real. The product of the beam fringe patterns in top right shows that the fringes
  cancel out as we expect. Comparing with Eq. \eqref{eq:Thetanu}, we see that $\Theta_\nu=\int d\Omega g_{b}^{*}g_{b'}$ is the sum over the image shown in the top right panel. Thus we show that at the optimal time offset the fringe patterns of the two baselines cancel out, leading to a substantial weight $\Theta_\nu$. The frequency-summed weight $\Theta$ is constructed with rephasing as described in Section \ref{sec:rephs} so that the conjugate product (top right panel) for different frequencies align in phase. 
  
 Similarly, we show the correlation of the two baselines in terms of their $uv$ beam spread overlap. The bottom left and middle panels are (peak-normalized) instantaneous $uv$ coverage of two baselines ($\widetilde{g}_{b}$ and $\widetilde{g}_{b'}$) while the bottom right panel is their product. We see from the bottom right panel that the cross-multiplied baselines recover power concentrated at $u\approx15$. The product of the $uv$ beams spread shown in the bottom right panel should not be confused with the Fourier transform of the beam-fringe conjugate product shown in the top right panel. 
@@ -606,7 +607,10 @@ Current visibility-based power spectrum pipelines have the advantage of easy-to-
 One benefit of delay-transform based power spectrum estimation is the ability to isolation foreground in Fourier space. We show that our proposed estimator does not lead to extra foreground leakage into the EoR window. We then apply our estimator to a variety array configurations. We show that for different configurations of PAPER and HERA, the incorporation of partial redundancy accounts for $20\%$ to $60\%$ of the array's sensitivity. The proposed power spectrum estimator retains benefits of delay-transform techniques for isolating foregrounds and avoiding systematics and enables one to unlock the full sensitivity of a redundant radio interferometer while simultaneously enjoying the benefits of delay-transform techniques for isolating foregrounds and avoiding systematics. 
 
 
-\pagebreak
+\acknowledgments
+
+The authors thank Zaki Ali, Carina Cheng, Dave DeBoer, and Miguel Morales for helpful discussions. This research was completed as part of the University of California Cosmic Dawn Initiative, with support from the University of California Office of the President Multicampus Research Programs and Initiative through award MR-15-328388. Additional support was provided by NSF AST grants 1129258 and 1636646. AL acknowledges support for this work by NASA through Hubble Fellowship grant \#HST-HF2-51363.001-A awarded by the Space Telescope Science Institute, which is operated by the Association of Universities for Research in Astronomy, Inc., for NASA, under contract NAS5-26555.
+
 
 
 
