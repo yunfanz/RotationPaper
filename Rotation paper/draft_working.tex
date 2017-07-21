@@ -60,7 +60,7 @@ and the Square Kilometer Array Low (SKA-low; e.g. \citealt{skalow2015} and refer
 
 The highly redshifted 21\,cm signal is faint and diffuse, in contrast to the localized bright sources targeted by many traditional radio telescopes.  Current 21\,cm experiments are sensitivity-starved, with the sensitivity requirement further increased considering the foreground contaminations five orders of magnitude brighter than the cosmological signal of interest. Low-frequency radio interferometers aiming to measure the 21\,cm signal are thus designed differently from traditional instruments. To satisfy the sensitivity needs, modern arrays are large. Ranging upwards from 100 elements, these arrays are typically of the drift-scan type to limit cost. To further improve sensitivity, specially designed arrays such as PAPER and HERA feature multiple copies of the same baselines to repeatedly measure the same Fourier signal\citep{first-paper}. 
 
-Analysis pipelines for the 21\,cm power spectrum typically fall into two categories. In the first, images are formed in Fourier domain through rotation synthesis, followed by a foreground mitigation step to construct a power spectrum. An alternative technique works directly with visibilities from baselines, delay-transforming and cross-multiplying them to form the power spectrum. This technique avoids many systematics associated with combining data from different baselines and tracks the native sampling of the interferometer. An example of the visibility-based pipeline is presented in \cite{Ali2015}, which provides the newest upper limit to the power spectrum
+Analysis pipelines for the 21\,cm power spectrum typically fall into two categories. In the first, images are formed in Fourier domain through rotation synthesis, followed by a foreground mitigation step to construct a power spectrum \citep{LOFARresult, MWAresult1, MWAresult0}. An alternative technique works directly with visibilities from baselines, delay-transforming and cross-multiplying them to form the power spectrum. This technique avoids many systematics associated with combining data from different baselines and tracks the native sampling of the interferometer. An example of the visibility-based pipeline is presented in \cite{Ali2015}, which provides the newest upper limit to the power spectrum
 measurements with the 64-element version of PAPER (henceforth as PAPER-64). However, one disadvantage of existing visibility-based pipelines is their lack of use of partial redundancy. Baselines of different lengths and orientations contain partially redundant information. While imaging based power-spectrum pipelines naturally include all redundancy information, visibility-based pipelines so far only cross multiply fully redundant baselines, i.e. baselines of the same length and orientation.
 
 Visibility-based pipelines are not fundamentally limited to using only fully redundant baselines. In fact, most sensitivity forecasts to date do include partial redundancy \citep{Pobersens, HERA, JoshAntPos}. Recently, \cite{wterm} proposed a visibility-based approach to extract power spectrum from partially redundant baselines in sky-tracking measurements. Arrays capable of such tracking include MWA and LOFAR. Our work introduces a two-baseline power spectrum estimator that can be applied to both tracking capable arrays and drift-scan only telescopes, such as PAPER, HERA, and potentially SKA-low.
@@ -99,9 +99,7 @@ respected time series are shifted with respect to one another by some time offse
 \caption{The PAPER-128 layout. Each dot corresponds to the location of
 an antenna. The top panel shows the antenna positions drawn to scale;
 the bottom panel show the antenna labels and distances of the 112-element grid, in other words excluding the outrigger antennas.
-The numbering of the antennas in the bottom panel are original labels
-during instrument assembly and does not bear significant
-meaning. In the bottom panel, the two baselines marked with red segments are example of an equivalent pair, each with antennas separated by 2 units east and 0 unit north. Similarly,
+In the bottom panel, the two baselines marked with red segments are example of an equivalent pair, each with antennas separated by 2 units east and 0 unit north. Similarly,
 the baselines marked in blue and yellow are examples
 of classes that , due to the small North-South separation within the grid (see top panel), are expected to be nearly equivalent to the red baselines. }
 \label{fig:AntPos}
@@ -159,7 +157,7 @@ the product of delay-transformed visibilities from two arbitrary baselines. We s
 We begin with the visibility as commonly defined in the literature (e.g.
 \citealt{TMS, first-paper}): 
 \begin{equation}
-\begin{aligned}V_{\nu}(\boldsymbol{b}) & =\int d\Omega A(\hat{\boldsymbol{s}},\nu)\phi(\nu)I_{\nu}(\hat{\boldsymbol{s}})\exp\left(-2\pi i\frac{\nu}{c}\boldsymbol{b}\cdot\hat{\boldsymbol{s}}\right),\\
+\begin{aligned}V_{\nu}(\boldsymbol{b}) & =\int d\Omega A(\hat{\boldsymbol{s}},\nu)\phi(\nu)I_{\nu}(\hat{\boldsymbol{s}})\exp\left(-2\pi i\frac{\nu}{c}\boldsymbol{b}\cdot\hat{\boldsymbol{s}}\right)\\
  & \approx\frac{2k_{B}}{\lambda^{2}}\int d\Omega A(\hat{\boldsymbol{s}},\nu)\phi(\nu)T(\hat{\boldsymbol{s}})\exp\left(-2\pi i\frac{\nu}{c}\boldsymbol{b}\cdot\hat{\boldsymbol{s}}\right),
 \end{aligned}
 \label{eq:Vis1}
@@ -191,8 +189,8 @@ We begin by relating the observational coordinates $\hat{\boldsymbol{s}}$
 and $\nu$, to
 $\boldsymbol{r}$ and $\boldsymbol{k}$: 
 \[
-\begin{aligned}r & =\frac{c}{H_{0}}\int_{0}^{z}\frac{dz'}{E(z')},\\
- & \approx\frac{c}{H_{0}}\int_{0}^{z_{0}}\frac{dz'}{E(z')}-\frac{c(1+z_0)^{2}}{\nu_{21}H_{0}E(z_0)}\left(\nu-\nu_{0}\right),\\
+\begin{aligned}r & =\frac{c}{H_{0}}\int_{0}^{z}\frac{dz'}{E(z')}\\
+ & \approx\frac{c}{H_{0}}\int_{0}^{z_{0}}\frac{dz'}{E(z')}-\frac{c(1+z_0)^{2}}{\nu_{21}H_{0}E(z_0)}\left(\nu-\nu_{0}\right)\\
  & \equiv X-Y\Delta\nu,
 \end{aligned} \label{eq:r}
 \]
@@ -218,7 +216,7 @@ Note Eq. \eqref{eq:thinshell} does not require the flat-sky approximation; the a
 Eqs. \eqref{eq:nur} and \eqref{eq:thinshell} show that observational angular and spectral dimensions together correspond to the three dimensional volume of cosmological interest. Moreover, recall that the power spectrum in Eq. \eqref{eq:Pofk} is proportional to the product of Fourier transforms of the temperature field. Since Eq. \eqref{eq:Vis1} resembles a Fourier transform along the angular directions, it is natural to perform a further Fourier transform along the radial, or equivalently, frequency axis. The transform, called delay-transform \citep{delay-transform}, has gained popularity recently since it has been shown that foregrounds are isolated in delay space \footnote{We discuss foreground isolation in detail in Section \ref{sec:chromaticity}.}. We define the delay-transformed visibility as:
 \small
 \begin{equation}
-\begin{aligned}V(\boldsymbol{b},\tau) & =\int d\nu V_{\nu}(\boldsymbol{b})\phi(\nu)\exp\left(2\pi i\nu\tau\right),\\
+\begin{aligned}V(\boldsymbol{b},\tau) & =\int d\nu V_{\nu}(\boldsymbol{b})\phi(\nu)\exp\left(2\pi i\nu\tau\right)\\
  & =\int d\Omega d\nu B(\hat{\boldsymbol{s}},\nu)T(\hat{\boldsymbol{s}},\nu)\exp\left[-2\pi i\nu\left(\frac{\boldsymbol{b}\cdot\hat{\boldsymbol{s}}}{c}-\tau\right)\right]. 
 \end{aligned}
 \label{eq:Vb1}
@@ -257,10 +255,10 @@ With implicit bounds of integrals from $-\infty$ to $\infty$, we have:
 \begin{widetext}
 \begin{equation}
 \begin{aligned} \langle V^{*}(\boldsymbol{b},\tau)V_{\psi}(\boldsymbol{b'},\tau)\rangle
- & =\int \frac{d^{3}rd^{3}r'}{(X^2Y)^2}\langle T^{*}(\boldsymbol{r})T(\boldsymbol{r'})\rangle B^{*}(\boldsymbol{r})B(\boldsymbol{\Gamma} \boldsymbol{r'})\Phi(\boldsymbol{r},\boldsymbol{\Gamma} \boldsymbol{r'}),\\
- & =\int \frac{d^{3}rd^{3}r'}{(X^2Y)^2}\left(\int\frac{d^{3}\kappa}{(2\pi)^{3}}\frac{d^{3}\kappa'}{(2\pi)^{3}}\langle T^{*}(\boldsymbol{\kappa})T(\boldsymbol{\kappa'})\rangle e^{-i(\boldsymbol{\kappa}\cdot \boldsymbol{r}-\boldsymbol{\kappa'}\cdot\boldsymbol{r'})}\right)B^{*}(\boldsymbol{r})B(\boldsymbol{\Gamma} \boldsymbol{r'})\Phi(\boldsymbol{r},\boldsymbol{\Gamma} \boldsymbol{r'}),\\
- & =\int \frac{d^{3}rd^{3}r'}{(X^2Y)^2}\left(\int\frac{d^{3}\kappa}{(2\pi)^{3}}P(\kappa)e^{-i\boldsymbol{\kappa}\cdot(\boldsymbol{r}-\boldsymbol{r'})}\right)B^{*}(\boldsymbol{r})B(\boldsymbol{\Gamma} \boldsymbol{r'})\Phi(\boldsymbol{r},\boldsymbol{\Gamma} \boldsymbol{r'}),\\
- & \approx P(k_{\bar{b}, \tau})\int \frac{d^{3}rd^{3}r'}{(X^2Y)^2} \delta_{D}^{(3)}(\boldsymbol{r}-\boldsymbol{r'})B^{*}(\boldsymbol{r})B(\boldsymbol{\Gamma} \boldsymbol{r'}) \Phi(\boldsymbol{r},\boldsymbol{\Gamma} \boldsymbol{r'}),\\
+ & =\int \frac{d^{3}rd^{3}r'}{(X^2Y)^2}\langle T^{*}(\boldsymbol{r})T(\boldsymbol{r'})\rangle B^{*}(\boldsymbol{r})B(\boldsymbol{\Gamma} \boldsymbol{r'})\Phi(\boldsymbol{r},\boldsymbol{\Gamma} \boldsymbol{r'})\\
+ & =\int \frac{d^{3}rd^{3}r'}{(X^2Y)^2}\left(\int\frac{d^{3}\kappa}{(2\pi)^{3}}\frac{d^{3}\kappa'}{(2\pi)^{3}}\langle T^{*}(\boldsymbol{\kappa})T(\boldsymbol{\kappa'})\rangle e^{-i(\boldsymbol{\kappa}\cdot \boldsymbol{r}-\boldsymbol{\kappa'}\cdot\boldsymbol{r'})}\right)B^{*}(\boldsymbol{r})B(\boldsymbol{\Gamma} \boldsymbol{r'})\Phi(\boldsymbol{r},\boldsymbol{\Gamma} \boldsymbol{r'})\\
+ & =\int \frac{d^{3}rd^{3}r'}{(X^2Y)^2}\left(\int\frac{d^{3}\kappa}{(2\pi)^{3}}P(\kappa)e^{-i\boldsymbol{\kappa}\cdot(\boldsymbol{r}-\boldsymbol{r'})}\right)B^{*}(\boldsymbol{r})B(\boldsymbol{\Gamma} \boldsymbol{r'})\Phi(\boldsymbol{r},\boldsymbol{\Gamma} \boldsymbol{r'})\\
+ & \approx P(k_{\bar{b}, \tau})\int \frac{d^{3}rd^{3}r'}{(X^2Y)^2} \delta_{D}^{(3)}(\boldsymbol{r}-\boldsymbol{r'})B^{*}(\boldsymbol{r})B(\boldsymbol{\Gamma} \boldsymbol{r'}) \Phi(\boldsymbol{r},\boldsymbol{\Gamma} \boldsymbol{r'})\\
  & = P(k_{\bar{b}, \tau})\int \frac{d^{3}r}{(X^2Y)^2}B^{*}(\boldsymbol{r})B(\boldsymbol{\Gamma} \boldsymbol{r})\exp\left[-i2\pi\frac{\nu_{r}}{c}\left(\hat{\boldsymbol{r}}\cdot\boldsymbol{b}-\boldsymbol{\Gamma} \hat{\boldsymbol{r}}\cdot\boldsymbol{b'}\right)-i\psi_{\nu}\right],
 \end{aligned}
 \label{eq:main}
