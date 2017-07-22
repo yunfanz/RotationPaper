@@ -16,6 +16,7 @@
 \renewcommand\[{\begin{equation}}
 \renewcommand\]{\end{equation}}
 \graphicspath{{../figures/}}
+\newcommand{\pasa}{PASA}
 
 \begin{document}
 
@@ -46,24 +47,24 @@ the intersection of cosmology and astrophysics. Understanding this
 event not only serves as a scientific goal
 of its own, but also as a gateway to information
 regarding fundamental physics of inflation, neutrino mass, and the phenomenology
-of the first stars and galaxies (e.g. \citealt{LiuOpticalDepth, Liu2016b, Mao2008, DEw21cm, Bull2015, Oyama20131186}). 
+of the first stars and galaxies (e.g., \citealt{LiuOpticalDepth, Liu2016b, Mao2008, DEw21cm, Bull2015, Oyama20131186}). 
 
-Observational studies of reionization, including Gunn-Peterson measurements of quasi-stellar objects \citep{Fan2006} and Cosmic Microwave Background temperature and anisotropy measurements (CMB; \citealt{Planck2016}), the Kinetic Sunyaev-Zeldo'vich effect \citep{ZahnKSZ, GeorgeKSZ, kszpatchy} and Lyman alpha galaxy observations \citep{Rhoads2017, Rhoads2012, mcquinnLyA} have given us indications of the rough time-frame of reionization, but only limited constraints on the finer spatial and temporal structures. A surge of recent radio-astronomical experiments of reionization focus on measuring the ``spin-flip'' transition of neutral
+Observational studies of reionization, including Gunn-Peterson measurements of quasi-stellar objects \citep{Fan2006} and Cosmic Microwave Background temperature and anisotropy measurements (CMB; \citealt{Planck2016}), the kinetic Sunyaev-Zel'dovich effect \citep{ZahnKSZ, GeorgeKSZ, kszpatchy} and Lyman alpha galaxy observations \citep{Rhoads2017, Rhoads2012, mcquinnLyA} have given us indications of the rough time frame of reionization, but only limited constraints on the finer spatial and temporal structures. A surge of recent radio-astronomical experiments of reionization focus on measuring the ``spin-flip'' transition of neutral
 hydrogen with a characteristic wavelength of 21\,cm \citep{Furlanetto2006181,PritchardLoeb}.
 The 21\,cm brightness temperature is a direct tracer of neutral hydrogen through the epoch of reionization. Therefore, by measuring the three dimensional distribution of the 21\,cm signal we measure the full temporal and spatial variations of this event. 
 However, before realizing full-scale 21\,cm tomography, many current radio interferometric efforts
 aim to measure the spatial power spectrum of 21\,cm brightness temperature fluctuations.
 Current-generation instruments include the Donald C. Backer Precision Array for Probing
-the Epoch of Reionization (PAPER; \citealt{Ali2015,paper32}), Murchison
-Widefield Array (MWA; \citealt{Bowman2013, Tingay2013}), Low Frequency Array (LOFAR; \citealt{LOFAR}). Next-generation instruments include the Hydrogen Epoch of Reionization
-Array (HERA; e.g. \citealt{HERA,HERAconfiguration,HERABEAM1,HERADISH2}), which is under construction, 
+the Epoch of Reionization (PAPER; \citealt{Ali2015,paper32}), the Murchison
+Widefield Array (MWA; \citealt{Bowman2013, Tingay2013}), and the Low Frequency Array (LOFAR; \citealt{LOFAR}). Next-generation instruments include the Hydrogen Epoch of Reionization
+Array (HERA; e.g. \citealt{HERA,JoshAntPos,HERABEAM1,HERADISH2}), which is under construction, 
 and the Square Kilometer Array Low (SKA-low; e.g. \citealt{skalow2015} and references therein), which is currently in planning stages. 
 
-The highly redshifted 21\,cm signal is faint and diffuse, in contrast to the localized bright sources targeted by many traditional radio telescopes.  Current 21\,cm experiments are sensitivity-starved, with the experimental challenge further increased when considering foreground contamination five orders of magnitude brighter than the cosmological signal of interest. Low-frequency radio interferometers aiming to measure the 21\,cm signal are thus designed differently from traditional instruments. To satisfy the sensitivity needs, modern arrays are large (ranging upwards from 100 elements) and are typically of the drift-scan (static-pointing) type to limit cost. To further improve sensitivity, experiments such as PAPER and HERA feature multiple copies of the same baselines to repeatedly measure the same Fourier signal\citep{first-paper}. 
+The highly redshifted 21\,cm signal is faint and diffuse, in contrast to the localized bright sources targeted by many traditional radio telescopes.  Current 21\,cm experiments are sensitivity-starved, with the experimental challenge further increased when considering foreground contamination five orders of magnitude brighter than the cosmological signal of interest. Low-frequency radio interferometers aiming to measure the 21\,cm signal are thus designed differently from traditional instruments. To satisfy the sensitivity needs, modern arrays are large (ranging upwards from 100 elements) and are typically of the drift-scan (static-pointing) type to limit cost. To further improve sensitivity, experiments such as PAPER and HERA feature multiple copies of the same baselines to repeatedly measure the same Fourier signal \citep{first-paper}. 
 
 Analysis pipelines for the 21\,cm power spectrum typically fall into two categories. In the first, images are formed through rotation synthesis, and after a foreground mitigation step, are Fourier transformed to construct a power spectrum \citep{MWAresult0, MWAresult1, LOFARresult}. An alternative technique works directly with visibilities from baselines, delay-transforming and cross-multiplying them to form the power spectrum \citep{delay-transform}. This technique avoids many systematics associated with combining data from different baselines and tracks the native sampling of the interferometer. An example of the visibility-based pipeline is presented in \cite{Ali2015}, which provides power spectrum
 measurements with the 64-element version of PAPER (henceforth as PAPER-64). However, one disadvantage of existing visibility-based pipelines is their lack of treatment of partial redundancy. Baselines that are slightly different in length and orientation
-``rotate into'' each other at a time offset. Baselines of different lengths and orientations therefore contain partially coherent information. This is the basis of earth-rotation synthesis. While imaging based power-spectrum pipelines naturally include all redundancy information, visibility-based pipelines so far only cross multiply fully redundant baselines, i.e. baselines of the same length and orientation.
+``rotate into'' each other at a time offset. Baselines of different lengths and orientations therefore contain partially coherent information. This is the basis of earth-rotation synthesis. While imaging based power-spectrum pipelines naturally include all redundancy information, visibility-based pipelines so far only cross multiply fully redundant baselines, i.e., baselines of the same length and orientation.
 
 Visibility-based pipelines are not fundamentally limited to using only fully redundant baselines. In fact, most sensitivity forecasts to date do include partial redundancy \citep{Pobersens, HERA, JoshAntPos}. Recently, \cite{wterm} proposed a visibility-based approach to produce power spectrum measurements using partially redundant baselines in sky-tracking measurements. Arrays capable of such tracking include MWA and LOFAR. Our work introduces a two-baseline power spectrum estimator that can be applied to both tracking-capable arrays and drift-scan telescopes such as PAPER, HERA, and potentially SKA-low.
 
@@ -549,7 +550,7 @@ where $\bar{b}$ is the average baseline length between the pair.
 
 \subsection{Array Configuration Comparisons \label{sec:arrconf}}
 We run our algorithm over all possible baseline-pairs of  PAPER-128, HERA-37, HERA-128, HERA-243 and HERA-350. The HERA antenna configurations are shown in Fig. \ref{fig:HeraAntpos}. The  
-hexagonal design is the densest pattern of antenna-packing. The larger arrays are fractured with a ``gap'' dividing the antennas into three different groups. The gaps are designed so as to improve $uv$ coverage and ease calibration without compromising sensitivity, but also produces many more nearly equivalent baselines than a pure hexagonal layout. The motivations behind the designs are explained in \cite{HERAconfiguration}.  Compared to PAPER-128, the hexagonal pattern of HERA lack short baselines oriented close to each other, and thus we expect to see only longer nearly equivalent baselines with high correlations. The lower multiplicities per class of baselines is compensated by the larger number of classes of baseline-pairs, especially given the gap in the larger versions. 
+hexagonal design is the densest pattern of antenna-packing. The larger arrays are fractured with a ``gap'' dividing the antennas into three different groups. The gaps are designed so as to improve $uv$ coverage and ease calibration without compromising sensitivity, but also produces many more nearly equivalent baselines than a pure hexagonal layout. The motivations behind the designs are explained in \cite{JoshAntPos}.  Compared to PAPER-128, the hexagonal pattern of HERA lack short baselines oriented close to each other, and thus we expect to see only longer nearly equivalent baselines with high correlations. The lower multiplicities per class of baselines is compensated by the larger number of classes of baseline-pairs, especially given the gap in the larger versions. 
 
 \begin{figure}[H]
 \includegraphics[width=\linewidth]{pairplot}
