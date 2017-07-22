@@ -33,8 +33,8 @@ Aaron R. Parsons\altaffilmark{1,2}
 \altaffiltext{3}{Hubble Fellow}
 
 \begin{abstract}
-Radio interferometers designed to measure the cosmological 21\,cm power spectrum require high sensitivity. Several modern low-frequency interferometers feature drift-scan antennas placed on regular grid to maximize the number of instantaneously coherent (redundant) measurements. However, even for such maximum-redundancy arrays, significant sensitivity comes through partial coherence between baselines. Current visibility-based power spectrum pipelines, though shown to ease control of systematics, lack the ability to make use of this partial redundancy. We introduce a method to leverage partial redundancy in such power spectrum pipelines for drift-scan arrays. Our method cross-multiplies baseline pairs at a time lag and quantifies the sensitivity contributions of each pair of baselines. 
-Using the configurations and beams of the 128-element Donald C. Backer Precision Array for Probing the Epoch of Reionization (PAPER-128) and staged deployments of the Hydrogen Epoch of Reionization Array (HERA), we illustrate how our method applies to different arrays and predict the sensitivity improvements associated with pairing partially coherent baselines. As the number of antennas increases, we find partial redundancy to be of increasing importance in unlocking the full sensitivity of upcoming arrays. 
+Radio interferometers designed to measure the cosmological 21\,cm power spectrum require high sensitivity. Several modern low-frequency interferometers feature drift-scan antennas placed on regular grid to maximize the number of instantaneously coherent (redundant) measurements. However, even for such maximum-redundancy arrays, significant sensitivity comes through partial coherence between baselines. Current visibility-based power spectrum pipelines, though shown to ease control of systematics, lack the ability to make use of partial redundancy. We introduce a method to leverage partial redundancy in such power spectrum pipelines for drift-scan arrays. Our method cross-multiplies baseline pairs at a time lag, and quantifies the sensitivity contributions of each pair of baselines. 
+Using the configurations and beams of the 128-element Donald C. Backer Precision Array for Probing the Epoch of Reionization (PAPER-128), and four staged deployments of the Hydrogen Epoch of Reionization Array (HERA), we illustrate how our method applies to different arrays and predict the sensitivity improvements associated with each baseline pairs. We show that for upcoming arrays with increasing number of antennas, partial redundancy will be of increasing importance in unlocking full sensitivities of the arrays. 
 \end{abstract}
 
 \section{Introduction}
@@ -49,26 +49,26 @@ of the first stars and galaxies (e.g. \citealt{LiuOpticalDepth, Liu2016b, Mao200
 
 Observational studies of reionization, including Gunn-Peterson measurements of quasi-stellar objects \citep{Fan2006} and Cosmic Microwave Background temperature and anisotropy measurements (CMB; \citealt{Planck2016}), the Kinetic Sunyaev-Zeldo'vich effect \citep{ZahnKSZ, GeorgeKSZ, kszpatchy} and Lyman alpha galaxy observations \citep{Rhoads2017, Rhoads2012, mcquinnLyA} have given us indications of the rough time-frame of reionization, but only limited constraints on the finer spatial and temporal structures. A surge of recent radio-astronomical experiments of reionization focus on measuring the ``spin-flip'' transition of neutral
 hydrogen with a characteristic wavelength of 21\,cm \citep{Furlanetto2006181,PritchardLoeb}.
-The 21\,cm brightness temperature is a direct tracer of neutral hydrogen through the epoch of reionization. Therefore, by measuring the three dimensional distribution of the 21\,cm signal we measure the full temporal and spatial variations of this event. 
+The 21\,cm brightness temperature is a direct tracer of neutral hydrogen through the epoch of reionization, and thus by measuring the three dimensional distribution of the 21\,cm signal we measure the full temporal and spatial variations of this event. 
 However, before realizing full-scale 21\,cm tomography, many current radio interferometric efforts
 aim to measure the spatial power spectrum of 21\,cm brightness temperature fluctuations.
 Current-generation instruments include the Donald C. Backer Precision Array for Probing
 the Epoch of Reionization (PAPER; \citealt{Ali2015,paper32}), Murchison
 Widefield Array (MWA; \citealt{Bowman2013, Tingay2013}), Low Frequency Array (LOFAR; \citealt{LOFAR}). Next-generation instruments include the Hydrogen Epoch of Reionization
-Array (HERA; e.g. \citealt{HERA,HERAconfiguration,HERABEAM1,HERADISH2}), which is under construction, 
-and the Square Kilometer Array Low (SKA-low; e.g. \citealt{skalow2015} and references therein), which is currently in planning stages. 
+Array (HERA; e.g. \citealt{HERA,HERAconfiguration,HERABEAM1,HERADISH2}) under construction, 
+and the Square Kilometer Array Low (SKA-low; e.g. \citealt{skalow2015} and references therein) currently in planning stages. 
 
-The highly redshifted 21\,cm signal is faint and diffuse, in contrast to the localized bright sources targeted by many traditional radio telescopes.  Current 21\,cm experiments are sensitivity-starved, with the experimental challenge further increased when considering foreground contamination five orders of magnitude brighter than the cosmological signal of interest. Low-frequency radio interferometers aiming to measure the 21\,cm signal are thus designed differently from traditional instruments. To satisfy the sensitivity needs, modern arrays are large (ranging upwards from 100 elements) and are typically of the drift-scan (static-pointing) type to limit cost. To further improve sensitivity, experiments such as PAPER and HERA feature multiple copies of the same baselines to repeatedly measure the same Fourier signal\citep{first-paper}. 
+The highly redshifted 21\,cm signal is faint and diffuse, in contrast to the localized bright sources targeted by many traditional radio telescopes.  Current 21\,cm experiments are sensitivity-starved, with the sensitivity requirement further increased considering the foreground contaminations five orders of magnitude brighter than the cosmological signal of interest. Low-frequency radio interferometers aiming to measure the 21\,cm signal are thus designed differently from traditional instruments. To satisfy the sensitivity needs, modern arrays are large. Ranging upwards from 100 elements, these arrays are typically of the drift-scan type to limit cost. To further improve sensitivity, specially designed arrays such as PAPER and HERA feature multiple copies of the same baselines to repeatedly measure the same Fourier signal\citep{first-paper}. 
 
-Analysis pipelines for the 21\,cm power spectrum typically fall into two categories. In the first, images are formed through rotation synthesis, and after a foreground mitigation step, are Fourier transformed to construct a power spectrum \citep{MWAresult0, MWAresult1, LOFARresult}. An alternative technique works directly with visibilities from baselines, delay-transforming and cross-multiplying them to form the power spectrum \citep{delay-transform}. This technique avoids many systematics associated with combining data from different baselines and tracks the native sampling of the interferometer. An example of the visibility-based pipeline is presented in \cite{Ali2015}, which provides power spectrum
-measurements with the 64-element version of PAPER (henceforth as PAPER-64). However, one disadvantage of existing visibility-based pipelines is their lack of treatment of partial redundancy. Baselines that are slightly different in length and orientation
-``rotate into'' each other at a time delay. Baselines of different lengths and orientations therefore contain partially coherent information. This is the basis of earth-rotation synthesis. While imaging based power-spectrum pipelines naturally include all redundancy information, visibility-based pipelines so far only cross multiply fully redundant baselines, i.e. baselines of the same length and orientation.
+Analysis pipelines for the 21\,cm power spectrum typically fall into two categories. In the first, images are formed in Fourier domain through rotation synthesis, followed by a foreground mitigation step to construct a power spectrum \citep{LOFARresult, MWAresult1, MWAresult0}. An alternative technique works directly with visibilities from baselines, delay-transforming and cross-multiplying them to form the power spectrum. This technique avoids many systematics associated with combining data from different baselines and tracks the native sampling of the interferometer. An example of the visibility-based pipeline is presented in \cite{Ali2015}, which provides the newest upper limit to the power spectrum
+measurements with the 64-element version of PAPER (henceforth as PAPER-64). However, one disadvantage of existing visibility-based pipelines is their lack of use of partial redundancy. Baselines of different lengths and orientations contain partially redundant information. While imaging based power-spectrum pipelines naturally include all redundancy information, visibility-based pipelines so far only cross multiply fully redundant baselines, i.e. baselines of the same length and orientation.
 
-Visibility-based pipelines are not fundamentally limited to using only fully redundant baselines. In fact, most sensitivity forecasts to date do include partial redundancy \citep{Pobersens, HERA, JoshAntPos}. Recently, \cite{wterm} proposed a visibility-based approach to produce power spectrum measurements using partially redundant baselines in sky-tracking measurements. Arrays capable of such tracking include MWA and LOFAR. Our work introduces a two-baseline power spectrum estimator that can be applied to both tracking-capable arrays and drift-scan telescopes such as PAPER, HERA, and potentially SKA-low.
+Visibility-based pipelines are not fundamentally limited to using only fully redundant baselines. In fact, most sensitivity forecasts to date do include partial redundancy \citep{Pobersens, HERA, JoshAntPos}. Recently, \cite{wterm} proposed a visibility-based approach to extract power spectrum from partially redundant baselines in sky-tracking measurements. Arrays capable of such tracking include MWA and LOFAR. Our work introduces a two-baseline power spectrum estimator that can be applied to both tracking capable arrays and drift-scan only telescopes, such as PAPER, HERA, and potentially SKA-low.
 
-The basic idea of our proposed visibility-based, two-baseline power-spectrum estimator is as follows. The Earth's rotation causes the baselines in a drift-scan array to pick up different modes of the sky with time. Rotation-synthesis makes use of the rotation-induced $uv$ coverage map to form an image. With visibility-based pipelines, the same information can be extracted. To do so, we cross-multiply time-shifted visibilities, with the proper weighting, to form power spectra.  Due to the large number of elements of modern arrays, the task of cross-multiplying every baseline against every other, scaling as number of array elements to the fourth power, can be computationally formidable, and many pairs of baselines provide only negligible redundancy information. Our contribution is thus twofold. First, we introduce a formalism to estimate the power spectrum from pairs of partially-redundant baselines in a visibility pipeline. Secondly we show how to use the two-baseline estimator to automatically pre-select baseline pairs and time offsets, making the problem computationally efficient. More precisely, our formalism allows one to simultaneously identify the baselines that have strong
+The basic idea of our proposed visibility-based, two-baseline power spectrum estimator is as follows. The Earth's rotation causes the baselines in a drift-scan array to pick up different modes of the sky with time. Rotation-synthesis makes use of the rotation-induced $uv$ coverage map to form image. In a visibility based pipeline, we can extract the same rotation-induced redundancy. In this point of view, baselines that are slightly different in length and orientation
+``rotate into'' each other at a time delay. We can thus cross-multiply time-shifted visibilities, with the proper weighting, to form power spectra.  Due to the large number of elements of modern arrays, the task of cross-multiplying every baseline against every other, scaling as number of array elements to the fourth power, can be computationally formidable, and many pairs of baselines provide only negligible redundancy information. Our contribution is thus twofold. First we introduce a formalism to estimate the power spectrum from pairs of partially-redundant baselines in a visibility pipeline. Secondly we show how to use the two-baseline estimator to automatically pre-select baseline pairs and time offsets, making the problem computationally efficient. More precisely, our formalism allows one to simultaneously identify the baselines that give good
 redundancy, find the time offset that corresponds to maximal redundancy for a given pair of baselines, and quantify the sensitivity associated with cross multiplying
-such a pair of partially redundant baselines, which in turn is used as weight to combine measurements in a power spectrum pipeline. 
+such a pair of partially redundant baselines, which in turns is used as weight to combine measurements in a power spectrum pipeline. 
 
 %[TODO: this paragraph would potentially be promoted to a section] By using pairs of baselines, we also reduce additional mode mixing. As discussed in \cite{Hazelton2013}, the varying shapes of overlapping regions in $uv$ space of all contributing baselines lead to chromaticities in the response. By considering only pairs of baselines, we fix shapes of overlapping regions, and only let their sizes vary with frequency, just as in the case of fully redundant baselines.  
 
@@ -88,40 +88,41 @@ introduce some terminology that may differ from what is commonly found in the li
 We make the distinction between a \textit{baseline}, which corresponds to two specific antennas, and a \textit{class of baselines}, which refers to all baselines of the same length and orientation in a given array. 
 Baselines of the same class are traditionally called
 ``redundant baselines'', because they measure the same Fourier mode
-in the sky.  We shall call baselines in the same class \textit{equivalent baselines}, and reserve the \textit{redundancy} of two baselines to mean a variable function of the relative time offsets of their visibility time series. With this terminology, equivalent
+in the sky.  We shall call baselines in the same class \textit{equivalent baselines}, and reserve the word \textit{redundancy} of two baselines in reference to a variable function of the relative time offsets of their visibility time series. With this terminology, two equivalent
 baselines are fully redundant with each other simultaneously at all
-times. Non-equivalent baselines also have partial redundancy, and the redundancy can be maximized 
-by shifting their time series by a relative time offset.
+times. Non-equivalent baselines also have partial redundancy, and the redundancy can be maximized if their
+respected time series are shifted with respect to one another by some time offset. 
 
 \begin{figure}[H]
 \includegraphics[width=\linewidth]{antconfig}
 
 \caption{The PAPER-128 layout. Each dot corresponds to the location of
 an antenna. The top panel shows the antenna positions drawn to scale;
-the bottom panel show the antenna labels and distances of the 112-element grid, excluding the outrigger antennas.
+the bottom panel show the antenna labels and distances of the 112-element grid, in other words excluding the outrigger antennas.
 In the bottom panel, the two baselines marked with red segments are example of an equivalent pair, each with antennas separated by 2 units east and 0 unit north. Similarly,
 the baselines marked in blue and yellow are examples
-of classes that, due to the small North-South separation within the grid, are expected to be nearly equivalent to the red baselines. }
+of classes that , due to the small North-South separation within the grid (see top panel), are expected to be nearly equivalent to the red baselines. }
 \label{fig:AntPos}
 \end{figure}
 
 We shall use the 128-element PAPER array (henceforth referred to as PAPER-128) to motivate our formalism and demonstrate our method, and extend our results to several HERA configurations in Section \ref{sec:arrconf}. 
 The PAPER array is located in the Karoo desert in South Africa (30:43:17.5
 S, 21:25:41.8 E). The layout pattern is shown
-in Fig. \ref{fig:AntPos}. The array consists of a 112-element core in a rectangular grid, and 16 ``outriggers'' used primarily to aid calibration.  In the bottom panel, the two baselines marked in red are an example of an equivalent pair. We denote a equivalency-class of baselines in the PAPER grid by their separations, in this case  \{2,0\}, for the
+in Fig. \ref{fig:AntPos}. The array consists of a 112-element core in a rectangular grid, and 16 ``outriggers'' used primarily to aid calibration.  In the bottom panel, the two baselines marked in red, are an example of equivalent pair. We denote a equivalency-class of baselines in the PAPER grid by their separations, in this case  \{2,0\}, for the
 antennas are separated by 2 units east and 0 units north. Similarly,
 the baselines marked in blue and yellow are respectively examples
 of \{2,1\} and \{2, -1\}.
-Note that \{2,0\} and \{-2, 0\} are the same class of baselines and should not be counted twice. Antennas in purely north-south baselines
+Note that \{2,0\} and \{-2, 0\} for example are the same class of baselines and should not be counted twice. Antennas in purely north-south baselines
 are close (4m), and hence these baselines are not suitable
-for sensitive measurements due to cross-coupling. On the other hand, the small North-South separation means that classes such as \{2,0\} and  \{2,1\} are expected to be near-equivalent. The PAPER-64 analysis of \cite{Ali2015} uses three classes of baselines, the PAPER-128
+for use due to cross-coupling. On the other hand, the small North-South separation means that classes such as \{2,0\} and  \{2,1\} are expected to be near-equivalent. The PAPER-64 analysis of \cite{Ali2015} uses three classes of baselines, the PAPER-128
 equivalent of which are 
-\{2, 0\}, \{2, 1\} and \{2, -1\}. There, baselines are cross-multiplied within each class. This paper provides the method for inter-class multiplications. We will use the short hand notation $\{m,n:m',n'\}$ to denote a pair of baseline classes to be cross-multiplied. 
+\{2, 0\}, \{2, 1\} and \{2, -1\}. There, each of these classes
+of baselines are cross multiplied within itself. This paper provides the method for inter-class multiplications. We will use the short hand notation $\{m,n:m',n'\}$ to denote a pair of baseline classes to be cross-multiplied. 
 
 
 \section{Method \label{sec:method}}\label{sec:method}
 
-In this section we introduce our method to cross-multiply non-equivalent baseline classes. 
+In this section we introduce our method to cross-multiply nearly equivalent baseline classes. 
 
 \subsection{$uvw$ tracks \label{sec:tracks}}
 
@@ -132,26 +133,26 @@ Radio interferometric observations are often described in the coordinates $uvw$,
 \]
 where $\boldsymbol{b}$ is the baseline vector in Cartesian coordinates, with first and second coordinates pointing East and North, respectively, and  $\nu$ is the frequency of observation, and $c$ is the speed of light. 
 Relative to a phase center on the sky, each baseline maps to a point in $uvw$ space. As the Earth rotates, the points trace out tracks in the $uvw$ space. 
-We show in Fig. \ref{fig:Tracks} $uvw$ tracks of the three PAPER-128 baselines colored in Fig. \ref{fig:AntPos}, projected onto the $uv$ and $vw$ planes. The tracks are traced over 12 sidereal hours, at 0.15\,GHz, relative to a phase center that drifts from zenith. 
+We show in Fig. \ref{fig:Tracks} $uvw$ tracks of the three PAPER-128 baselines colored in Fig. \ref{fig:AntPos}, projected onto the $uv$ and $vw$ planes. The tracks are traced over 12 sidereal hours, at 0.15\,GHz, relative to a phase center that pdrifts from zenith. 
 
 
 \begin{figure}[h]
 \includegraphics[width=\linewidth]{rotation_new}
-\caption{Tracks of the three PAPER-128 baseline classes shown in Fig. \ref{fig:AntPos}, here with the same respective colors. Tracks are traced out over half a sidereal day for frequency $\nu=0.15\text{\,GHz}$ and a phase center that passes through zenith. The top panel shows $uv$ tracks with crossings among each pair of baseline classes. Projection to the $vw$ plane in the bottom panel shows that although tracks appear to overlap in the $uv$ plane, tracks in $uvw$ space do not cross. }
+\caption{Tracks of 3 PAPER-128 baseline classes shown in Fig. \ref{fig:AntPos}, here with the same respective colors. Tracks are traced out over half a sidereal day for frequency $\nu=0.15\text{\,GHz}$ and a phase center that passes through zenith. The top panel shows $uv$ tracks with crossings among each pair of baseline classes. Projection to the $vw$ plane in the bottom panel shows that tracks in $uvw$ space do not cross. }
 \label{fig:Tracks}
 \end{figure}
 
 Equivalent baselines follow identical $uvw$ tracks. Traditionally, we can identify
 redundancy of nearly equivalent baselines as crossings
-of the $uv$ tracks, a two-dimensional projection of $uvw$, as shown in the top panel of Fig. \ref{fig:Tracks}. However, there are several reasons that $uv$ track-crossing does not imply perfect redundancy. The most obvious reason is that the three-dimensional $uvw$ tracks do not actually cross, as is evident from the $vw$ projection in the bottom panel of Fig. \ref{fig:Tracks}. In general, track-crossings are
-not accurate enough for time offset determination, nor can it give estimate of the degree of redundancy.   For drift-scan arrays, even a hypothetical crossing in $uvw$ space would not imply perfect redundancy. This will become evident in the next section, after we develop a more general formalism that accounts for the point spread function of primary. The relation between track-crossing and redundancy for both drift-scan and tracking measurements is further explored in Appendix \ref{sec:appA}. 
+of the $uv$ tracks, a 2 dimensional projection of Fig. \ref{fig:Tracks}. As we see in the top panel of Fig. \ref{fig:Tracks}, there would be many such crossings. However, there are several reasons that $uv$ track-crossing do not imply perfect redundancy. The most obvious reason is that the 3 dimensional $uvw$ tracks do not actually cross, as is evident from the $vw$ projection in the bottom panel of Fig. \ref{fig:Tracks}. Therefore, in our case $uv$ track-crossings are
+not accurate enough for time offset determination, nor can it give estimate of the degree of redundancy.   For drift-scan arrays, even a hypothetical crossing in $uvw$ space would not imply perfect redundancy. This shall become evident in the next section, after we develop a more general formalism that accounts for the point spread function of the finite beams, and estimate the degree of redundancy for general combination of baselines at a general time offset. Relation between track-crossing and redundancy for both drift-scan and tracking measurements is further explored in Appendix \ref{sec:appA}. 
 
 
 
 \subsection{Formalism \label{sec:formalism}}
 \label{sec:formalism}
 In this section we formulate a power spectrum estimator from
-the product of delay-transformed visibilities from two arbitrary baselines. We shall work in the case of drift-scan telescopes and extend the results to tracking measurements. 
+the product of delay-transformed visibilities from two arbitrary baselines. We shall work in the case of drift scan telescopes and extent the results to tracking measurements. 
 
 We begin with the visibility as commonly defined in the literature (e.g.
 \citealt{TMS, first-paper}): 
@@ -178,12 +179,12 @@ for all baselines. Power-spectrum measurements are typically taken from $\sim10$
 %\end{figure}
 
 
-Ultimately we would like to relate the observed visibility to the power spectrum, $P$, defined such that
+Ultimately we would like to relate observed visibility to the power spectrum $P$, defined such that
 \[
 \langle \widetilde{T}^{*}(\boldsymbol{k})\widetilde{T}(\boldsymbol{k'})\rangle = \left(2\pi\right)^3\delta_D^3(\bold{k}-\bold{k'})P(k),
 \label{eq:Pofk}
 \]
-where $\bold{k}$ is the cosmological wavenumber, $\delta_D^3$ is the three-dimensional Dirac delta function, and $\widetilde{T}(\boldsymbol{k})$ is the three-dimensional Fourier transform of the brightness temperature field $T(\bold{r})$, with $\bold r$ being the cosmological position coordinate. 
+where $\bold{k}$ is the cosmological wavenumber, $\delta_D^3$ is the three-dimensional Dirac delta function, and $\widetilde{T}(\boldsymbol{k})$ is the three-dimensional Fourier transform of the brightness temperature field $T(\bold{r})$, with $\bold r$ as the cosmological position coordinate. 
 We begin by relating the observational coordinates $\hat{\boldsymbol{s}}$
 and $\nu$, to
 $\boldsymbol{r}$ and $\boldsymbol{k}$: 
@@ -209,9 +210,10 @@ In the thin-shell limit, we can write:
 d^2r=X^2d\Omega. 
 \label{eq:thinshell}
 \end{equation}
-Note that Eq. \eqref{eq:thinshell} does not require the flat-sky approximation; the angular integral is still performed over the curved sky. 
+Note Eq. \eqref{eq:thinshell} does not require the flat-sky approximation; the angular integral is still performed over the curved sky. 
 
-Eqs. \eqref{eq:nur} and \eqref{eq:thinshell} show that observational angular and spectral dimensions together correspond to the three dimensional volume of cosmological interest. Moreover, recall that the power spectrum in Eq. \eqref{eq:Pofk} is proportional to the product of Fourier transforms of the temperature field. Since Eq. \eqref{eq:Vis1} resembles a Fourier transform along the angular directions, it is natural to perform a further Fourier transform along the radial, or equivalently, frequency axis. The transform, called delay-transform \citep{PB2009}, has gained popularity recently since it has been shown that foregrounds are isolated in delay space\footnote{We discuss foreground isolation in detail in Section \ref{sec:chromaticity}.}. We define the delay-transformed visibility as:
+ 
+Eqs. \eqref{eq:nur} and \eqref{eq:thinshell} show that observational angular and spectral dimensions together correspond to the three dimensional volume of cosmological interest. Moreover, recall that the power spectrum in Eq. \eqref{eq:Pofk} is proportional to the product of Fourier transforms of the temperature field. Since Eq. \eqref{eq:Vis1} resembles a Fourier transform along the angular directions, it is natural to perform a further Fourier transform along the radial, or equivalently, frequency axis. The transform, called delay-transform \citep{delay-transform}, has gained popularity recently since it has been shown that foregrounds are isolated in delay space \footnote{We discuss foreground isolation in detail in Section \ref{sec:chromaticity}.}. We define the delay-transformed visibility as:
 \small
 \begin{equation}
 \begin{aligned}V(\boldsymbol{b},\tau) & =\int d\nu V_{\nu}(\boldsymbol{b})\phi(\nu)\exp\left(2\pi i\nu\tau\right)\\
@@ -221,7 +223,7 @@ Eqs. \eqref{eq:nur} and \eqref{eq:thinshell} show that observational angular and
 \end{equation}
 \normalsize
 Here the delay $\tau$ is the Fourier dual of $\nu$. Eq. \eqref{eq:Vb1} expresses the delay-transformed visibility as
-an integral over observational coordinates $\hat{\boldsymbol{s}}$ and $\nu$. For notational simplicity we have defined the quantity
+an integral over observational coordinates $\hat{\boldsymbol{s}}$ and $\nu$. For notational simplicity here and in the rest of this paper, we have defined the quantity
 
 \[
 B(\hat{\boldsymbol{s}},\nu) \equiv \frac{2k_B}{\lambda^2}\phi(\nu)A(\hat{\boldsymbol{s}},\nu). 
@@ -239,15 +241,15 @@ where $d\nu=-dr/Y$ and $d^{3}r=-X^{2}Yd\Omega d\nu$.
 We have written $\nu_{r}$ as a reminder that $\nu$ and $r$ are related
 by Eq. \eqref{eq:nur}. 
 
-Existing visibility-based power-spectrum pipelines for redundant drift-scan  arrays relate the power-spectrum to the conjugate square of the visibilities \citep{delay-transform, paper32, Ali2015}. We would like to generalize such relations by relating the power-spectrum to the product of two visibilities from two arbitrary baselines and time offsets. 
-To do this, we must account for the fact that the beam pattern of a baseline shifts relative to the sky as the Earth rotates. Here we choose to fix the sky, and denote the rotated coordinates
+Existing visibility based power-spectrum pipelines for redundant drift-scan  arrays relate the power-spectrum to the conjugate square of the visibilities \citep{delay-transform, paper32, Ali2015}. We would like to generalize such relations by relating the power-spectrum to the product of two visibilities from two arbitrary baselines and time offsets. 
+The beam pattern of a baseline shifts relative to the sky as the Earth rotates. Here we choose to fix the sky, and denote the rotated coordinates
 in the topocentric frame with the three-dimensional rotation operator $\boldsymbol{\Gamma}$:
 
 \[
 \begin{aligned}V_{\psi}(\boldsymbol{b'},\tau) & = \int\frac{d^{3}r}{X^{2}Y}B(\boldsymbol{\Gamma}\boldsymbol{r})T(\boldsymbol{r})\\
 & \qquad \qquad  \exp\left[-2\pi i\left(\frac{\boldsymbol{b}}{c}\cdot\boldsymbol{\Gamma}\hat{\boldsymbol{r}}-\tau\right)\nu_{r}-i\psi_\nu\right],\end{aligned}
 \]
-where we introduced a frequency-dependent phase $\psi_{\nu}$, which to linear-order in $\nu$ corresponds to phasing the two visibilities to the same phase center. \footnote{For many cases, the linear-order interpretation is sufficient. We keep the general term to reserve the option to determine its exact form numerically. } 
+where we introduced a frequency-dependent phase $\psi_{\nu}$, which to linear-order in $\nu$ corresponds to phasing the two visibilities to the same phase center. \footnote{Turns out for many cases, the linear-order interpretation is largely sufficient, but we still keep the term to reserve the option to determine its exact form numerically. } 
 
 With implicit bounds of integrals from $-\infty$ to $\infty$, we have:
 \begin{widetext}
@@ -269,8 +271,8 @@ where $\delta_D$ is the Dirac delta-function and
 
 \end{widetext}
 
-The third equality of Eq.(\ref{eq:main}) follows from assuming the translational invariance of statistics of the 21\,cm field. 
-For the inequality in the fourth line, we have assumed that the  3D power spectrum varies negligibly over the $k$-space of interest and have thus pulled out of the integral the power spectrum centered at 
+The third equality of Eq.(\ref{eq:main}) follows from assumption of translational invariance of statistics of the 21\,cm field. 
+For the inequality in the fourth line we have assumed that the  3D power spectrum varies negligibly over the $k$-space of interest and thus pulled out the integral a power spectrum centered at 
 \[
 k_{\boldsymbol{b}, \tau} \equiv 2\pi \sqrt{\left(\frac{\tau}{Y}\right)^2 + \left(\frac{\bar{b}}{\lambda X}\right)^2},
 \label{eq:kbtau}
@@ -313,13 +315,13 @@ with
 \]
 
 
-Notice that $\Theta$ has no dependence on $\tau$. We point out that although all our derivations focused on drift-scan telescopes, we can get the analogous result for tracking measurements simply by noticing that for a tracking primary beam with radial symmetry we have:
+Notice that $\Theta$ has no dependence on $\tau$. We point out that although all our derivations focused on drift-scan telescopes, we can get the analogous result for tracking measurements simply by noticing that for a tracking primary beam, and so by the radial-symmetry of the primary beam, we have:
 \[
 \Theta_{\nu} \equiv e^{-i\psi_{\nu}} \int \frac{d\Omega}{X^{2}Y}B^{*}(\hat{\boldsymbol{s}},\nu)B(\hat{\boldsymbol{s}},\nu) e^{i2\pi\frac{\nu}{c}\left(\hat{\boldsymbol{s}}\cdot\boldsymbol{b}-\boldsymbol{\Gamma}\hat{\boldsymbol{s}}\cdot\boldsymbol{b'}\right)}.
 \label{eq:Thetanu_tracking}
 \]
 
-Roughly speaking, Eqs. \eqref{eq:opp} through \eqref{eq:Thetanu} tell us that the product of visibilities at a time delay is proportional to the power spectrum times the Fourier
+Roughly speaking, Eqs. \eqref{eq:opp} through \eqref{eq:Thetanu} tell us that the cross multiplications of visibilities at a time delay is proportional to the power spectrum times the Fourier
 transform of the cross multiplied beam patterns. As a check, when applied to equivalent baselines,
 $\boldsymbol{b}=\boldsymbol{b'}$, the peak correlation occurs at $\Delta t=0$ and $\hat{\boldsymbol{s}}=\boldsymbol{\Gamma}\hat{\boldsymbol{s}}$, in which case Eq. \eqref{eq:final} reduces to Eq. (B9) of \cite{paper32}. 
 With Eq. \eqref{eq:opp} and Eq. \eqref{eq:Theta} we can, for any given pair of baseline classes and time delay, estimate the degree of redundancy, here represented by $\Theta$. This allows us to achieve our goals stated in the introduction: to identify 
@@ -329,15 +331,15 @@ Eq. \eqref{eq:Theta} for various time offsets.
 
 
 \subsection{Rephasing \label{sec:rephs}}
-If $\psi_{\nu}=0$ in  Eq. \eqref{eq:Thetanu}, $\Theta_{\nu}$ at the peak of correlation is in general complex, and often far from real. Furthermore, this phase of peak correlation is inevitably frequency dependent. This frequency dependence of the phase would lead to destructive interference when we integrate over frequency, unless we correct $\Theta_{\nu}$ by an extra phase $\psi_\nu$. 
+If $\psi_{\nu}=0$ in  Eq. \eqref{eq:Thetanu}, $\Theta_{\nu}$ at the peak of correlation ( as a function of time) is generally complex, and often far from real. Furthermore, this phase of peak correlation is inevitably frequency dependent. This frequency dependence would lead to destructive interference when we integrate over frequency, unless we correct $\Theta_{\nu}$ by a phase $\psi_\nu$. 
 
-To linear order in $\nu$, $\psi_\nu$ cancels the decoherence due to the two visibilities having different phase centers. By default the correlators of a drift-scan array phase the two visibilities both to zenith at the same time. When they are cross-multiplied with a time lag, the visibilities must be rephased before delay transform to account for the movement of the phase center. The effect of the phase thus roughly corresponds in a shift of the delay mode measured, and we should expect $\psi_{\nu}$ to be in first order a linear function of $\nu$:
+To linear order in $\nu$, $\psi_\nu$ cancels the decoherence due to the two visibilities having different phase centers. By default the correlators of a drift-scan array phase the two visibilities both to zenith at the same time. When they are cross-multiplied with a time lag, the visibilities must be rephased before the delay transform to account for the movement of the phase center. The effect of the phase thus roughly corresponds in a shift of the delay mode measured, and we should expect $\psi_{\nu}$ to be approximately a linear function of $\nu$:
 \[
 \psi_{\nu}\sim 2\pi\Delta\tau\nu,
 \]
 where $\Delta\tau$ is a shift in delay corresponding to the phase center movement. 
 
-In Fig. \ref{fig:phi_nu} we show the phases of $\Theta_\nu$ at the optimal time offset or, in other words, when $|\Theta_\nu|$ is maximized. The phases are shown for the baseline pair \{2,0:2,1\} of PAPER-128. The drift-scan phase dependence is compared with that of the same baseline with hypothetical tracking-elements (Eq. \eqref{eq:Thetanu} and Eq. \eqref{eq:Thetanu_tracking}). In the drift-scan case, we indeed see a linear relation corresponding to a delay of $\Delta\tau\approx15.7$\,ns. In the tracking case, since the phase center is fixed to the sky, only second order effects are observed. The origin of the second order effects can be seen as due to the $w$-term, or more precisely the fact that $uvw$ tracks do not cross when their two-dimensional projections do. We refer the reader to Appendix \ref{sec:appA} for further explanation. In both cases, the full effects are encapsulated in the phase of $\Theta_\nu$ and can be thus determined empirically without any additional computation. 
+In Fig. \ref{fig:phi_nu} we show the phases of $\Theta_\nu$ at the optimal time offset, i.e. when $|\Theta_\nu|$ is maximized. The phases are shown for the baseline pair \{2,0:2,1\} of PAPER-128. The drift-scan phase dependence is compared with that of the same baseline with hypothetical tracking-elements (Eq. \eqref{eq:Thetanu} and Eq. \eqref{eq:Thetanu_tracking}). In the drift-scan case, we indeed see a linear relation corresponding to a delay of $\Delta\tau\approx15.7$\,ns. In the tracking case, since the phase center is fixed to the sky, only second order effects are observed. The origin of the second order effects can be seen as due to the $w$-term, or more precisely the fact that $uvw$ tracks do not cross when their two-dimensional projections do. We refer the reader to Appendix \ref{sec:appA} for further explanation. In both cases, the full effects are encapsulated in the phase of $\Theta_\nu$ and can be thus determined empirically without any additional computation. 
 
 \begin{figure}[H]
 \includegraphics[width=1\linewidth]{phi_nu}
@@ -349,7 +351,7 @@ In Fig. \ref{fig:phi_nu} we show the phases of $\Theta_\nu$ at the optimal time 
 
 To illustrate the effect of rephasing, we compare in Fig. \ref{fig:freqdiff} real parts of $\Theta_{\nu}$ of both equivalent and nearly equivalent baseline pairs for two channels: 0.145\,GHz and 0.155\,GHz. The top two panels have zero rephasing, and the bottom two are linearly rephased to a differential delay of $\Delta\tau\approx15.7$\,ns, as we determined above. The first and third panels show the equivalent baseline pairs \{2,0:2,0\}, and second and fourth panels show \{2,0:2,1\}. Summing over frequency without proper rephasing leads to destructive interference and sensitivity loss. The wider the frequency profile, the more destructive the interference would be. Only after rephasing to the correct time offset for each baseline pairs can we constructively combine the frequency channels. 
 
-We see from Fig. \ref{fig:freqdiff} that although the amplitude of correlations match up for all time offsets, the phase would only locally match. The need for rephasing can thus be understood as a symptom of the underlying spatial decoherence; coherence at the phase center would not extend to the entire beam pattern (see Section \ref{sec:visual}). Thus while integrating over frequencies and sky-direction in Eq. \eqref{eq:Theta} there are necessarily sky-directions that do not add coherently. This decoherence across the beam pattern cannot be removed and plays a fundamental role in determining how much sensitivity one can recover from nearly equivalent baselines. 
+We see from Fig. \ref{fig:freqdiff} that although the amplitude of correlations match up for all time offsets, the phase would only locally match. The need for rephasing can thus be understood as a symptom of the underlying spatial decoherence; coherence at the phase center would not extend to the entire beam pattern (see Section \ref{sec:visual}). While integrating over frequencies and sky-direction in Eq. \eqref{eq:Theta}, there are necessarily sky-directions that do not add coherently. This decoherence across the beam pattern cannot be removed and plays a fundamental role in determining how much sensitivity one can recover from nearly equivalent baselines. 
 
 \begin{figure}[H]
 \includegraphics[width=1.1\linewidth]{rephs_rb}
@@ -466,7 +468,7 @@ In both the middle and bottom panels, we have chosen to fix the value  of \{1,0:
 \begin{figure}[h]
 \includegraphics[width=\linewidth]{HeraAntpos}
 \label{fig:HeraAntpos}
-\caption{Planned Hydrogen Epoch of Reionization Array antenna configurations. HERA 37 is expected to complete and start collecting data in summer of 2017, and the other three are planned configurations in the next phases. For HERA350, only the 320 elements in the core are shown. }
+\caption{Planned Hydrogen Epoch of Reionization Array antenna configurations. HERA 37 is expected to complete and start collecting data in August of 2017, and the other three are planned configurations in the next phases. For HERA350, only the 320 elements in the core are shown. }
 \end{figure}
 
 \subsection{ Sensitivity \label{sec:sensitivity}}
