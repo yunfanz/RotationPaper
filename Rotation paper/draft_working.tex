@@ -17,7 +17,7 @@
 \renewcommand\]{\end{equation}}
 \graphicspath{{../figures/}}
 \newcommand{\pasa}{PASA}
-\usepackage[backref,breaklinks,colorlinks,citecolor=cyan]{hyperref}
+\usepackage[breaklinks,colorlinks,citecolor=cyan]{hyperref}
 \begin{document}
 
 \title{Unlocking Sensitivity for Visibility-based Estimators of the 21\,cm Reionization Power Spectrum}
@@ -186,7 +186,7 @@ Ultimately we would like to relate the observed visibility to the power spectrum
 \label{eq:Pofk}
 \]
 where $\bold{k}$ is the cosmological wavenumber, $\delta_D^3$ is the three-dimensional Dirac delta function, and $\widetilde{T}(\boldsymbol{k})$ is the three-dimensional Fourier transform of the brightness temperature field $T(\bold{r})$, with $\bold r$ being the cosmological position coordinate. 
-We begin by relating the observational coordinates $\hat{\boldsymbol{s}}$
+We begin by relating the observational coordinates\footnote{The observational direction $\hat{\boldsymbol{s}}$ is equal to the cosmological direction $\hat{\boldsymbol{r}}$. We shall nevertheless keep the notations separate to highlight the conceptual differences and switch between the symbols depending on the context. } $\hat{\boldsymbol{s}}$
 and $\nu$, to
 $\boldsymbol{r}$ and $\boldsymbol{k}$: 
 \[
@@ -349,7 +349,10 @@ the decoherence due to the two visibilities having different phase centers. By d
 \[
 \psi_{\nu}\sim 2\pi\Delta\tau\nu,
 \]
-where $\Delta\tau$ is a shift in delay corresponding to the phase center movement, more precisely the light travel time from one antenna to another of the rotated baseline (relative to the phase center).
+where $\Delta\tau$ is a shift in delay corresponding to the phase center movement, i.e.
+\[
+\Delta \tau = \frac{\boldsymbol{b'}}{c}\left(\boldsymbol{\Gamma}\hat{\boldsymbol{s}}-\hat{\boldsymbol{s}}\right). 
+\]
 
 In Fig. \ref{fig:phi_nu} we show the phases of $\Theta_\nu$ at the optimal time offset, i.e. when $|\Theta_\nu|$ is maximized. The phases are shown for the baseline pair \{2,0:2,1\} of PAPER-128. The drift-scan phase dependence is compared with that of the same baseline with hypothetical tracking-elements (Eq. \eqref{eq:Thetanu} and Eq. \eqref{eq:Thetanu_tracking}). In the drift-scan case, we indeed see a linear relation corresponding to a delay of $\Delta\tau\approx15.7$\,ns.  In the tracking case, since the phase center is fixed to the sky, only second order effects are observed. The origin of the second order effects can be seen as due to the $w$-term, or more precisely the fact that $uvw$ tracks do not cross when their two-dimensional projections do. We refer the reader to Appendix \ref{sec:appA} for further explanation. In both cases, the full effects are encapsulated in the phase of $\Theta_\nu$ and can be thus determined empirically without any additional computation. 
 
