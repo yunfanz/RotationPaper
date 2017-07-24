@@ -252,23 +252,35 @@ in the topocentric frame with the three-dimensional rotation operator $\boldsymb
 %\]
 where we introduced a frequency-dependent phase $\psi_{\nu}$, which to linear-order in $\nu$ one would typically pick to correspond to the re-phasing of the two visibilities to the same phase center.\footnote{For many cases, the linear-order interpretation is sufficient. We keep the general term to reserve the option to determine its exact form numerically as this information comes at no additional computational cost.} 
 
-With implicit bounds of integrals from $-\infty$ to $\infty$, we have:
+With implicit bounds of integrals from $-\infty$ to $\infty$, we have
 \begin{eqnarray}
  &&\langle V^{*}(\boldsymbol{b},\tau)V_{\psi}(\boldsymbol{b'},\tau)\rangle \nonumber \\
  && =\int \frac{d^{3}rd^{3}r'}{(X^2Y)^2}\langle T^{*}(\boldsymbol{r})T(\boldsymbol{r'})\rangle B^{*}(\boldsymbol{r})B(\boldsymbol{\Gamma} \boldsymbol{r'})\Phi(\boldsymbol{r},\boldsymbol{\Gamma} \boldsymbol{r'}) \nonumber \\
  &&  =\int \frac{d^{3}rd^{3}r'}{(X^2Y)^2}\left(\int\frac{d^{3}\kappa}{(2\pi)^{3}}\frac{d^{3}\kappa'}{(2\pi)^{3}}\langle T^{*}(\boldsymbol{\kappa})T(\boldsymbol{\kappa'})\rangle e^{-i(\boldsymbol{\kappa}\cdot \boldsymbol{r}-\boldsymbol{\kappa'}\cdot\boldsymbol{r'})}\right) \nonumber \\
  && \qquad  \times B^{*}(\boldsymbol{r})B(\boldsymbol{\Gamma} \boldsymbol{r'})\Phi(\boldsymbol{r},\boldsymbol{\Gamma} \boldsymbol{r'})\nonumber \\
  && =\int \frac{d^{3}rd^{3}r'}{(X^2Y)^2}\left(\int\frac{d^{3}\kappa}{(2\pi)^{3}}P(\kappa)e^{-i\boldsymbol{\kappa}\cdot(\boldsymbol{r}-\boldsymbol{r'})}\right) \nonumber \\
- && \qquad \times B^{*}(\boldsymbol{r})B(\boldsymbol{\Gamma} \boldsymbol{r'})\Phi(\boldsymbol{r},\boldsymbol{\Gamma} \boldsymbol{r'}) \nonumber \\
- && \approx P(k_{\bar{b}, \tau})\int \frac{d^{3}rd^{3}r'}{(X^2Y)^2} \delta_{D}^{(3)}(\boldsymbol{r}-\boldsymbol{r'})B^{*}(\boldsymbol{r})B(\boldsymbol{\Gamma} \boldsymbol{r'}) \Phi(\boldsymbol{r},\boldsymbol{\Gamma} \boldsymbol{r'}) \nonumber \\
- && = P(k_{\bar{b}, \tau})\int \frac{d^{3}r}{(X^2Y)^2}B^{*}(\boldsymbol{r})B(\boldsymbol{\Gamma} \boldsymbol{r}) e^{-i2\pi\frac{\nu_{r}}{c}\left(\hat{\boldsymbol{r}}\cdot\boldsymbol{b}-\boldsymbol{\Gamma} \hat{\boldsymbol{r}}\cdot\boldsymbol{b'}\right)-i\psi_{\nu}}, \qquad
-\label{eq:main}
-\end{eqnarray}
-where $\delta_D$ is the Dirac delta-function and
-\begin{eqnarray}
+ && \qquad \times B^{*}(\boldsymbol{r})B(\boldsymbol{\Gamma} \boldsymbol{r'})\Phi(\boldsymbol{r},\boldsymbol{\Gamma} \boldsymbol{r'}),
+ \end{eqnarray}
+ where 
+ \begin{eqnarray}
 \Phi(\boldsymbol{r},\boldsymbol{\Gamma} \boldsymbol{r'})\equiv &\exp\left[i\frac{2\pi}{c}\left(\boldsymbol{b}\cdot\nu_{r}\hat{\boldsymbol{r}}-\boldsymbol{b'}\cdot\nu_{r'}\boldsymbol{\Gamma}\hat{\boldsymbol{r}}'\right)\right] \nonumber \\
 & \times \exp\left[-i2\pi\tau\left(\nu_{r}-\nu_{r'}\right)-i\psi_{\nu}\right].
 \end{eqnarray}
+The third equality of Eq.(\ref{eq:main}) follows from assuming the translational invariance of the statistics of the 21\,cm field. Continuing, we may make the assumption that the 3D power spectrum varies negligibly over the $k$-space of interest, thus allowing us to pull out of the integral the power spectrum centered at 
+\[
+k_{\boldsymbol{b}, \tau} \equiv 2\pi \sqrt{\left(\frac{\tau}{Y}\right)^2 + \left(\frac{\bar{b}}{\lambda X}\right)^2},
+\label{eq:kbtau}
+\]
+where $\bar{b}$ is approximately the mean of $b$ and $b'$. This gives 
+ \begin{eqnarray}
+  &&\langle V^{*}(\boldsymbol{b},\tau)V_{\psi}(\boldsymbol{b'},\tau)\rangle \nonumber \\
+ && \approx P(k_{\bar{b}, \tau})\int \frac{d^{3}rd^{3}r'}{(X^2Y)^2} \delta_{D}^{(3)}(\boldsymbol{r}-\boldsymbol{r'})B^{*}(\boldsymbol{r})B(\boldsymbol{\Gamma} \boldsymbol{r'}) \Phi(\boldsymbol{r},\boldsymbol{\Gamma} \boldsymbol{r'}) \nonumber \\
+ && = P(k_{\bar{b}, \tau})\!\!\int\!\! \frac{d^{3}r}{(X^2Y)^2}B^{*}(\boldsymbol{r})B(\boldsymbol{\Gamma} \boldsymbol{r}) e^{-i2\pi\frac{\nu_{r}}{c}\left(\hat{\boldsymbol{r}}\cdot\boldsymbol{b}-\boldsymbol{\Gamma} \hat{\boldsymbol{r}}\cdot\boldsymbol{b'}\right)-i\psi_{\nu}}, \qquad
+\label{eq:main}
+\end{eqnarray}
+where $\delta_D$ is the Dirac delta-function, and notice that the phase factor $\exp\left[-i2\pi\tau\left(\nu-\nu'\right)\right]$
+drops out in the end. In factoring out the power spectrum from the integral, one is essentially making the approximation that the estimator probes only a single Fourier mode. In Section \ref{sec:chromaticity} we will relax this assumption and examine the exact form of the Fourier-space footprint that is being probed, as well as its effect on foreground isolation.  
+
 %
 %\begin{widetext}
 %\begin{equation}
@@ -288,17 +300,7 @@ where $\delta_D$ is the Dirac delta-function and
 %\end{equation}
 %
 %\end{widetext}
-The third equality of Eq.(\ref{eq:main}) follows from assuming the translational invariance of the statistics of the 21\,cm field. 
-For the inequality in the fourth line, we have assumed that the  3D power spectrum varies negligibly over the $k$-space of interest and have thus pulled out of the integral the power spectrum centered at 
-\[
-k_{\boldsymbol{b}, \tau} \equiv 2\pi \sqrt{\left(\frac{\tau}{Y}\right)^2 + \left(\frac{\bar{b}}{\lambda X}\right)^2},
-\label{eq:kbtau}
-\]
-where $\bar{b}$ is approximately the mean of $b$ and $b'$. 
-In Section \ref{sec:chromaticity} we will examine the exact form of the Fourier-space footprint that is being probed, as well as its effect on foreground isolation.  
-%Since $\boldsymbol{\Gamma}$ is a sky rotation, it does not affect $\nu$, hence we have taken $\nu_{r}$ outside the parenthesis in the phase term $\exp\left[-i2\pi\frac{\nu_{r}}{c}\left(\hat{\boldsymbol{r}}\cdot\boldsymbol{b}-\boldsymbol{\Gamma} \hat{\boldsymbol{r}}\cdot\boldsymbol{b'}\right)\right]$. 
-Notice that the phase factor $\exp\left[-i2\pi\tau\left(\nu-\nu'\right)\right]$
-drops out in the end.
+%Since $\boldsymbol{\Gamma}$ is a sky rotation, it does not affect $\nu$, hence we have taken $\nu_{r}$ outside the parenthesis in the phase term $\exp\left[-i2\pi\frac{\nu_{r}}{c}\left(\hat{\boldsymbol{r}}\cdot\boldsymbol{b}-\boldsymbol{\Gamma} \hat{\boldsymbol{r}}\cdot\boldsymbol{b'}\right)\right]$.
 
 Since the beam pattern and bandpass are given in $\hat{\boldsymbol{s}}$
 and $\nu$, we convert the last line of Eq. \eqref{eq:main} back to these coordinates to get
@@ -343,6 +345,14 @@ Eq. \eqref{eq:Theta} for various time offsets.
 \subsection{Rephasing \label{sec:rephs}}
 If $\psi_{\nu}$ were set to zero in  Eq. \eqref{eq:Thetanu}, $\Theta_{\nu}$ at the peak of correlation (as a function of time) is generally complex, and often far from real. Furthermore, this phase of peak correlation is inevitably frequency dependent. This frequency dependence would lead to destructive interference when we integrate over frequency, unless we correct $\Theta_{\nu}$ by a phase $\psi_\nu$. 
 
+\begin{figure}[t]
+\includegraphics[width=1\linewidth]{phi_nu}
+
+\caption{Frequency dependent peak phases for PAPER-128 baseline pair \{2,0:2,1\}. Both the drift-scan case and a hypothetical tracking baseline are shown in solid lines. The first-order, linear effects are shown in dashed lines. We have also fixed the global phase in both cases to 0 at 0.15\,GHz. The drift-scan case exhibits linear behavior and conforms well to the first order effect of a shift in delay space due to the movement of zenith. }
+\label{fig:phi_nu}
+\end{figure}
+
+
 Selecting $\psi_\nu$ to be a linear function of $\nu$ allows one to cancel
 %To linear order in $\nu$, $\psi_\nu$ cancels
 the decoherence due to the two visibilities having different phase centers. By default the correlators of a drift-scan array phase the two visibilities both to zenith at the same time. When they are cross-multiplied with a time lag, the visibilities must be rephased before the delay transform to account for the movement of the phase center. The effect of the phase thus roughly corresponds in a shift of the delay mode measured, and we should expect $\psi_{\nu}$ to be approximately a linear function of $\nu$:
@@ -356,24 +366,16 @@ where $\Delta\tau$ is a shift in delay corresponding to the phase center movemen
 
 In Fig. \ref{fig:phi_nu} we show the phases of $\Theta_\nu$ at the optimal time offset, i.e. when $|\Theta_\nu|$ is maximized. The phases are shown for the baseline pair \{2,0:2,1\} of PAPER-128. The drift-scan phase dependence is compared with that of the same baseline with hypothetical tracking-elements (Eq. \eqref{eq:Thetanu} and Eq. \eqref{eq:Thetanu_tracking}). In the drift-scan case, we indeed see a linear relation corresponding to a delay of $\Delta\tau\approx15.7$\,ns.  In the tracking case, since the phase center is fixed to the sky, only second order effects are observed. The origin of the second order effects can be seen as due to the $w$-term, or more precisely the fact that $uvw$ tracks do not cross when their two-dimensional projections do. We refer the reader to Appendix \ref{sec:appA} for further explanation. In both cases, the full effects are encapsulated in the phase of $\Theta_\nu$ and can be thus determined empirically without any additional computation. 
 
-\begin{figure}[H]
-\includegraphics[width=1\linewidth]{phi_nu}
-
-\caption{Frequency dependent peak phases for PAPER-128 baseline pair \{2,0:2,1\}. Both the drift-scan case and a hypothetical tracking baseline are shown in solid lines. The first-order, linear effects are shown in dashed lines. We have also fixed the global phase in both cases to 0 at 0.15\,GHz. The drift-scan case exhibits linear behavior and conforms well to the first order effect of a shift in delay space due to the movement of zenith. }
-\label{fig:phi_nu}
-\end{figure}
-
-
-To illustrate the effect of rephasing, we compare in Fig. \ref{fig:freqdiff} real parts of $\Theta_{\nu}$ of both equivalent and nearly equivalent baseline pairs for two channels: 0.145\,GHz and 0.155\,GHz. The top two panels have zero rephasing, and the bottom two are linearly rephased to a differential delay of $\Delta\tau\approx15.7$\,ns, as we determined above. The first and third panels show the equivalent baseline pairs \{2,0:2,0\}, and second and fourth panels show \{2,0:2,1\}. Summing over frequency without proper rephasing leads to destructive interference and sensitivity loss. The wider the frequency profile, the more destructive the interference would be. Only after rephasing to the correct time offset for each baseline pairs can we constructively combine the frequency channels. 
-
-We see from Fig. \ref{fig:freqdiff} that although the amplitude of correlations match up for all time offsets, the phase would only locally match. The need for rephasing can thus be understood as a symptom of the underlying spatial decoherence; coherence at the phase center does not extend to the entire beam pattern (see Section \ref{sec:visual}). While integrating over frequencies and sky-direction in Eq. \eqref{eq:Theta}, there are necessarily sky-directions that do not add coherently. This decoherence across the beam pattern cannot be removed and plays a fundamental role in determining how much sensitivity one can recover from nearly equivalent baselines. 
-
-\begin{figure}[H]
+\begin{figure}[t]
 \includegraphics[width=1.1\linewidth]{rephs_rb}
 
 \caption{Comparisons of the peak phases of two different frequencies. Specifically shown are the real parts of $\Theta_{\nu}$. First and third panels shows equivalent baselines, second and fourth show a pair of nearly equivalents. The top two panels have zero phase shift ($\psi_{\nu}=0$), and the bottom two are rephased to a time offset of 0.78 hours. The first and last panels thus show a coherently rephased series that would add constructively at the respective peaks. }
 \label{fig:freqdiff}
 \end{figure}
+
+To illustrate the effect of rephasing, we compare in Fig. \ref{fig:freqdiff} real parts of $\Theta_{\nu}$ of both equivalent and nearly equivalent baseline pairs for two channels: 0.145\,GHz and 0.155\,GHz. The top two panels have zero rephasing, and the bottom two are linearly rephased to a differential delay of $\Delta\tau\approx15.7$\,ns, as we determined above. The first and third panels show the equivalent baseline pairs \{2,0:2,0\}, and second and fourth panels show \{2,0:2,1\}. Summing over frequency without proper rephasing leads to destructive interference and sensitivity loss. The wider the frequency profile, the more destructive the interference would be. Only after rephasing to the correct time offset for each baseline pairs can we constructively combine the frequency channels. 
+
+We see from Fig. \ref{fig:freqdiff} that although the amplitude of correlations match up for all time offsets, the phase would only locally match. The need for rephasing can thus be understood as a symptom of the underlying spatial decoherence; coherence at the phase center does not extend to the entire beam pattern (see Section \ref{sec:visual}). While integrating over frequencies and sky-direction in Eq. \eqref{eq:Theta}, there are necessarily sky-directions that do not add coherently. This decoherence across the beam pattern cannot be removed and plays a fundamental role in determining how much sensitivity one can recover from nearly equivalent baselines. 
 
 \section{Analysis}
 
@@ -453,6 +455,14 @@ W_{\ell}(k; \mathbf{b}, \mathbf{b}^\prime , \tau) \equiv \frac{2 k^2}{\pi \Theta
 \end{equation}
 By construction, the window function sums to unity when integrated over all $k$ and summed over all $\ell$. We may therefore interpret our estimator $\hat{P}$ of the power spectrum to be a weighted average over all possible $\ell$ and $k$ modes, with the window function providing the weights of this average. This means that window functions can serve as indicators of foreground leakage into the EoR window. One writes down the estimator for a hypothetical measurement of a power spectrum mode within the EoR window, and additionally computes the window function for that estimator. Ideally, the window function for $\hat{P}(k)$ will be sharply peaked around $k$. In general, however, window functions will have wings that encroach upon other modes. If the window function is substantially non-zero at low-$k$ modes---which is where foreground emission typically resides, given its spectral smoothness---then the EoR window will be contaminated by foregrounds.
 
+
+\begin{figure}[h]
+\includegraphics[width=1.1\linewidth]{multiblwindows}
+\caption{Sample window functions for delay-spectrum estimates of the power spectrum explored in this paper. The top plot shows window functions for a traditional equivalent-baseline delay-spectrum estimate, where a single baseline's delay spectrum is squared. The bottom plot shows the window functions resulting from nearly equivalent baselines. In each plot, the window function on the right corresponds to the window function for baselines of length $b \sim 180\,\textrm{m}$ in the East West direction, while the window function on the left is for $b\sim 30\,\textrm{m}$. The general extent of the window functions for the two-baseline estimator are seen to be roughly the same as for the single-baseline estimator, suggesting that the former is just as good as the latter in keeping the EoR window free of foregrounds.}
+\label{fig:multiblwindows}
+\end{figure}
+
+
 Figure \ref{fig:multiblwindows} shows four example window functions. The two window functions in the top plot are for equivalent baseline power-spectrum estimators, i.e., where one squares the delay spectrum from a single baseline and normalizes the result. The window function localized at low $\ell$ is for the baseline \{2,0\} of around $30\,\textrm{m}$ in length, while the window function localized at high $\ell$ is for \{12,0\}, roughly $180\,\textrm{m}$ in length. The window functions for near-equivalent baseline estimates are shown in the bottom plot, for \{2,0:2,1\} and \{12,0:12,1\} at low and high $\bar{b}$, respectively. In all cases, the window functions that we show are for $\tau = 703\,\textrm{ns}$, and are generated using primary beam models for PAPER. For numerical convenience we assumed that the bandpass $\phi_\nu$ (see Eq. \eqref{eq:B}) takes the form of a half-period sine curve that peaks at $0.15\,\textrm{\,GHz}$ and goes to zero $5\,\textrm{\,MHz}$ on either side of the peak.
 
 One sees that all four window functions are fairly localized around specific values of $k$, which to a good approximation are described by Eq. \eqref{eq:kbtau}. This suggests that both equivalent- and near-equivalent-baseline delay-spectrum estimators are good estimators of the power spectrum. At higher $\ell$, the window functions for both estimators become elongated in $k$, with stronger tails towards the low $k$ modes where foregrounds reside. This is the phenomenology of the wedge, where at fine angular scales the foreground leakage to higher $k$ modes are more pronounced. Importantly, however, we note that the window functions for the near-equivalent-baseline estimator are no more elongated than for the equivalent-baseline estimator. One may thus conclude that the our proposed near-equivalent-baseline estimator does not result in extra foreground contamination of the EoR window.
@@ -461,12 +471,6 @@ One sees that all four window functions are fairly localized around specific val
 %Note that the right hand side has no explicit dependence on $\ell$ or $m$, aside from the Kronecker Delta functions to enforce that the different spherical harmonic modes are statistically independent. This is a consequence of the statistically translation-invariant nature of the cosmological signal. For foregrounds, this invariance is broken because the signal in question is a broadband signal at $z \sim 0$, rather than a signal from a spectral line over a range of redshifts. The nature of its angular fluctuations are therefore inherently different from its radial 
 
 
-
-\begin{figure}[h]
-\includegraphics[width=1.1\linewidth]{multiblwindows}
-\caption{Sample window functions for delay-spectrum estimates of the power spectrum explored in this paper. The top plot shows window functions for a traditional equivalent-baseline delay-spectrum estimate, where a single baseline's delay spectrum is squared. The bottom plot shows the window functions resulting from nearly equivalent baselines. In each plot, the window function on the right corresponds to the window function for baselines of length $b \sim 180\,\textrm{m}$ in the East West direction, while the window function on the left is for $b\sim 30\,\textrm{m}$. The general extent of the window functions for the two-baseline estimator are seen to be roughly the same as for the single-baseline estimator, suggesting that the former is just as good as the latter in keeping the EoR window free of foregrounds.}
-\label{fig:multiblwindows}
-\end{figure}
 
 
 
