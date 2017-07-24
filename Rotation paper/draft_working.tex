@@ -17,7 +17,7 @@
 \renewcommand\]{\end{equation}}
 \graphicspath{{../figures/}}
 \newcommand{\pasa}{PASA}
-\usepackage[backref,breaklinks,colorlinks,citecolor=blue]{hyperref}
+\usepackage[backref,breaklinks,colorlinks,citecolor=cyan]{hyperref}
 \begin{document}
 
 \title{Unlocking Sensitivity for Visibility-based Estimators of the 21\,cm Reionization Power Spectrum}
@@ -388,7 +388,7 @@ The bottom-left and middle panels show the peak-normalized $uv$ point spread of 
 \label{fig:beamfringe}
 \end{figure*}
 
-So far for clarity and generality we have avoided the traditional formulation of radio astronomy in terms of the $uv$-plane. To gain some visual intuition of the formalism in Section \ref{sec:method}, we show explicit beam fringe patterns of the two baselines and their interactions. For this section, we relax into the flat sky approximation so that $(l,m,\sqrt{1-l^2-m^2})\equiv\hat{s}$ and examine a single frequency of $0.15$\,GHz. 
+So far for clarity and generality we have avoided the traditional formulation of radio astronomy in terms of the $uv$-plane. To gain some visual intuition of the formalism in Section \ref{sec:method}, we show explicit beam fringe patterns of the two baselines and their interactions. For this section, we let $(l,m,\sqrt{1-l^2-m^2})\equiv\hat{s}$ and examine a single frequency of $0.15$\,GHz. 
 
 At the time offset of maximum redundancy, we expect two baselines to have to same fringe pattern in both frequency and phase. Due to the time offset, however, the beam centers would be slightly shifted with respect to each other. In the top panels of Fig. \ref{fig:beamfringe}, we show the real parts of peak-normalized beam-fringe patterns. The top left and middle panels show the beam-fringe
 patterns for the baseline classes \{2,0\} and \{2,1\}, offset by 0.78 hours. More specifically, displayed are the real parts of $g_b\equiv B(\hat{\boldsymbol{s}},\nu)\exp\left[-i2\pi\frac{\nu}{c}\hat{\boldsymbol{s}}\cdot\boldsymbol{b}\right]$ and $g_{b'}\equiv B(\boldsymbol{\Gamma}\hat{\boldsymbol{s}},\nu)\exp\left[-i2\pi\frac{\nu}{c}\boldsymbol{\Gamma}\hat{\boldsymbol{s}}\cdot\boldsymbol{b'}\right]$, respectively. The top right panel show their conjugate product $g_{b}^{*}g_{b'}e^{-i\psi_\nu} = B^{*}(\hat{\boldsymbol{s}},\nu)B(\boldsymbol{\Gamma}\hat{\boldsymbol{s}},\nu)\exp\left[i2\pi\frac{\nu}{c}\left(\hat{\boldsymbol{s}}\cdot\boldsymbol{b}-\boldsymbol{\Gamma}\hat{\boldsymbol{s}}\cdot\boldsymbol{b'}\right)-i\psi_{\nu}\right]$, where we have chosen global phase $\psi_{\nu}$ such that the peak of the conjugate product is real. The product of the beam fringe patterns in the top right shows that the fringes
@@ -712,6 +712,6 @@ Thus we have defined a slightly modified version of the effective weight in Eq. 
 
 \bibliographystyle{apj}
 %\nocite{*}
-\bibliography{draft_final}
+\bibliography{draft_working}
 
 \end{document}
