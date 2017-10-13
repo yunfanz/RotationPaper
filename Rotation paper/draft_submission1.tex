@@ -62,7 +62,7 @@ and the Square Kilometer Array Low (SKA-low; e.g. \citealt{skalow2015} and refer
 
 The highly redshifted 21\,cm signal is faint and diffuse, in contrast to the localized bright sources targeted by many traditional radio telescopes.  Current 21\,cm experiments are sensitivity-starved, with the experimental challenge further increased when considering foreground contamination five orders of magnitude brighter than the cosmological signal of interest. Low-frequency radio interferometers aiming to measure the 21\,cm signal are thus designed differently from traditional instruments. To satisfy the sensitivity needs, modern arrays are large (ranging upwards from 100 elements) and are typically of the drift-scan (static-pointing) type to limit cost. To further improve sensitivity, experiments such as PAPER and HERA feature multiple copies of the same baselines to repeatedly measure the same Fourier signal \citep{first-paper}. 
 
-Analysis pipelines for the 21\,cm power spectrum typically fall into two categories. In the first, images are formed through rotation synthesis, and after a foreground mitigation step, are Fourier transformed to construct a power spectrum \citep{MWAresult0, MWAresult1, LOFARresult}. An alternative technique works directly with visibilities from baselines, delay-transforming and cross-multiplying them to form the power spectrum \citep{delay-transform}. This technique avoids many systematics associated with combining data from different baselines and tracks the native sampling of the interferometer. An example of the visibility-based pipeline was presented in \cite{Ali2015}, which provided power spectrum
+Analysis pipelines for the 21\,cm power spectrum typically fall into two categories. In the first, images are formed through rotation synthesis, and after a foreground mitigation step, are Fourier transformed to construct a power spectrum \citep{MWAresult0, MWAresult1, LOFARresult}. An alternative technique works directly with visibilities from baselines, delay-transforming and cross-multiplying them to form the power spectrum \citep{delay-transform}. This technique avoids many systematics associated with combining data from different baselines and tracks the native sampling of the interferometer. An example of the visibility-based pipeline is presented in \cite{Ali2015}, which provides power spectrum
 measurements with the 64-element version of PAPER (henceforth as PAPER-64). However, one disadvantage of existing visibility-based pipelines is their lack of treatment of partial redundancy. Baselines that are slightly different in length and orientation
 ``rotate into'' each other at a time offset. Baselines of different lengths and orientations therefore contain partially coherent information. This is the basis of earth-rotation synthesis. While imaging based power-spectrum pipelines naturally include all redundancy information, visibility-based pipelines so far only cross multiply fully redundant baselines, i.e., baselines of the same length and orientation.
 
@@ -108,17 +108,17 @@ of classes that, due to the small North-South separation within the grid, are ex
 \end{figure}
 
 We shall use the 128-element PAPER array (henceforth referred to as PAPER-128) to motivate our formalism and demonstrate our method, and extend our results to several HERA configurations in Section \ref{sec:arrconf}. 
-The PAPER array \textbf{was} located in the Karoo desert in South Africa (30:43:17.5
+The PAPER array is located in the Karoo desert in South Africa (30:43:17.5
 S, 21:25:41.8 E). The layout pattern is shown
-in Fig. \ref{fig:AntPos}. The array \textbf{consisted} of a 112-element core in a rectangular grid, and 16 ``outriggers'' used primarily to aid calibration.  In the bottom panel, the two baselines marked in red are an example of an equivalent pair. We denote a equivalency class of baselines in the PAPER grid by their separations, in this case  \{2,0\}, for the
+in Fig. \ref{fig:AntPos}. The array consists of a 112-element core in a rectangular grid, and 16 ``outriggers'' used primarily to aid calibration.  In the bottom panel, the two baselines marked in red are an example of an equivalent pair. We denote a equivalency class of baselines in the PAPER grid by their separations, in this case  \{2,0\}, for the
 antennas are separated by 2 units east and 0 units north. Similarly,
 the baselines marked in blue and yellow are respectively examples
 of \{2,1\} and $\{2, -1\}$.
 Note that \{2,0\} and $\{-2, 0\}$ are the same class of baselines and should not be included twice in power-spectrum measurements. Antennas in purely north-south baselines
 are close (4m), and hence these baselines are not suitable
-for sensitive measurements due to cross-coupling. On the other hand, the small North-South separation means that classes such as \{2,0\} and  \{2,1\} are expected to be near-equivalent. The PAPER-64 analysis of \cite{Ali2015} \textbf{used} three classes of baselines, the PAPER-128
-equivalent of which \textbf{were} 
-\{2, 0\}, \{2, 1\} and $\{2, -1\}$. There, baselines \textbf{were} cross-multiplied within each class. This paper provides the method for inter-class multiplications. We will use the short hand notation $\{m,n:m',n'\}$ to denote a pair of baseline classes to be cross-multiplied. 
+for sensitive measurements due to cross-coupling. On the other hand, the small North-South separation means that classes such as \{2,0\} and  \{2,1\} are expected to be near-equivalent. The PAPER-64 analysis of \cite{Ali2015} uses three classes of baselines, the PAPER-128
+equivalent of which are 
+\{2, 0\}, \{2, 1\} and $\{2, -1\}$. There, baselines are cross-multiplied within each class. This paper provides the method for inter-class multiplications. We will use the short hand notation $\{m,n:m',n'\}$ to denote a pair of baseline classes to be cross-multiplied. 
 
 
 \section{Method \label{sec:method}}\label{sec:method}
@@ -446,7 +446,7 @@ g_{\ell m}^\psi (k ; \mathbf{b}, \tau) = \int && d\Omega d\nu B(\boldsymbol \Gam
 \end{eqnarray}
 Note that unlike the primary beam and the fringe pattern, the spherical harmonic function does \emph{not} rotate, since it originated from a spherical harmonic expansion of the sky temperature, which is fixed. With these expressions and a little algebra combining Eqs. \eqref{eq:SHB} through \eqref{eq:glmpsi}, we arrive at a form of the two-baseline estimator (compare with Eq. \eqref{eq:final}):
 \begin{eqnarray}
-\hat{P}(k_{\bar{b}, \tau}) &=& \frac{ \langle V^{*}(\boldsymbol{b},\tau)V_{\psi}(\boldsymbol{b'},\tau) \rangle}{\Theta} \nonumber \\
+\hat{P}(k) &=& \frac{ \langle V^{*}(\boldsymbol{b},\tau)V_{\psi}(\boldsymbol{b'},\tau) \rangle}{\Theta} \nonumber \\
 &=& \sum_\ell \int \!dk\, W_{\ell}(k; \mathbf{b}, \mathbf{b}^\prime , \tau) P(k),
 \end{eqnarray}
 where we have defined the \emph{window function}
@@ -521,7 +521,7 @@ we see for example that \{1,0\} has higher multiplicity than \{2,0\},
 or \{1,1\}. Assuming that each equivalent baseline delivers
 the same $\Theta_{\boldsymbol{bb}}$, the relative contribution to sensitivity can be estimated as follows. 
 
-First we can average the visibilities of the equivalent baselines. Since the core of PAPER-128 was a 16 by 7 antenna configuration, there
+First we can average the visibilities of the equivalent baselines. Since the core of PAPER-128 is a 16 by 7 antenna configuration, there
 are $M\equiv(16-|m|)\times(7-|n|)$ copies of the baseline class $\{m,n\}$. This means
 that if we add visibility measurements of all the equivalent baselines,
 we get a factor of $\sqrt{M}$ reduction in the noise
@@ -574,11 +574,11 @@ hexagonal design is the densest pattern of antenna-packing. The larger arrays ar
 \begin{figure}[H]
 \includegraphics[width=\linewidth]{pairplot}
 
-\caption{Pairplots of the top contributing baseline pairs in three arrays. Plotted properties are optimal time offset $\Delta t_{\boldsymbol{bb'}}$ (in hours),  effective weight $\widetilde{\Theta}_{\boldsymbol{bb'}}$, and baseline length $\bar{b}$ (in meters). \textbf{Shown on the diagonal are histograms of given quantities for the different arrays. On the off-diagonals we show the the scatter plots of the three quantities against each other.} Only those points with $\widetilde{\Theta}_{\boldsymbol{bb'}}>0.01$ are shown (the weight for the top class of equivalent pair is normalized to 1). Scatter points of the three arrays overlap, in the order indicated by the legend. }
+\caption{Pairplots of the top contributing baseline pairs in three arrays. Plotted properties are optimal time offset $\Delta t_{\boldsymbol{bb'}}$ (in hours),  effective weight $\widetilde{\Theta}_{\boldsymbol{bb'}}$, and baseline length $\bar{b}$ (in meters). Only those points with $\widetilde{\Theta}_{\boldsymbol{bb'}}>0.01$ are shown (the weight for the top class of equivalent pair is normalized to 1). Scatter points of the three arrays overlap, in the order indicated by the legend. }
 \label{fig:pairplot}
 \end{figure}
 
-In Fig. \ref{fig:pairplot} we present pair-distributions of three different properties for baselines that contribute well to the sensitivity ($\widetilde{\Theta}_{\boldsymbol{bb'}}>0.01$, where again the weight for the top class of equivalent pair is normalized to 1). The properties shown are effective weight $\widetilde{\Theta}_{\boldsymbol{bb'}}$, optimal time offset $\Delta t_{\boldsymbol{bb'}}$, and average baseline length $\bar{b}$. \textbf{We show the histograms on the diagonals and scatter plots on the off-diagonals.} We only show three of the mentioned arrays for visual clarity. The other two results are qualitatively similar. We point out some key features:
+In Fig. \ref{fig:pairplot} we present pair-distributions of three different properties for baselines that contribute well to the sensitivity ($\widetilde{\Theta}_{\boldsymbol{bb'}}>0.01$, where again the weight for the top class of equivalent pair is normalized to 1). The properties shown are effective weight $\widetilde{\Theta}_{\boldsymbol{bb'}}$, optimal time offset $\Delta t_{\boldsymbol{bb'}}$, and average baseline length $\bar{b}$. We only show three of the mentioned arrays for visual clarity. The other two results are qualitatively similar. We point out some key features:
 \begin{itemize}
 
 \item $\Delta t_{\boldsymbol{bb'}}$ vs. $\widetilde{\Theta}_{\boldsymbol{bb'}}$:
@@ -600,7 +600,7 @@ As Fig. \ref{fig:pairplot} suggests, not all baseline pairs contribute significa
 
 Note that here we normalized sensitivity for each array as the fraction of the total sensitivity of an array, i.e. when all baseline pairs are used. The plot therefore does not compare absolute sensitivity across different arrays. We see as expected that in all cases, using the nearly equivalent baselines leads to increasingly significant improvements as $\widetilde{\Theta}_{min}$ is lowered, or in other words, when more baseline pairs are used. We point out that PAPER results until now \citep{Ali2015, paper32} only used the top contributing baseline pairs, essentially only exploiting the sensitivity of the $\rho(\widetilde{\Theta}_{min}\sim 1)$ scenario. 
 
-The dashed lines represent the values when only the equivalent baseline-pairs are used. The small and unfractured HERA-37, with no gap (like in HERA-350) or short nearly equivalent baselines (like in PAPER 128), will not benefit much from the nearly equivalent baselines. Near-equivalent baselines make an increasingly significant contribution to the total sensitivity as the number of array elements are increased. PAPER-128 is designed with highly redundant nearly equivalent baselines, and thus  these baselines start contributing at higher $\widetilde{\Theta}_{min}$. \textbf{Incidentally, as we have seen in  $\widetilde{\Theta}_{\boldsymbol{bb'}}$ vs. $\bar{b}$ scatter plot of Fig. \ref{fig:pairplot}, these are also the shorter baselines contributing to lower $k$-modes.} The fractured HERA configurations will benefit even more from nearly equivalent baselines at low $\widetilde{\Theta}_{min}$ due to the presence of more classes of such pairs. \textbf{However, compared to PAPER, HERA's boost in sensitivity mostly attributes to the longer baselines and thus high $k$-modes (see Fig. \ref{fig:pairplot}). } The stepwise pattern seen in almost all cases are characteristic of a regular grid; as we step to lower $\widetilde{\Theta}_{\boldsymbol{bb'}}$ large groups of baseline pair classes get included in ``batch''. Thus the ``unfractured'' HERA-37, with more regularity in its antenna configurations than the larger counterparts, exhibit more step patterns in fractional sensitivity. 
+The dashed lines represent the values when only the equivalent baseline-pairs are used. The small and unfractured HERA-37, with no gap (like in HERA-350) or short nearly equivalent baselines (like in PAPER 128), will not benefit much from the nearly equivalent baselines. Near-equivalent baselines make an increasingly significant contribution to the total sensitivity as the number of array elements are increased. PAPER-128 is designed with highly redundant nearly equivalent baselines, and thus  these baselines start contributing at higher $\widetilde{\Theta}_{min}$. The fractured HERA configurations will benefit even more from nearly equivalent baselines at low $\widetilde{\Theta}_{min}$ due to the presence of more classes of such pairs. The stepwise pattern seen in almost all cases are characteristic of a regular grid; as we step to lower $\widetilde{\Theta}_{\boldsymbol{bb'}}$ large groups of baseline pair classes get included in ``batch''. Thus the ``unfractured'' HERA-37, with more regularity in its antenna configurations than the larger counterparts, exhibit more step patterns in fractional sensitivity. 
 %\begin{centered}
 \begin{figure}[H]
 \includegraphics[width=\linewidth]{osens}
