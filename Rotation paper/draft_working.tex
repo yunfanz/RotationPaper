@@ -66,8 +66,17 @@ Analysis pipelines for the 21\,cm power spectrum typically fall into two categor
 measurements with the 64-element version of PAPER (henceforth as PAPER-64). However, one disadvantage of existing visibility-based pipelines is their lack of treatment of partial redundancy. Baselines that are slightly different in length and orientation
 ``rotate into'' each other at a time offset. Baselines of different lengths and orientations therefore contain partially coherent information. This is the basis of earth-rotation synthesis. While imaging based power-spectrum pipelines naturally include all redundancy information, visibility-based pipelines so far only cross multiply fully redundant baselines, i.e., baselines of the same length and orientation.
 
-Visibility-based pipelines are not fundamentally limited to using only fully redundant baselines. In fact, most sensitivity forecasts to date do include partial redundancy \citep{Pobersens, HERA, JoshAntPos}. \textbf{A number of methods to produce power spectrum measurements using partially redundant baselines had been studied in recent years. A power-spectrum estimator based on visibilities gridded in the $uv$-plane was introduced in \cite{Choudhury2014Estimators, Choudhury2016Taperingb, Choudhury2016Taperinga}, and compared to a simple pair-baseline estimator in \cite{Choudhury2014Estimators}. Due to considerations of computational complexity, the authors favored grid-based estimator over pair-baseline estimators despite the higher accuracy of the latter.  \cite{wterm} proposed another approach based on gridded visibilities in sky-tracking measurements. Arrays capable of tracking include MWA and LOFAR, but not drift-scan telescopes such as PAPER, HERA, and potentially SKA-low. \cite{CTrott} studied three observing strategies (tracking, zenith drift scan, and drift and shift) with a pair-visibility based approach and concluded that zenith drift scan was the preferred observing strategy. In this paper, we introduce a pair-baseline power spectrum estimator that can be applied to both tracking-capable arrays and drift scan only arrays. Our formalism also provides a way to identify the pairs to cross-correlate, overcoming the previously considered computational disadvantage as compared to grid-based estimators.
-Furthermore, compared to the pair-baseline estimators studied in \cite{Choudhury2014Estimators} and \cite{CTrott}, our analysis of the sensitivities indicate the importance of the three dimensional nature of the sky, resulting in us directly addressing curved sky effects in our formalism.  }
+Visibility-based pipelines are not fundamentally limited to using only fully redundant baselines. In fact, most sensitivity forecasts to date do include partial redundancy \citep{Pobersens, HERA, JoshAntPos}. \textbf{A number of methods to produce power spectrum measurements using partially redundant baselines has been studied in recent years. A power-spectrum estimator based on visibilities gridded in the $uv$-plane was introduced in \cite{Choudhury2014Estimators, Choudhury2016Taperingb, Choudhury2016Taperinga}, and compared to a simple pair-baseline estimator in \cite{Choudhury2014Estimators}. Due to considerations of computational complexity, the authors favored grid-based estimator over pair-baseline estimators despite the higher accuracy of the latter.  \cite{wterm} proposed another approach based on gridded visibilities in sky-tracking measurements. 
+%Arrays capable of tracking include MWA and LOFAR, but not drift-scan telescopes such as PAPER, HERA, and potentially SKA-low.
+\cite{CTrott} studied three observing strategies (tracking, drift scan, and a combination of the two) and developed a pair-visibility based approach to power spectrum estimation.
+%and concluded that zenith drift scan was the preferred observing strategy.
+In this paper, we extend the above works and introduce a non-gridded \emph{baseline}-pair power spectrum estimator that can be applied to both tracking-capable arrays and drift scan-only arrays. Our formalism also provides a way to identify which baseline pairs to cross-correlate, overcoming the aforementioned computational disadvantage of baseline-based estimators relative to grid-based estimators.
+Furthermore, compared to
+%the pair-baseline estimators studied in
+\cite{Choudhury2014Estimators} and \cite{CTrott}, our analysis 
+more explicitly treats the curved nature of the sky as well as its spectral dimension.
+%of the sensitivities indicate the importance of the three dimensional nature of the sky, resulting in us directly addressing curved sky effects in our formalism. 
+}
 
 The basic idea of our proposed visibility-based, two-baseline power-spectrum estimator is as follows. The Earth's rotation causes the baselines in a drift-scan array to pick up different modes of the sky with time. Rotation synthesis makes use of the rotation-induced $uv$ coverage map to form an image. With visibility-based pipelines, the same information can be extracted. To do so, we cross-multiply time-shifted visibilities, with the proper weighting, to form power spectra.  Due to the large number of elements of modern arrays, the task of cross-multiplying every baseline against every other, scaling as number of array elements to the fourth power, can be computationally formidable, and many pairs of baselines provide only negligible redundancy information. Our contribution is thus twofold. First, we introduce a formalism to estimate the power spectrum from pairs of partially-redundant baselines in a visibility pipeline. Secondly we show how to use the two-baseline estimator to automatically pre-select baseline pairs and time offsets, making the problem computationally efficient. More precisely, our formalism allows one to simultaneously identify the baselines that have strong
 redundancy, find the time offset that corresponds to maximal redundancy for a given pair of baselines, and quantify the sensitivity associated with cross multiplying
@@ -87,15 +96,6 @@ this technique as well as the expected sensitivity improvement
 
 In order to avoid confusion and ambiguity for the rest of this paper, we
 introduce some terminology that may differ from what is commonly found in the literature. 
-
-We make the distinction between a \textit{baseline}, which corresponds to two specific antennas, and a \textit{class of baselines}, which refers to all baselines of the same length and orientation in a given array. 
-Baselines of the same class are traditionally called
-``redundant baselines'', because they measure the same Fourier mode
-in the sky.  We shall call baselines in the same class \textit{equivalent baselines}, and reserve the \textit{redundancy} of two baselines to mean a variable function of the relative time offsets of their visibility time series. With this terminology, equivalent
-baselines are fully redundant with each other simultaneously at all
-times. Non-equivalent baselines also have partial redundancy, and the redundancy can be maximized 
-by shifting their time series by a relative time offset.
-
 \begin{figure}[H]
 \includegraphics[width=\linewidth]{antconfig}
 
@@ -107,6 +107,14 @@ the baselines marked in blue and yellow are examples
 of classes that, due to the small North-South separation within the grid, are expected to be nearly equivalent to the red baselines. }
 \label{fig:AntPos}
 \end{figure}
+
+We make the distinction between a \textit{baseline}, which corresponds to two specific antennas, and a \textit{class of baselines}, which refers to all baselines of the same length and orientation in a given array. 
+Baselines of the same class are traditionally called
+``redundant baselines'', because they measure the same Fourier mode
+in the sky.  We shall call baselines in the same class \textit{equivalent baselines}, and reserve the \textit{redundancy} of two baselines to mean a variable function of the relative time offsets of their visibility time series. With this terminology, equivalent
+baselines are fully redundant with each other simultaneously at all
+times. Non-equivalent baselines also have partial redundancy, and the redundancy can be maximized 
+by shifting their time series by a relative time offset.
 
 We shall use the 128-element PAPER array (henceforth referred to as PAPER-128) to motivate our formalism and demonstrate our method, and extend our results to several HERA configurations in Section \ref{sec:arrconf}. 
 The PAPER array \textbf{was} located in the Karoo desert in South Africa (30:43:17.5
@@ -152,7 +160,6 @@ not accurate enough to determine the optimal time offset for the cross multiplic
 
 
 \subsection{Formalism \label{sec:formalism}}
-\label{sec:formalism}
 In this section we formulate a power spectrum estimator from
 the product of delay-transformed visibilities from two arbitrary baselines. We shall work in the case of drift-scan telescopes and extend the results to tracking measurements. 
 
@@ -601,7 +608,7 @@ As Fig. \ref{fig:pairplot} suggests, not all baseline pairs contribute significa
 
 Note that here we normalized sensitivity for each array as the fraction of the total sensitivity of an array, i.e. when all baseline pairs are used. The plot therefore does not compare absolute sensitivity across different arrays. We see as expected that in all cases, using the nearly equivalent baselines leads to increasingly significant improvements as $\widetilde{\Theta}_{min}$ is lowered, or in other words, when more baseline pairs are used. We point out that PAPER results until now \citep{Ali2015, paper32} only used the top contributing baseline pairs, essentially only exploiting the sensitivity of the $\rho(\widetilde{\Theta}_{min}\sim 1)$ scenario. 
 
-The dashed lines represent the values when only the equivalent baseline-pairs are used. The small and unfractured HERA-37, with no gap (like in HERA-350) or short nearly equivalent baselines (like in PAPER 128), will not benefit much from the nearly equivalent baselines. Near-equivalent baselines make an increasingly significant contribution to the total sensitivity as the number of array elements are increased. PAPER-128 is designed with highly redundant nearly equivalent baselines, and thus  these baselines start contributing at higher $\widetilde{\Theta}_{min}$. \textbf{Incidentally, as we have seen in the scatter plot of $\widetilde{\Theta}_{\boldsymbol{bb'}}$ vs. $\bar{b}$ in Fig. \ref{fig:pairplot}, these are also the shorter baselines contributing to lower $k$-modes.} The fractured HERA configurations will benefit even more from nearly equivalent baselines at low $\widetilde{\Theta}_{min}$ due to the presence of more classes of such pairs. \textbf{However, compared to PAPER, HERA's boost in sensitivity mostly attributes to the longer baselines and thus high $k$-modes (see Fig. \ref{fig:pairplot}). } The stepwise pattern seen in almost all cases are characteristic of a regular grid; as we step to lower $\widetilde{\Theta}_{\boldsymbol{bb'}}$ large groups of baseline pair classes get included in ``batch''. Thus the ``unfractured'' HERA-37, with more regularity in its antenna configurations than the larger counterparts, exhibit more step patterns in fractional sensitivity. 
+The dashed lines represent the values when only the equivalent baseline-pairs are used. The small and unfractured HERA-37, with no gap (like in HERA-350) or short nearly equivalent baselines (like in PAPER 128), will not benefit much from the nearly equivalent baselines. Near-equivalent baselines make an increasingly significant contribution to the total sensitivity as the number of array elements are increased. PAPER-128 is designed with highly redundant nearly equivalent baselines, and thus  these baselines start contributing at higher $\widetilde{\Theta}_{min}$. \textbf{As seen in the scatter plot of $\widetilde{\Theta}_{\boldsymbol{bb'}}$ vs. $\bar{b}$ in Fig. \ref{fig:pairplot}, these are also the shorter baselines, which tend to contribute sensitivity to lower $k$-modes.} The fractured HERA configurations will benefit even more from nearly equivalent baselines at low $\widetilde{\Theta}_{min}$ due to the presence of more classes of such pairs. \textbf{However, compared to PAPER, HERA's boost in sensitivity is mostly attributable to the longer baselines---and thus high $k$---modes (see Fig. \ref{fig:pairplot}). } The stepwise pattern seen in almost all cases are characteristic of a regular grid; as we step to lower $\widetilde{\Theta}_{\boldsymbol{bb'}}$ large groups of baseline pair classes get included in ``batch''. Thus the ``unfractured'' HERA-37, with more regularity in its antenna configurations than the larger counterparts, exhibit more step patterns in fractional sensitivity. 
 %\begin{centered}
 \begin{figure}[H]
 \includegraphics[width=\linewidth]{osens}
